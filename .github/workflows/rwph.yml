@@ -1,0 +1,36 @@
+name: Grow Castle RWPH Tracker
+
+on:
+  schedule:
+    - cron: '*/20 * * * *'   # 백업용: 이어달리기가 끊겼을 때만 새로 시작 (살아있으면 즉시 종료)
+  workflow_dispatch:
+    inputs:
+      handoff_at:
+        description: '이전 job에게 넘겨받을 시각(epoch ms). 비워두면 즉시 시작'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  track:
+    runs-on: ubuntu-latest
+    timeout-minutes: 358
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Git identity
+        run: |
+          git config user.name  "rwph-bot"
+          git config user.email "rwph-bot@users.noreply.github.com"
+      - name: Poll every 1s (relay)
+        env:
+          PLAYER: ReynRule
+          RUN_MINUTES: 345
+          HANDOFF_AT: ${{ inputs.handoff_at }}
+          GH_TOKEN: ${{ github.token }}
+        run: node poll.js
