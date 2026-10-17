@@ -5,7 +5,7 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2180647,
+   "lastWave": 2180662,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
@@ -40,8 +40,8 @@
      "gain": 860
     },
     "2026-10-18T07": {
-     "count": 17,
-     "gain": 85
+     "count": 20,
+     "gain": 100
     }
    },
    "jumps": {
@@ -96,7 +96,7 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17996390,
+   "lastWave": 17996410,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
@@ -131,8 +131,8 @@
      "gain": 1190
     },
     "2026-10-18T07": {
-     "count": 17,
-     "gain": 111
+     "count": 20,
+     "gain": 131
     }
    },
    "jumps": {
@@ -151,7 +151,7 @@
    ]
   },
   "S_Raikkonen": {
-   "lastWave": 1194277,
+   "lastWave": 1194286,
    "hours": {
     "2026-10-17T23": {
      "count": 0,
@@ -186,8 +186,8 @@
      "gain": 516
     },
     "2026-10-18T07": {
-     "count": 16,
-     "gain": 48
+     "count": 19,
+     "gain": 57
     }
    },
    "jumps": {
@@ -282,7 +282,7 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1373063,
+   "lastWave": 1373078,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
@@ -317,8 +317,8 @@
      "gain": 777
     },
     "2026-10-18T07": {
-     "count": 16,
-     "gain": 72
+     "count": 19,
+     "gain": 87
     }
    },
    "jumps": {
@@ -528,7 +528,7 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 178796,
+   "lastWave": 178800,
    "hours": {
     "2026-10-18T00": {
      "count": 57,
@@ -559,8 +559,8 @@
      "gain": 210
     },
     "2026-10-18T07": {
-     "count": 10,
-     "gain": 20
+     "count": 12,
+     "gain": 24
     }
    },
    "jumps": {
@@ -594,7 +594,7 @@
    "past": []
   },
   "DC_InTTerre": {
-   "lastWave": 1384816,
+   "lastWave": 1384831,
    "hours": {
     "2026-10-18T03": {
      "count": 1,
@@ -613,8 +613,8 @@
      "gain": 865
     },
     "2026-10-18T07": {
-     "count": 17,
-     "gain": 85
+     "count": 20,
+     "gain": 100
     }
    },
    "jumps": {
@@ -638,5 +638,5 @@
    "past": []
   }
  },
- "updated": 1792278044174
+ "updated": 1792278106174
 }
