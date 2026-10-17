@@ -5,7 +5,7 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2166721,
+   "lastWave": 2166736,
    "hours": {
     "2026-10-17T09": {
      "count": 1,
@@ -32,8 +32,8 @@
      "gain": 865
     },
     "2026-10-17T15": {
-     "count": 4,
-     "gain": 20
+     "count": 7,
+     "gain": 35
     }
    },
    "jumps": {
@@ -62,7 +62,7 @@
    "past": []
   },
   "DP_ASURA": {
-   "lastWave": 17980246,
+   "lastWave": 17980266,
    "hours": {
     "2026-10-17T10": {
      "count": 61,
@@ -85,8 +85,8 @@
      "gain": 1184
     },
     "2026-10-17T15": {
-     "count": 3,
-     "gain": 19
+     "count": 6,
+     "gain": 39
     }
    },
    "jumps": {
@@ -136,7 +136,7 @@
    "past": []
   },
   "ALDE": {
-   "lastWave": 2978864,
+   "lastWave": 2978880,
    "hours": {
     "2026-10-17T11": {
      "count": 110,
@@ -155,8 +155,8 @@
      "gain": 894
     },
     "2026-10-17T15": {
-     "count": 4,
-     "gain": 21
+     "count": 7,
+     "gain": 37
     }
    },
    "jumps": {
@@ -185,7 +185,7 @@
    "past": []
   },
   "SKL_CAZcaz": {
-   "lastWave": 1358448,
+   "lastWave": 1358461,
    "hours": {
     "2026-10-17T13": {
      "count": 160,
@@ -196,8 +196,8 @@
      "gain": 981
     },
     "2026-10-17T15": {
-     "count": 3,
-     "gain": 14
+     "count": 6,
+     "gain": 27
     }
    },
    "jumps": {
@@ -221,5 +221,5 @@
    "past": []
   }
  },
- "updated": 1792216875476
+ "updated": 1792216937474
 }
