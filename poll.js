@@ -11,6 +11,8 @@ const MAX_HOURS = 24;
 const MAX_PAST = 30;
 const STATE = 'data/state.json';
 const USERS_FILE = 'user.txt';
+const RANK_DIR = 'rankdata';
+const RANK_INDEX = `${RANK_DIR}/index.json`;
 
 const ISSUES_NEW_BASE = process.env.GITHUB_REPOSITORY
   ? `https://github.com/${process.env.GITHUB_REPOSITORY}/issues/new`
@@ -307,6 +309,60 @@ function render() {
   );
 }
 
+
+// 평속 랭킹 스냅샷: KST 시간대별 wave 증가량(gain)을 기준으로 순위를 매긴다.
+const rankFileName = (hour) => `${hour.slice(0, 10)}-${hour.slice(11, 13)}.json`;
+
+function saveRankSnapshot(hour) {
+  if (!hour || !/^\d{4}-\d{2}-\d{2}T\d{2}$/.test(hour)) return false;
+  fs.mkdirSync(RANK_DIR, { recursive: true });
+  const file = `${RANK_DIR}/${rankFileName(hour)}`;
+  // 과거 기록은 절대 덮어쓰지 않는다.
+  if (fs.existsSync(file)) return false;
+
+  const rows = Object.entries(state.users || {}).map(([nick, u]) => {
+    const h = (u.hours || {})[hour] || { gain: 0, count: 0 };
+    return {
+      nick,
+      speed: Number(h.gain) || 0,
+      waveChanges: Number(h.count) || 0,
+      lastWave: u.lastWave == null ? null : Number(u.lastWave)
+    };
+  }).sort((a, b) => b.speed - a.speed || a.nick.localeCompare(b.nick));
+
+  rows.forEach((r, i) => { r.rank = i + 1; });
+  const payload = {
+    hour,
+    timezone: 'Asia/Seoul',
+    metric: 'wave gain during this hour',
+    savedAt: new Date().toISOString(),
+    rankings: rows
+  };
+  fs.writeFileSync(file, JSON.stringify(payload, null, 2) + '\n');
+
+  let hours = [];
+  try {
+    const old = JSON.parse(fs.readFileSync(RANK_INDEX, 'utf8'));
+    if (Array.isArray(old.hours)) hours = old.hours;
+  } catch {}
+  if (!hours.includes(hour)) hours.push(hour);
+  hours.sort();
+  fs.writeFileSync(RANK_INDEX, JSON.stringify({
+    updatedAt: new Date().toISOString(),
+    hours
+  }, null, 2) + '\n');
+  console.log('rank snapshot saved:', file);
+  return true;
+}
+
+function snapshotCurrentHourAt55() {
+  const now = new Date(Date.now() + 9 * 3600e3);
+  // KST 기준 매시 55분부터 현재 시간대 기록을 한 번 저장한다.
+  // 파일이 이미 존재하면 saveRankSnapshot이 덮어쓰지 않는다.
+  if (now.getUTCMinutes() < 55) return;
+  saveRankSnapshot(hourKey(Date.now()));
+}
+
 function save() {
   state.updated = Date.now();
 
@@ -338,6 +394,7 @@ function commit(msg) {
 
   try {
     execSync('git add index.html data/state.json user.txt');
+    if (fs.existsSync(RANK_DIR)) execSync('git add -A -- rankdata');
 
     if (!execSync('git status --porcelain').toString().trim()) return;
 
@@ -396,6 +453,8 @@ async function fetchPlayer(nick) {
 }
 
 async function tick() {
+  // KST 기준 매시 55분 이후 현재 시간대 기록을 저장한다. API 오류와 무관하게 실행한다.
+  snapshotCurrentHourAt55();
   const names = readUsers();
 
   if (!names.length) return;
