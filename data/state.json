@@ -37,15 +37,15 @@
    "past": []
   },
   "DP_ASURA": {
-   "lastWave": 17986436,
+   "lastWave": 17986464,
    "hours": {
     "2026-10-17T20": {
      "count": 133,
      "gain": 877
     },
     "2026-10-17T21": {
-     "count": 148,
-     "gain": 1017
+     "count": 152,
+     "gain": 1045
     }
    },
    "jumps": {
@@ -79,15 +79,15 @@
    "past": []
   },
   "ALDE": {
-   "lastWave": 2984558,
+   "lastWave": 2984574,
    "hours": {
     "2026-10-17T20": {
      "count": 127,
      "gain": 660
     },
     "2026-10-17T21": {
-     "count": 142,
-     "gain": 774
+     "count": 145,
+     "gain": 790
     }
    },
    "jumps": {
@@ -100,15 +100,15 @@
    "past": []
   },
   "SKL_CAZcaz": {
-   "lastWave": 1365942,
+   "lastWave": 1365957,
    "hours": {
     "2026-10-17T20": {
      "count": 124,
      "gain": 572
     },
     "2026-10-17T21": {
-     "count": 139,
-     "gain": 668
+     "count": 142,
+     "gain": 683
     }
    },
    "jumps": {
@@ -121,15 +121,15 @@
    "past": []
   },
   "S_seungheeee": {
-   "lastWave": 3157395,
+   "lastWave": 3157410,
    "hours": {
     "2026-10-17T20": {
      "count": 130,
      "gain": 650
     },
     "2026-10-17T21": {
-     "count": 145,
-     "gain": 760
+     "count": 148,
+     "gain": 775
     }
    },
    "jumps": {
@@ -163,5 +163,5 @@
    "past": []
   }
  },
- "updated": 1792244815030
+ "updated": 1792244877028
 }
