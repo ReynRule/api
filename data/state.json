@@ -5,7 +5,7 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2171297,
+   "lastWave": 2171312,
    "hours": {
     "2026-10-17T09": {
      "count": 1,
@@ -52,8 +52,8 @@
      "gain": 1010
     },
     "2026-10-17T20": {
-     "count": 46,
-     "gain": 250
+     "count": 49,
+     "gain": 265
     }
    },
    "jumps": {
@@ -221,7 +221,7 @@
    "past": []
   },
   "ALDE": {
-   "lastWave": 2982314,
+   "lastWave": 2982329,
    "hours": {
     "2026-10-17T11": {
      "count": 110,
@@ -260,8 +260,8 @@
      "gain": 884
     },
     "2026-10-17T20": {
-     "count": 45,
-     "gain": 254
+     "count": 48,
+     "gain": 269
     }
    },
    "jumps": {
@@ -305,7 +305,7 @@
    "past": []
   },
   "SKL_CAZcaz": {
-   "lastWave": 1363852,
+   "lastWave": 1363865,
    "hours": {
     "2026-10-17T13": {
      "count": 160,
@@ -336,8 +336,8 @@
      "gain": 1033
     },
     "2026-10-17T20": {
-     "count": 45,
-     "gain": 302
+     "count": 48,
+     "gain": 315
     }
    },
    "jumps": {
@@ -391,7 +391,7 @@
    "past": []
   },
   "S_seungheeee": {
-   "lastWave": 3155210,
+   "lastWave": 3155230,
    "hours": {
     "2026-10-17T15": {
      "count": 0,
@@ -414,8 +414,8 @@
      "gain": 875
     },
     "2026-10-17T20": {
-     "count": 46,
-     "gain": 255
+     "count": 50,
+     "gain": 275
     }
    },
    "jumps": {
@@ -471,5 +471,5 @@
    "past": []
   }
  },
- "updated": 1792235841346
+ "updated": 1792235903347
 }
