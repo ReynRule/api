@@ -18,6 +18,7 @@ const RANK_HTML = `${RANK_PAGE_DIR}/index.html`;
 
 
 
+
 const RANK_HTML_TEMPLATE = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +26,7 @@ const RANK_HTML_TEMPLATE = `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RWPH Rankings</title>
 <style>
+*{box-sizing:border-box}
 body{margin:0;padding:24px;background:#0d1117;color:#e6edf3;font:14px/1.5 -apple-system,"Segoe UI",sans-serif}
 main{max-width:800px;margin:auto}
 a{color:#58a6ff}
@@ -35,8 +37,21 @@ table{width:100%;border-collapse:collapse}
 th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #30363d}
 .num{text-align:right}
 .muted{color:#8b949e}
-.scroll{overflow-x:auto}
-@media(max-width:500px){body{padding:14px}.controls{flex-direction:column}select,input{width:100%;box-sizing:border-box}}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pagination{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:16px}
+.pagination button{padding:9px 12px;background:#21262d;color:#e6edf3;border:1px solid #30363d;border-radius:8px;cursor:pointer}
+.pagination button:hover:not(:disabled){border-color:#58a6ff}
+.pagination button:disabled{opacity:.4;cursor:not-allowed}
+.pagination input{width:76px;text-align:center}
+.page-info{color:#8b949e;width:100%;text-align:center}
+@media(max-width:500px){
+  body{padding:14px}
+  .controls{flex-direction:column}
+  select,input{width:100%;box-sizing:border-box}
+  .pagination{gap:6px}
+  .pagination button{padding:8px 10px}
+  .pagination input{width:65px}
+}
 </style>
 </head>
 <body>
@@ -44,12 +59,15 @@ th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #30363d}
 <p><a href="../">← Back to RWPH Tracker</a></p>
 <h1>RWPH Rankings</h1>
 <p class="muted">Hourly wave gain rankings · Korea Standard Time (KST)</p>
+
 <div class="card">
   <div class="controls">
     <label>Date (KST)<br><input type="date" id="date"></label>
     <label>Hour (KST)<br><select id="hour"></select></label>
   </div>
+
   <p id="status" class="muted">Loading rankings...</p>
+
   <div class="scroll">
     <table>
       <thead>
@@ -63,19 +81,41 @@ th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #30363d}
       <tbody id="rows"></tbody>
     </table>
   </div>
+
+  <div class="pagination" id="pagination">
+    <button type="button" id="firstPage">First</button>
+    <button type="button" id="prevPage">Previous</button>
+    <label>
+      Page
+      <input type="number" id="pageInput" min="1" value="1">
+    </label>
+    <button type="button" id="goPage">Go</button>
+    <button type="button" id="nextPage">Next</button>
+    <button type="button" id="lastPage">Last</button>
+    <div class="page-info" id="pageInfo"></div>
+  </div>
 </div>
+
 <p class="muted">Historical rankings are saved at 55 minutes past each hour.</p>
 </main>
+
 <script>
 const $ = id => document.getElementById(id);
 const fmt = n => Number(n || 0).toLocaleString('en-US');
 const pad = n => String(n).padStart(2, '0');
-const getKstDate = () => new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
-const getKstHour = () => new Date(Date.now() + 9 * 3600000).toISOString().slice(11, 13);
+const PAGE_SIZE = 50;
+
+const getKstDate = () =>
+  new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
+
+const getKstHour = () =>
+  new Date(Date.now() + 9 * 3600000).toISOString().slice(11, 13);
 
 let selectedDate = getKstDate();
 let selectedHour = getKstHour();
 let availableHours = [];
+let currentPage = 1;
+let currentRankings = [];
 
 function hourKey() {
   return selectedDate + 'T' + selectedHour;
@@ -86,28 +126,78 @@ function hourLabel(h) {
 }
 
 function renderRows(rankings) {
+  currentRankings = rankings || [];
+
+  const total = currentRankings.length;
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  currentPage = Math.max(1, Math.min(currentPage, totalPages));
+
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const visible = currentRankings.slice(start, start + PAGE_SIZE);
+
   $('rows').innerHTML = '';
 
-  if (!rankings || !rankings.length) {
-    $('rows').innerHTML = '<tr><td colspan="4">No ranking data available.</td></tr>';
+  if (!total) {
+    $('rows').innerHTML =
+      '<tr><td colspan="4">No ranking data available.</td></tr>';
+  } else {
+    visible.forEach((r, i) => {
+      const tr = document.createElement('tr');
+
+      [
+        r.rank || start + i + 1,
+        r.nick || '',
+        fmt(r.rwph),
+        fmt(r.jumps)
+      ].forEach((value, j) => {
+        const td = document.createElement('td');
+        td.textContent = value;
+
+        if (j >= 2) td.className = 'num';
+
+        tr.appendChild(td);
+      });
+
+      $('rows').appendChild(tr);
+    });
+  }
+
+  $('pageInput').value = currentPage;
+  $('pageInput').min = 1;
+  $('pageInput').max = totalPages;
+
+  $('firstPage').disabled = currentPage === 1;
+  $('prevPage').disabled = currentPage === 1;
+  $('nextPage').disabled = currentPage === totalPages;
+  $('lastPage').disabled = currentPage === totalPages;
+
+  $('pageInfo').textContent = total
+    ? 'Total ' + fmt(total) + ' players · Showing ' +
+      (start + 1) + '–' + Math.min(start + PAGE_SIZE, total) +
+      ' · Page ' + currentPage + ' of ' + totalPages
+    : 'No players to display.';
+}
+
+function goToPage(page) {
+  const totalPages = Math.max(
+    1,
+    Math.ceil(currentRankings.length / PAGE_SIZE)
+  );
+
+  const parsed = Number(page);
+
+  if (!Number.isFinite(parsed) || parsed === 0) {
+    $('pageInput').value = currentPage;
     return;
   }
 
-  rankings.forEach((r, i) => {
-    const tr = document.createElement('tr');
-    [
-      r.rank || i + 1,
-      r.nick || '',
-      fmt(r.rwph),
-      fmt(r.jumps)
-    ].forEach((value, j) => {
-      const td = document.createElement('td');
-      td.textContent = value;
-      if (j >= 2) td.className = 'num';
-      tr.appendChild(td);
-    });
-    $('rows').appendChild(tr);
-  });
+  currentPage = Math.max(
+    1,
+    Math.min(totalPages, Math.trunc(parsed))
+  );
+
+  renderRows(currentRankings);
 }
 
 function updateHourOptions() {
@@ -118,10 +208,13 @@ function updateHourOptions() {
     .filter(h => h.startsWith(selectedDate + 'T'))
     .map(h => h.slice(11, 13));
 
-  if (selectedDate === getKstDate()) hoursForDate.push(getKstHour());
+  if (selectedDate === getKstDate()) {
+    hoursForDate.push(getKstHour());
+  }
 
   const uniqueHours = [...new Set(hoursForDate)];
 
+  // 현재 시간대와 과거 스냅샷 모두 선택할 수 있도록 24시간 제공
   for (let h = 0; h < 24; h++) {
     const value = pad(h);
     if (!uniqueHours.includes(value)) uniqueHours.push(value);
@@ -163,28 +256,32 @@ async function loadRanking() {
 
       const state = await res.json();
 
-      // RWPH는 메인 페이지와 동일하게 해당 시간대의 h.count 사용
+      // RWPH는 메인 대시보드와 동일한 h.count 기준
       rankings = Object.entries(state.users || {}).map(([nick, u]) => {
         const h = (u.hours || {})[key] || {};
-        const jumps = (u.jumps && u.jumps.hours && u.jumps.hours[key]) || {};
+        const jumps =
+          (u.jumps && u.jumps.hours && u.jumps.hours[key]) || {};
 
         return {
           nick,
           rwph: Number(h.count) || 0,
-          jumps: (Number(jumps.j10) || 0) +
-                 (Number(jumps.j20) || 0) +
-                 (Number(jumps.j30) || 0)
+          jumps:
+            (Number(jumps.j10) || 0) +
+            (Number(jumps.j20) || 0) +
+            (Number(jumps.j30) || 0)
         };
       });
 
       label = 'Live ranking';
     } else {
-      const file = '../rankdata/' +
+      const file =
+        '../rankdata/' +
         selectedDate + '-' + selectedHour + '.json?t=' + Date.now();
 
       const res = await fetch(file, { cache: 'no-store' });
 
       if (!res.ok) {
+        currentPage = 1;
         renderRows([]);
         $('status').textContent =
           'No saved snapshot for ' + key.replace('T', ' ') + ' KST';
@@ -202,19 +299,27 @@ async function loadRanking() {
       label = 'Historical ranking';
     }
 
+    // 정렬은 페이지를 나누기 전에 전체 유저에 적용
     rankings.sort((a, b) =>
-      b.rwph - a.rwph || a.nick.localeCompare(b.nick)
+      b.rwph - a.rwph ||
+      a.nick.localeCompare(b.nick)
     );
 
-    rankings.forEach((r, i) => { r.rank = i + 1; });
+    // 전체 순위 부여 후 페이지네이션
+    rankings.forEach((r, i) => {
+      r.rank = i + 1;
+    });
 
     renderRows(rankings);
 
     $('status').textContent =
-      label + ' · ' + selectedDate + ' ' + hourLabel(selectedHour);
+      label + ' · ' + selectedDate + ' ' +
+      hourLabel(selectedHour);
   } catch (e) {
+    currentPage = 1;
     renderRows([]);
-    $('status').textContent = 'Could not load ranking data: ' + e.message;
+    $('status').textContent =
+      'Could not load ranking data: ' + e.message;
   }
 }
 
@@ -234,28 +339,62 @@ async function loadHours() {
   await loadRanking();
 }
 
-$('date').value = selectedDate;
-$('date').max = getKstDate();
+// 페이지 이동 버튼
+$('firstPage').addEventListener('click', () => goToPage(1));
 
+$('prevPage').addEventListener('click', () => {
+  goToPage(currentPage - 1);
+});
+
+$('nextPage').addEventListener('click', () => {
+  goToPage(currentPage + 1);
+});
+
+$('lastPage').addEventListener('click', () => {
+  goToPage(Math.ceil(currentRankings.length / PAGE_SIZE));
+});
+
+$('goPage').addEventListener('click', () => {
+  goToPage($('pageInput').value);
+});
+
+$('pageInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    goToPage($('pageInput').value);
+  }
+});
+
+// 날짜 변경 시 첫 페이지로 이동
 $('date').addEventListener('change', () => {
   if (!$('date').value) return;
+
   selectedDate = $('date').value;
+  currentPage = 1;
+
   updateHourOptions();
   loadRanking();
 });
 
+// 시간 변경 시 첫 페이지로 이동
 $('hour').addEventListener('change', () => {
   selectedHour = $('hour').value;
+  currentPage = 1;
+
   loadRanking();
 });
 
+$('date').value = selectedDate;
+$('date').max = getKstDate();
+
 loadHours();
 
+// 1분마다 시간 목록과 랭킹 갱신
 setInterval(() => {
   $('date').max = getKstDate();
   loadHours();
 }, 60000);
 
+// 현재 시간대는 15초마다 실시간 갱신
 setInterval(() => {
   if (hourKey() === getKstDate() + 'T' + getKstHour()) {
     loadRanking();
@@ -266,13 +405,11 @@ setInterval(() => {
 </html>`;
 
 
+
 function ensureRankHtml() {
   fs.mkdirSync(RANK_PAGE_DIR, { recursive: true });
-
-  if (!fs.existsSync(RANK_HTML)) {
-    fs.writeFileSync(RANK_HTML, RANK_HTML_TEMPLATE, 'utf8');
-    console.log('created', RANK_HTML);
-  }
+  fs.writeFileSync(RANK_HTML, RANK_HTML_TEMPLATE, 'utf8');
+  console.log('updated', RANK_HTML);
 }
 
 const ISSUES_NEW_BASE = process.env.GITHUB_REPOSITORY
