@@ -28,11 +28,11 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17986927,
+   "lastWave": 17986948,
    "hours": {
     "2026-10-17T23": {
-     "count": 1,
-     "gain": 6
+     "count": 4,
+     "gain": 27
     }
    },
    "jumps": {
@@ -97,11 +97,11 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1366887,
+   "lastWave": 1366901,
    "hours": {
     "2026-10-17T23": {
-     "count": 1,
-     "gain": 4
+     "count": 4,
+     "gain": 18
     }
    },
    "jumps": {
@@ -166,5 +166,5 @@
    ]
   }
  },
- "updated": 1792249217029
+ "updated": 1792249279031
 }
