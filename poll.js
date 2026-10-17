@@ -11,6 +11,9 @@ const MAX_HOURS = 24;
 const MAX_PAST = 30;
 const STATE = 'data/state.json';
 const USERS_FILE = 'user.txt';
+const ISSUES_URL = process.env.GITHUB_REPOSITORY
+  ? `https://github.com/${process.env.GITHUB_REPOSITORY}/issues/new`
+  : (process.env.ISSUES_URL || '#');
 
 const newJumps = () => ({ total: 0, j10: 0, j20: 0, j30: 0, hours: {} });
 const tierOf = (d) => {
@@ -85,6 +88,8 @@ h2{font-size:15px;margin:22px 0 8px}
 .home input{flex:1;background:var(--card);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:12px 14px;font-size:15px;outline:none}
 .home input:focus{border-color:var(--acc)}
 .home button{background:var(--acc);color:#041018;border:none;border-radius:10px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer}
+.issue-btn{display:inline-block;margin-top:16px;padding:12px 20px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:14px;font-weight:600;text-decoration:none;cursor:pointer}
+.issue-btn:hover{border-color:var(--acc);color:var(--acc)}
 .err{color:#f85149;font-size:13px;margin-top:12px;display:none}
 .back{display:inline-block;color:var(--sub);font-size:13px;margin-bottom:10px;text-decoration:none}
 .back:hover{color:var(--acc)}
@@ -106,6 +111,7 @@ h2{font-size:15px;margin:22px 0 8px}
       <button type="submit">Go</button>
     </form>
     <div class="err" id="searchErr">등록되지 않은 유저입니다</div>
+    <a class="issue-btn" id="issueBtn" href="/*ISSUES_URL*/" target="_blank" rel="noopener">유저 등록 (이슈 작성)</a>
     <div class="foot" style="margin-top:32px">Made By ReynRule</div>
   </div>
   <div id="dashView" style="display:none">
@@ -245,7 +251,10 @@ function render() {
     updated: Date.now(),
     users: state.users,
   }).replace(/</g, '\\u003c');
-  fs.writeFileSync('index.html', HTML_TEMPLATE.replace('/*DATA*/null', () => data));
+  fs.writeFileSync(
+    'index.html',
+    HTML_TEMPLATE.replace('/*DATA*/null', () => data).replace('/*ISSUES_URL*/', ISSUES_URL)
+  );
 }
 
 function save() {
