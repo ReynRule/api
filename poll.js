@@ -11,9 +11,14 @@ const MAX_HOURS = 24;
 const MAX_PAST = 30;
 const STATE = 'data/state.json';
 const USERS_FILE = 'user.txt';
-const ISSUES_URL = process.env.GITHUB_REPOSITORY
+const ISSUES_NEW_BASE = process.env.GITHUB_REPOSITORY
   ? `https://github.com/${process.env.GITHUB_REPOSITORY}/issues/new`
   : (process.env.ISSUES_URL || '#');
+// Prefill title only; body = completely empty (no spaces)
+const ISSUES_URL =
+  ISSUES_NEW_BASE === '#'
+    ? '#'
+    : `${ISSUES_NEW_BASE}?title=${encodeURIComponent('Register users')}&body=`;
 
 const newJumps = () => ({ total: 0, j10: 0, j20: 0, j30: 0, hours: {} });
 const tierOf = (d) => {
@@ -380,12 +385,11 @@ function dispatchNext(at) {
 }
 
 async function handleIssueRegister() {
-  const title = (process.env.ISSUE_TITLE || '').trim();
   const body = (process.env.ISSUE_BODY || '').trim();
   const issueNumber = process.env.ISSUE_NUMBER;
 
-  // Title + body: one nick per line (multiple users OK)
-  const rawLines = (title + '\n' + body)
+  // Body only (ignore issue title): one nick per line
+  const rawLines = body
     .split(/\r?\n/)
     .map((s) => s.replace(/^\[.*?\]\s*/, '').replace(/^[-*•]\s+/, '').trim())
     .filter(Boolean)
@@ -405,7 +409,7 @@ async function handleIssueRegister() {
     if (issueNumber) {
       try {
         execSync(
-          'gh issue comment ' + issueNumber + ' --body "Enter one player name per line (multiple names allowed)."',
+          'gh issue comment ' + issueNumber + ' --body "Put player names in the issue **body**, one per line (title is ignored)."',
           { stdio: 'inherit' }
         );
         execSync('gh issue close ' + issueNumber, { stdio: 'inherit' });
