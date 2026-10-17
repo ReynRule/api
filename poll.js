@@ -46,8 +46,8 @@ const HTML_TEMPLATE = `<!DOCTYPE html>
 <style>
 :root{--bg:#0d1117;--card:#161b22;--line:#30363d;--text:#e6edf3;--sub:#8b949e;--acc:#58a6ff;--hot:#f0883e;--ok:#3fb950}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,#1b2a4a 0,transparent 60%),var(--bg);color:var(--text);font:14px/1.5 -apple-system,"Segoe UI","Noto Sans KR",sans-serif;font-variant-numeric:tabular-nums}
+html{-webkit-text-size-adjust:100%;min-height:100%}
+body{margin:0;min-height:100vh;background-color:var(--bg);background-image:radial-gradient(1200px 600px at 10% -10%,#1b2a4a 0,transparent 60%);background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;color:var(--text);font:14px/1.5 -apple-system,"Segoe UI","Noto Sans KR",sans-serif;font-variant-numeric:tabular-nums}
 .wrap{max-width:860px;margin:0 auto;padding:24px 16px 48px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));padding-bottom:max(48px,env(safe-area-inset-bottom))}
 h1{margin:0;font-size:22px;letter-spacing:.5px}
 .sub{color:var(--sub);margin:4px 0 18px;word-break:keep-all}
