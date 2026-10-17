@@ -731,11 +731,10 @@ function saveRankSnapshot(hour) {
     const h = (u.hours || {})[hour] || { gain: 0, count: 0 };
     const jumps = (u.jumps && u.jumps.hours &&
       u.jumps.hours[hour]) || {};
-
+  
     return {
       nick,
-      rwph: Number(h.count) || 0, // /rank 페이지가 읽는 값
-      speed: Number(h.gain) || 0,
+      rwph: Number(h.count) || 0, // 웨이브 증가 횟수
       jumps:
         (Number(jumps.j10) || 0) +
         (Number(jumps.j20) || 0) +
@@ -749,7 +748,7 @@ function saveRankSnapshot(hour) {
     hour,
     timezone: 'Asia/Seoul',
     window: 'HH:55 to next HH:55 (KST)',
-    metric: 'rwph (wave count during this hour)',
+    metric: 'rwph (number of wave increases during this hour)',
     savedAt: new Date().toISOString(),
     rankings: rows
   };
