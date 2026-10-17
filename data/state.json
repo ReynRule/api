@@ -1,0 +1,128 @@
+{
+ "season": {
+  "start": "2026-10-12T15:00:00",
+  "end": "2026-10-17T14:59:59"
+ },
+ "users": {
+  "ReynRule": {
+   "lastWave": 2172192,
+   "hours": {
+    "2026-10-17T20": {
+     "count": 3,
+     "gain": 15
+    }
+   },
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
+  },
+  "DP_ASURA": {
+   "lastWave": 17984561,
+   "hours": {
+    "2026-10-17T20": {
+     "count": 3,
+     "gain": 19
+    }
+   },
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
+  },
+  "S_Raikkonen": {
+   "lastWave": 1191121,
+   "hours": {
+    "2026-10-17T20": {
+     "count": 0,
+     "gain": 0
+    }
+   },
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
+  },
+  "ALDE": {
+   "lastWave": 2983140,
+   "hours": {
+    "2026-10-17T20": {
+     "count": 3,
+     "gain": 16
+    }
+   },
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
+  },
+  "SKL_CAZcaz": {
+   "lastWave": 1364717,
+   "hours": {
+    "2026-10-17T20": {
+     "count": 3,
+     "gain": 15
+    }
+   },
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
+  },
+  "S_seungheeee": {
+   "lastWave": 3156000,
+   "hours": {
+    "2026-10-17T20": {
+     "count": 3,
+     "gain": 15
+    }
+   },
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
+  },
+  "RynzeQ": {
+   "lastWave": 16585,
+   "hours": {
+    "2026-10-17T20": {
+     "count": 0,
+     "gain": 0
+    }
+   },
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
+  }
+ },
+ "updated": 1792239080231
+}

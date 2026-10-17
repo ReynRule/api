@@ -75,7 +75,7 @@ th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #30363d}
   </div>
 </div>
 
-<p class="muted">Historical rankings are saved at 55 minutes past each hour.</p>
+<p class="muted">Each ranking hour runs from :55 to the next :55. Historical rankings are saved when the hour ends.</p>
 </main>
 
 <script>
@@ -84,11 +84,14 @@ const fmt = n => Number(n || 0).toLocaleString('en-US');
 const pad = n => String(n).padStart(2, '0');
 const PAGE_SIZE = 50;
 
+// 시간대는 매시 55분에 시작하므로 55분을 뺀 시각을 기준으로 날짜/시간을 계산한다.
+const OFFSET = 55 * 60000;
+
 const getKstDate = () =>
-  new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
+  new Date(Date.now() + 9 * 3600000 - OFFSET).toISOString().slice(0, 10);
 
 const getKstHour = () =>
-  new Date(Date.now() + 9 * 3600000).toISOString().slice(11, 13);
+  new Date(Date.now() + 9 * 3600000 - OFFSET).toISOString().slice(11, 13);
 
 let selectedDate = getKstDate();
 let selectedHour = getKstHour();
@@ -101,7 +104,7 @@ function hourKey() {
 }
 
 function hourLabel(h) {
-  return h + ':00–' + pad((Number(h) + 1) % 24) + ':00 KST';
+  return h + ':55–' + pad((Number(h) + 1) % 24) + ':55 KST';
 }
 
 function renderRows(rankings) {

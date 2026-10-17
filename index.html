@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RWPH Tracker</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--line:#30363d;--text:#e6edf3;--sub:#8b949e;--acc:#58a6ff;--hot:#f0883e;--ok:#3fb950}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;min-height:100%}
+body{margin:0;min-height:100vh;background-color:var(--bg);background-image:radial-gradient(1200px 600px at 10% -10%,#1b2a4a 0,transparent 60%);background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;color:var(--text);font:14px/1.5 -apple-system,"Segoe UI","Noto Sans KR",sans-serif;font-variant-numeric:tabular-nums}
+.wrap{max-width:860px;margin:0 auto;padding:24px 16px 48px;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));padding-bottom:max(48px,env(safe-area-inset-bottom))}
+h1{margin:0;font-size:22px;letter-spacing:.5px}
+.sub{color:var(--sub);margin:4px 0 18px;word-break:keep-all}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.card .l{color:var(--sub);font-size:12px}
+.card .v{font-size:22px;font-weight:700;margin-top:2px}
+.card.click{cursor:pointer;border-color:#5b3a1e;background:linear-gradient(135deg,#2a1c10,#161b22)}
+.card.click .v{color:var(--hot)}
+.card.click:hover{border-color:var(--hot)}
+.hint{color:var(--sub);font-size:11px;margin-top:2px}
+.panel{display:none;margin-bottom:16px}
+.panel.open{display:block}
+.tiers{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0 12px}
+.tier{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:10px;background:#0d1117}
+.tier b{display:block;font-size:20px;color:var(--hot)}
+.tier span{color:var(--sub);font-size:12px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--sub);font-weight:500;font-size:12px}
+td.n,th.n{text-align:right}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.now td{background:#1c2a1f}
+.badge{display:inline-block;background:var(--ok);color:#04210d;border-radius:6px;padding:0 6px;font-size:11px;font-weight:700;margin-left:6px}
+.jbtn{display:inline-block;cursor:pointer;color:var(--hot);font-weight:700;border-radius:6px;padding:2px 8px;border:1px solid #5b3a1e;background:#2a1c10}
+.jnone{color:var(--sub)}
+tr.detail td{background:#12171e;color:var(--sub);font-size:13px}
+tr.detail b{color:var(--hot)}
+h2{font-size:15px;margin:22px 0 8px}
+.foot{color:var(--sub);font-size:12px;margin-top:16px}
+.home{max-width:420px;margin:12vh auto 0;text-align:center}
+.home h1{font-size:28px;margin-bottom:8px}
+.home p{color:var(--sub);margin:0 0 20px;font-size:14px}
+.home form{display:flex;gap:8px}
+.home input{flex:1;background:var(--card);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:12px 14px;font-size:15px;outline:none}
+.home input:focus{border-color:var(--acc)}
+.home button{background:var(--acc);color:#041018;border:none;border-radius:10px;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer}
+.issue-btn{display:inline-block;margin-top:16px;padding:12px 20px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font-size:14px;font-weight:600;text-decoration:none;cursor:pointer}
+.issue-btn:hover{border-color:var(--acc);color:var(--acc)}
+.err{color:#f85149;font-size:13px;margin-top:12px;display:none}
+.back{display:inline-block;color:var(--sub);font-size:13px;margin-bottom:10px;text-decoration:none}
+.back:hover{color:var(--acc)}
+@media (max-width:600px){
+  body{font-size:13px}
+  .grid{grid-template-columns:1fr 1fr;gap:8px}
+  .card.click{grid-column:1/-1}
+  .home form{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="homeView" class="home" style="display:none">
+    <h1>RWPH Tracker</h1>
+    <p>Enter a player name</p>
+    <form id="searchForm">
+      <input type="text" id="searchInput" placeholder="Player name" autocomplete="off" autofocus>
+      <button type="submit">Go</button>
+    </form>
+    <div class="err" id="searchErr">User is not registered</div>
+    <a class="issue-btn" id="issueBtn" href="https://github.com/ReynRule/api/issues/new?title=Register%20users&body=" target="_blank" rel="noopener">Register user (open issue)</a>
+    <a class="issue-btn rank-btn" href="./rank/" rel="noopener">View RWPH Rankings (/rank)</a>
+    <div class="foot" style="margin-top:32px">Made By ReynRule</div>
+  </div>
+  <div id="dashView" style="display:none">
+    <a class="back" href="./">← Back to search</a>
+    <h1>RWPH</h1>
+    <div class="sub" id="sub"></div>
+    <div class="grid" id="cards"></div>
+    <div class="card panel" id="seasonPanel">
+      <div class="l">Season jump details (click to close)</div>
+      <div class="tiers" id="tiers"></div>
+      <div class="scroll"><table>
+        <thead><tr><th>Hour (KST)</th><th class="n">10 Jump</th><th class="n">20 Jump</th><th class="n">30 Jump</th><th class="n">Total</th></tr></thead>
+        <tbody id="seasonRows"></tbody>
+      </table></div>
+    </div>
+    <h2>Last 24 hours</h2>
+    <div class="card scroll"><table>
+      <thead><tr><th>Hour (KST)</th><th class="n">RWPH</th><th class="n">wave+</th><th class="n">JUMP</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <div id="pastWrap" style="display:none">
+      <h2>Past seasons</h2>
+      <div class="card scroll"><table>
+        <thead><tr><th>Season (KST)</th><th class="n">Total jumps</th></tr></thead>
+        <tbody id="pastRows"></tbody>
+      </table></div>
+    </div>
+    <div class="foot">Made By ReynRule</div>
+  </div>
+</div>
+<script>
+var D = {"season":{"start":"2026-10-12T15:00:00","end":"2026-10-17T14:59:59"},"updated":1792239080232,"users":{"ReynRule":{"lastWave":2172192,"hours":{"2026-10-17T20":{"count":3,"gain":15}},"jumps":{"total":0,"j10":0,"j20":0,"j30":0,"hours":{}},"past":[]},"DP_ASURA":{"lastWave":17984561,"hours":{"2026-10-17T20":{"count":3,"gain":19}},"jumps":{"total":0,"j10":0,"j20":0,"j30":0,"hours":{}},"past":[]},"S_Raikkonen":{"lastWave":1191121,"hours":{"2026-10-17T20":{"count":0,"gain":0}},"jumps":{"total":0,"j10":0,"j20":0,"j30":0,"hours":{}},"past":[]},"ALDE":{"lastWave":2983140,"hours":{"2026-10-17T20":{"count":3,"gain":16}},"jumps":{"total":0,"j10":0,"j20":0,"j30":0,"hours":{}},"past":[]},"SKL_CAZcaz":{"lastWave":1364717,"hours":{"2026-10-17T20":{"count":3,"gain":15}},"jumps":{"total":0,"j10":0,"j20":0,"j30":0,"hours":{}},"past":[]},"S_seungheeee":{"lastWave":3156000,"hours":{"2026-10-17T20":{"count":3,"gain":15}},"jumps":{"total":0,"j10":0,"j20":0,"j30":0,"hours":{}},"past":[]},"RynzeQ":{"lastWave":16585,"hours":{"2026-10-17T20":{"count":0,"gain":0}},"jumps":{"total":0,"j10":0,"j20":0,"j30":0,"hours":{}},"past":[]}}};
+var $ = function(id){return document.getElementById(id)};
+var nf = function(n){return Number(n||0).toLocaleString('en-US')};
+var kst = function(ms){return new Date(ms+9*3600e3).toISOString()};
+var fmt = function(ms){return kst(ms).replace('T',' ').slice(0,16)};
+// 시간대는 매시 55분에 시작한다. 키 "T14" = 14:55~15:55
+var HOUR_OFFSET = 55*60e3;
+var label = function(k){var hh=Number(k.slice(11,13));return k.slice(0,10)+' '+k.slice(11,13)+':55~'+String((hh+1)%24).padStart(2,'0')+':55'};
+var seasonOpen = false;
+var openJumps = {};
+var lastUpdated = (D && D.updated) || 0;
+var currentName = null;
+function getNameParam(){return (new URLSearchParams(location.search).get('name')||'').trim()}
+function goName(name){var n=(name||'').trim();if(!n)return;location.search='?name='+encodeURIComponent(n)}
+function userData(name){
+  if(!D||!D.users)return null;
+  if(D.users[name])return D.users[name];
+  var keys=Object.keys(D.users);
+  for(var i=0;i<keys.length;i++){if(keys[i].toLowerCase()===name.toLowerCase())return D.users[keys[i]]}
+  return null;
+}
+function resolveName(name){
+  if(!D||!D.users)return name;
+  if(D.users[name])return name;
+  var keys=Object.keys(D.users);
+  for(var i=0;i<keys.length;i++){if(keys[i].toLowerCase()===name.toLowerCase())return keys[i]}
+  return name;
+}
+function renderHome(){
+  $('homeView').style.display='';
+  $('dashView').style.display='none';
+  document.title='RWPH Tracker';
+}
+function renderDash(name){
+  var u=userData(name);
+  if(!u){renderHome();$('searchErr').style.display='block';$('searchInput').value=name;return}
+  currentName=resolveName(name);
+  $('homeView').style.display='none';
+  $('dashView').style.display='';
+  document.title=currentName+' · RWPH';
+  var J=u.jumps||{total:0,j10:0,j20:0,j30:0,hours:{}};
+  var H=u.hours||{};
+  var nowKey=kst(Date.now()-HOUR_OFFSET).slice(0,13);
+  var ss=D.season&&D.season.start?new Date(D.season.start+'Z').getTime():null;
+  var se=D.season&&D.season.end?new Date(D.season.end+'Z').getTime():null;
+  $('sub').textContent=currentName+(ss?'  ·  Season '+fmt(ss)+' ~ '+fmt(se)+' (KST)':'');
+  var keys=Object.keys(H).sort().slice(-24);
+  var gain=keys.reduce(function(s,k){return s+(H[k].gain||0)},0);
+  var best=keys.reduce(function(b,k){return (b==null||(H[k].count||0)>(H[b].count||0))?k:b},null);
+  var cards=[
+    ['Last wave',u.lastWave==null?'-':nf(u.lastWave)],
+    ['24h Total','+'+nf(gain)+' wave'],
+    ['Best hour',best?best.slice(11,13)+':55 ['+nf(H[best].count)+']':'-'],
+    ['Updated (KST)',D.updated?kst(D.updated).replace('T',' ').slice(5,19):'-']
+  ];
+  var cardsEl=$('cards');cardsEl.innerHTML='';
+  cards.forEach(function(c){var d=document.createElement('div');d.className='card';d.innerHTML='<div class="l">'+c[0]+'</div><div class="v">'+c[1]+'</div>';cardsEl.appendChild(d)});
+  var jc=document.createElement('div');jc.className='card click';
+  jc.innerHTML='<div class="l">Season total JUMP</div><div class="v">'+nf(J.total)+'</div><div class="hint">Click for 10/20/30 breakdown</div>';
+  jc.onclick=function(){seasonOpen=!seasonOpen;$('seasonPanel').classList.toggle('open',seasonOpen)};
+  cardsEl.appendChild(jc);
+  $('seasonPanel').classList.toggle('open',seasonOpen);
+  $('seasonPanel').onclick=function(){seasonOpen=false;$('seasonPanel').classList.remove('open')};
+  var tiersEl=$('tiers');tiersEl.innerHTML='';
+  [['10 Jump (10–12)',J.j10],['20 Jump (20–22)',J.j20],['30 Jump (30–32)',J.j30]].forEach(function(t){
+    var d=document.createElement('div');d.className='tier';d.innerHTML='<b>'+nf(t[1]||0)+'</b><span>'+t[0]+'</span>';tiersEl.appendChild(d);
+  });
+  var jk=Object.keys(J.hours||{}).sort().reverse();
+  $('seasonRows').innerHTML=jk.length?jk.map(function(k){var h=J.hours[k];return '<tr><td>'+label(k)+'</td><td class="n">'+(h.j10||0)+'</td><td class="n">'+(h.j20||0)+'</td><td class="n">'+(h.j30||0)+'</td><td class="n"><b>'+((h.j10||0)+(h.j20||0)+(h.j30||0))+'</b></td></tr>'}).join(''):'<tr><td colspan="5" class="jnone">No jumps this season</td></tr>';
+  var tb=$('rows');tb.innerHTML='';
+  keys.slice().reverse().forEach(function(k){
+    var h=H[k]||{count:0,gain:0};var jh=(J.hours&&J.hours[k])||{j10:0,j20:0,j30:0};var jt=(jh.j10||0)+(jh.j20||0)+(jh.j30||0);
+    var tr=document.createElement('tr');if(k===nowKey)tr.className='now';
+    tr.innerHTML='<td>'+label(k)+(k===nowKey?'<span class="badge">NOW</span>':'')+'</td><td class="n">'+nf(h.count||0)+'</td><td class="n">+'+nf(h.gain||0)+'</td><td class="n">'+(jt?'<span class="jbtn">'+jt+'</span>':'<span class="jnone">-</span>')+'</td>';
+    tb.appendChild(tr);
+    if(jt){var dt=document.createElement('tr');dt.className='detail';dt.style.display=openJumps[k]?'':'none';
+      dt.innerHTML='<td colspan="4">10 Jump <b>'+(jh.j10||0)+'</b> &nbsp;·&nbsp; 20 Jump <b>'+(jh.j20||0)+'</b> &nbsp;·&nbsp; 30 Jump <b>'+(jh.j30||0)+'</b></td>';tb.appendChild(dt);
+      tr.querySelector('.jbtn').onclick=function(){openJumps[k]=!openJumps[k];dt.style.display=openJumps[k]?'':'none'};
+    }
+  });
+  var P=(u.past||[]).slice().reverse();
+  if(P.length){$('pastWrap').style.display='';$('pastRows').innerHTML=P.map(function(p){return '<tr><td>'+fmt(new Date(p.start+'Z').getTime())+' ~ '+fmt(new Date(p.end+'Z').getTime())+'</td><td class="n"><b>'+nf(p.total)+'</b></td></tr>'}).join('')}
+  else{$('pastWrap').style.display='none'}
+}
+function render(){var name=getNameParam();if(!name){renderHome();return}renderDash(name)}
+function refreshData(){
+  fetch('data/state.json?t='+Date.now(),{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
+    .then(function(json){if(!json)return;if((json.updated||0)<=lastUpdated)return;lastUpdated=json.updated||0;D=json;render()})
+    .catch(function(){});
+}
+$('searchForm').onsubmit=function(e){
+  e.preventDefault();
+  var n=($('searchInput').value||'').trim();if(!n)return;
+  if(D&&D.users&&!userData(n)){$('searchErr').style.display='block';return}
+  goName(n);
+};
+render();
+setInterval(refreshData,30000);
+</script>
+</body>
+</html>
