@@ -5,15 +5,15 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2175332,
+   "lastWave": 2175347,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
      "gain": 940
     },
     "2026-10-18T00": {
-     "count": 156,
-     "gain": 955
+     "count": 159,
+     "gain": 970
     }
    },
    "jumps": {
@@ -43,15 +43,15 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17989092,
+   "lastWave": 17989113,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
      "gain": 1072
     },
     "2026-10-18T00": {
-     "count": 166,
-     "gain": 1099
+     "count": 169,
+     "gain": 1120
     }
    },
    "jumps": {
@@ -97,15 +97,15 @@
    ]
   },
   "ALDE": {
-   "lastWave": 2987312,
+   "lastWave": 2987327,
    "hours": {
     "2026-10-17T23": {
      "count": 145,
      "gain": 925
     },
     "2026-10-18T00": {
-     "count": 159,
-     "gain": 845
+     "count": 162,
+     "gain": 860
     }
    },
    "jumps": {
@@ -135,15 +135,15 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1368319,
+   "lastWave": 1368332,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
      "gain": 709
     },
     "2026-10-18T00": {
-     "count": 156,
-     "gain": 727
+     "count": 159,
+     "gain": 740
     }
    },
    "jumps": {
@@ -216,34 +216,34 @@
    ]
   },
   "Scav rip pan": {
-   "lastWave": 1036149,
+   "lastWave": 1036183,
    "hours": {
     "2026-10-18T00": {
-     "count": 93,
-     "gain": 450
+     "count": 95,
+     "gain": 484
     }
    },
    "jumps": {
-    "total": 3,
+    "total": 4,
     "j10": 0,
     "j20": 0,
-    "j30": 3,
+    "j30": 4,
     "hours": {
      "2026-10-18T00": {
       "j10": 0,
       "j20": 0,
-      "j30": 3
+      "j30": 4
      }
     }
    },
    "past": []
   },
   "Kiroap": {
-   "lastWave": 177304,
+   "lastWave": 177308,
    "hours": {
     "2026-10-18T00": {
-     "count": 50,
-     "gain": 184
+     "count": 52,
+     "gain": 188
     }
    },
    "jumps": {
@@ -262,5 +262,5 @@
    "past": []
   }
  },
- "updated": 1792255851037
+ "updated": 1792255913040
 }
