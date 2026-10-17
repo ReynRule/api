@@ -5,38 +5,38 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2162751,
+   "lastWave": 2162791,
    "hours": {
     "2026-10-17T09": {
      "count": 1,
      "gain": 5
     },
     "2026-10-17T10": {
-     "count": 57,
-     "gain": 705
+     "count": 60,
+     "gain": 745
     }
    },
    "jumps": {
-    "total": 7,
+    "total": 8,
     "j10": 0,
     "j20": 3,
-    "j30": 4,
+    "j30": 5,
     "hours": {
      "2026-10-17T10": {
       "j10": 0,
       "j20": 3,
-      "j30": 4
+      "j30": 5
      }
     }
    },
    "past": []
   },
   "DP_ASURA": {
-   "lastWave": 17975111,
+   "lastWave": 17975131,
    "hours": {
     "2026-10-17T10": {
-     "count": 3,
-     "gain": 19
+     "count": 6,
+     "gain": 39
     }
    },
    "jumps": {
@@ -49,11 +49,11 @@
    "past": []
   },
   "S_Raikkonen": {
-   "lastWave": 1190593,
+   "lastWave": 1190602,
    "hours": {
     "2026-10-17T10": {
-     "count": 2,
-     "gain": 7
+     "count": 5,
+     "gain": 16
     }
    },
    "jumps": {
@@ -66,5 +66,5 @@
    "past": []
   }
  },
- "updated": 1792201253780
+ "updated": 1792201315791
 }
