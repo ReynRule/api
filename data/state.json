@@ -5,15 +5,15 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2175027,
+   "lastWave": 2175042,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
      "gain": 940
     },
     "2026-10-18T00": {
-     "count": 105,
-     "gain": 650
+     "count": 108,
+     "gain": 665
     }
    },
    "jumps": {
@@ -43,15 +43,15 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17988755,
+   "lastWave": 17988773,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
      "gain": 1072
     },
     "2026-10-18T00": {
-     "count": 114,
-     "gain": 762
+     "count": 117,
+     "gain": 780
     }
    },
    "jumps": {
@@ -97,15 +97,15 @@
    ]
   },
   "ALDE": {
-   "lastWave": 2987067,
+   "lastWave": 2987082,
    "hours": {
     "2026-10-17T23": {
      "count": 145,
      "gain": 925
     },
     "2026-10-18T00": {
-     "count": 110,
-     "gain": 600
+     "count": 113,
+     "gain": 615
     }
    },
    "jumps": {
@@ -135,15 +135,15 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1368088,
+   "lastWave": 1368102,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
      "gain": 709
     },
     "2026-10-18T00": {
-     "count": 107,
-     "gain": 496
+     "count": 110,
+     "gain": 510
     }
    },
    "jumps": {
@@ -216,11 +216,11 @@
    ]
   },
   "Scav rip pan": {
-   "lastWave": 1036009,
+   "lastWave": 1036017,
    "hours": {
     "2026-10-18T00": {
-     "count": 58,
-     "gain": 310
+     "count": 60,
+     "gain": 318
     }
    },
    "jumps": {
@@ -239,11 +239,11 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 177224,
+   "lastWave": 177228,
    "hours": {
     "2026-10-18T00": {
-     "count": 24,
-     "gain": 104
+     "count": 26,
+     "gain": 108
     }
    },
    "jumps": {
@@ -262,5 +262,5 @@
    "past": []
   }
  },
- "updated": 1792254797031
+ "updated": 1792254859050
 }
