@@ -11,16 +11,24 @@ const MAX_HOURS = 24;
 const MAX_PAST = 30;
 const STATE = 'data/state.json';
 const USERS_FILE = 'user.txt';
+
 const ISSUES_NEW_BASE = process.env.GITHUB_REPOSITORY
   ? `https://github.com/${process.env.GITHUB_REPOSITORY}/issues/new`
   : (process.env.ISSUES_URL || '#');
-// Prefill title only; body = completely empty (no spaces)
+
 const ISSUES_URL =
   ISSUES_NEW_BASE === '#'
     ? '#'
     : `${ISSUES_NEW_BASE}?title=${encodeURIComponent('Register users')}&body=`;
 
-const newJumps = () => ({ total: 0, j10: 0, j20: 0, j30: 0, hours: {} });
+const newJumps = () => ({
+  total: 0,
+  j10: 0,
+  j20: 0,
+  j30: 0,
+  hours: {}
+});
+
 const tierOf = (d) => {
   if (d >= 10 && d <= 12) return 10;
   if (d >= 20 && d <= 22) return 20;
@@ -28,17 +36,34 @@ const tierOf = (d) => {
   return 0;
 };
 
-let state = { season: { start: null, end: null }, users: {}, updated: 0 };
+let state = {
+  season: { start: null, end: null },
+  users: {},
+  updated: 0
+};
+
 const load = () => {
-  try { state = { ...state, ...JSON.parse(fs.readFileSync(STATE, 'utf8')) }; } catch {}
+  try {
+    state = {
+      ...state,
+      ...JSON.parse(fs.readFileSync(STATE, 'utf8'))
+    };
+  } catch {}
+
   state.season ??= { start: null, end: null };
   state.users ??= {};
 };
+
 load();
 
-// Not real player nicks (form field names / UI labels that leaked into user.txt)
 const BLOCKED_NICKS = new Set([
-  'title', 'body', 'register users', 'register user', 'register', 'user', 'users',
+  'title',
+  'body',
+  'register users',
+  'register user',
+  'register',
+  'user',
+  'users'
 ]);
 
 function readUsers() {
@@ -48,7 +73,12 @@ function readUsers() {
       .split(/\r?\n/)
       .map((s) => s.trim())
       .filter(Boolean)
-      .filter((s) => s.length >= 2 && s.length <= 40 && !BLOCKED_NICKS.has(s.toLowerCase()));
+      .filter(
+        (s) =>
+          s.length >= 2 &&
+          s.length <= 40 &&
+          !BLOCKED_NICKS.has(s.toLowerCase())
+      );
   } catch {
     return [];
   }
@@ -268,70 +298,150 @@ function render() {
     updated: Date.now(),
     users: state.users,
   }).replace(/</g, '\\u003c');
+
   fs.writeFileSync(
     'index.html',
-    HTML_TEMPLATE.replace('/*DATA*/null', () => data).replace('/*ISSUES_URL*/', ISSUES_URL)
+    HTML_TEMPLATE
+      .replace('/*DATA*/null', () => data)
+      .replace('/*ISSUES_URL*/', ISSUES_URL)
   );
 }
 
 function save() {
   state.updated = Date.now();
+
   for (const name of Object.keys(state.users)) {
     const u = state.users[name];
     const keys = Object.keys(u.hours || {}).sort();
-    for (const k of keys.slice(0, Math.max(0, keys.length - MAX_HOURS))) delete u.hours[k];
+
+    for (const k of keys.slice(0, Math.max(0, keys.length - MAX_HOURS))) {
+      delete u.hours[k];
+    }
+
     if (u.jumps && u.jumps.hours) {
       const jk = Object.keys(u.jumps.hours).sort();
-      for (const k of jk.slice(0, Math.max(0, jk.length - MAX_HOURS))) delete u.jumps.hours[k];
+
+      for (const k of jk.slice(0, Math.max(0, jk.length - MAX_HOURS))) {
+        delete u.jumps.hours[k];
+      }
     }
   }
+
   fs.mkdirSync('data', { recursive: true });
   fs.writeFileSync(STATE, JSON.stringify(state, null, 1));
   render();
 }
 
+// 기존 추적 job용: 상태 저장 및 index.html 생성 유지
 function commit(msg) {
   save();
+
   try {
     execSync('git add index.html data/state.json user.txt');
+
     if (!execSync('git status --porcelain').toString().trim()) return;
-    const m = (msg || 'chore: update rwph [skip ci]').replace(/"/g, '\\"');
+
+    const m = (msg || 'chore: update rwph [skip ci]')
+      .replace(/"/g, '\\"');
+
     execSync('git commit -m "' + m + '"');
-    try { execSync('git pull --rebase --autostash', { stdio: 'ignore' }); } catch {}
+
+    try {
+      execSync('git pull --rebase --autostash', { stdio: 'ignore' });
+    } catch {}
+
     execSync('git push', { stdio: 'ignore' });
+
     console.log('committed', new Date().toISOString());
-  } catch (e) { console.error('commit failed', e.message); }
+  } catch (e) {
+    console.error('commit failed', e.message);
+  }
+}
+
+// register job 전용: user.txt만 커밋
+// save()와 render()를 호출하지 않는다.
+function commitUsersFile(msg) {
+  try {
+    execSync('git add -- user.txt');
+
+    const m = (msg || 'chore: update user.txt')
+      .replace(/"/g, '\\"');
+
+    execSync('git commit -m "' + m + '" -- user.txt');
+
+    try {
+      execSync('git pull --rebase --autostash', { stdio: 'ignore' });
+    } catch {}
+
+    execSync('git push', { stdio: 'inherit' });
+
+    console.log('user.txt committed', new Date().toISOString());
+  } catch (e) {
+    console.error('user.txt commit failed', e.message);
+  }
 }
 
 async function fetchPlayer(nick) {
-  const url = 'https://raongames.com/growcastle/restapi/season/now/players/' + encodeURIComponent(nick);
-  const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
+  const url =
+    'https://raongames.com/growcastle/restapi/season/now/players/' +
+    encodeURIComponent(nick);
+
+  const res = await fetch(url, {
+    signal: AbortSignal.timeout(5000)
+  });
+
   if (!res.ok) throw new Error('HTTP ' + res.status);
+
   return res.json();
 }
 
 async function tick() {
   const names = readUsers();
+
   if (!names.length) return;
-  const results = await Promise.all(names.map(async (nick) => {
-    try { return { nick, json: await fetchPlayer(nick) }; }
-    catch (e) { console.error('fetch fail', nick, e.message); return { nick, json: null }; }
-  }));
+
+  const results = await Promise.all(
+    names.map(async (nick) => {
+      try {
+        return { nick, json: await fetchPlayer(nick) };
+      } catch (e) {
+        console.error('fetch fail', nick, e.message);
+        return { nick, json: null };
+      }
+    })
+  );
+
   let anyOk = false;
   let seasonDate = null;
 
   for (const { nick, json } of results) {
     if (!json || json.code !== 200 || !json.result) continue;
+
     anyOk = true;
+
     const sd = json.result.date;
-    if (sd && sd.start && sd.end) seasonDate = sd;
-    const me = (json.result.list || []).find((p) => p.nick === nick) || (json.result.list || [])[0];
+
+    if (sd && sd.start && sd.end) {
+      seasonDate = sd;
+    }
+
+    const me =
+      (json.result.list || []).find((p) => p.nick === nick) ||
+      (json.result.list || [])[0];
+
     if (!me) continue;
 
     let u = state.users[nick];
+
     if (!u) {
-      u = state.users[nick] = { lastWave: null, hours: {}, jumps: newJumps(), past: [] };
+      u = state.users[nick] = {
+        lastWave: null,
+        hours: {},
+        jumps: newJumps(),
+        past: []
+      };
     }
+
     u.jumps ??= newJumps();
     u.jumps.hours ??= {};
     u.hours ??= {};
@@ -339,20 +449,38 @@ async function tick() {
 
     const wave = Number(me.wave) || 0;
     const k = hourKey(Date.now());
+
     if (u.lastWave != null && wave > u.lastWave) {
       const diff = wave - u.lastWave;
-      const h = (u.hours[k] ??= { count: 0, gain: 0 });
+
+      const h = (u.hours[k] ??= {
+        count: 0,
+        gain: 0
+      });
+
       h.count += 1;
       h.gain += diff;
+
       const t = tierOf(diff);
+
       if (t) {
-        const jh = (u.jumps.hours[k] ??= { j10: 0, j20: 0, j30: 0 });
+        const jh = (u.jumps.hours[k] ??= {
+          j10: 0,
+          j20: 0,
+          j30: 0
+        });
+
         jh['j' + t] += 1;
         u.jumps['j' + t] += 1;
         u.jumps.total += 1;
-        console.log('JUMP ' + nick + ' +' + diff + ' (' + t + ')', new Date().toISOString());
+
+        console.log(
+          'JUMP ' + nick + ' +' + diff + ' (' + t + ')',
+          new Date().toISOString()
+        );
       }
     }
+
     u.hours[k] ??= { count: 0, gain: 0 };
     u.lastWave = wave;
   }
@@ -362,24 +490,44 @@ async function tick() {
     return;
   }
 
-  if (seasonDate && seasonDate.start && seasonDate.end &&
-      (state.season.start !== seasonDate.start || state.season.end !== seasonDate.end)) {
+  if (
+    seasonDate &&
+    seasonDate.start &&
+    seasonDate.end &&
+    (
+      state.season.start !== seasonDate.start ||
+      state.season.end !== seasonDate.end
+    )
+  ) {
     if (state.season.start) {
       console.log('season changed', state.season, '->', seasonDate);
+
       for (const name of Object.keys(state.users)) {
         const u = state.users[name];
+
         u.past = u.past || [];
-        u.past.push({ start: state.season.start, end: state.season.end, total: (u.jumps && u.jumps.total) || 0 });
+
+        u.past.push({
+          start: state.season.start,
+          end: state.season.end,
+          total: (u.jumps && u.jumps.total) || 0
+        });
+
         u.past = u.past.slice(-MAX_PAST);
         u.jumps = newJumps();
         u.hours = {};
         u.lastWave = null;
       }
     }
-    state.season = { start: seasonDate.start, end: seasonDate.end };
+
+    state.season = {
+      start: seasonDate.start,
+      end: seasonDate.end
+    };
   }
 
   const set = new Set(names);
+
   for (const name of Object.keys(state.users)) {
     if (!set.has(name)) {
       console.log('remove user from state', name);
@@ -390,48 +538,86 @@ async function tick() {
 
 function dispatchNext(at) {
   try {
-    execSync('gh workflow run rwph.yml --ref ' + (process.env.GITHUB_REF_NAME || 'main') + ' -f handoff_at=' + at, { stdio: 'inherit' });
-    console.log('next run dispatched, handoff at', new Date(at).toISOString());
-  } catch (e) { console.error('dispatch failed (cron backup will recover)', e.message); }
+    execSync(
+      'gh workflow run rwph.yml --ref ' +
+      (process.env.GITHUB_REF_NAME || 'main') +
+      ' -f handoff_at=' + at,
+      { stdio: 'inherit' }
+    );
+
+    console.log(
+      'next run dispatched, handoff at',
+      new Date(at).toISOString()
+    );
+  } catch (e) {
+    console.error(
+      'dispatch failed (cron backup will recover)',
+      e.message
+    );
+  }
 }
 
 async function handleIssueRegister() {
   const body = (process.env.ISSUE_BODY || '').trim();
   const issueNumber = process.env.ISSUE_NUMBER;
 
-  // Latest user.txt before editing (avoid overwriting concurrent track commits)
+  // 원격 최신 내용을 가져온 뒤 user.txt를 읽는다.
   try {
-    execSync('git pull --rebase --autostash', { stdio: 'ignore' });
+    execSync('git pull --rebase --autostash', {
+      stdio: 'ignore'
+    });
   } catch {}
+
+  // 기존 추적 상태는 읽을 수 있지만 register에서 저장하거나 수정하지 않는다.
   load();
 
-  // Body only (ignore issue title): one nick per line
+  // Issue 제목은 무시하고 본문에서 닉네임만 가져온다.
   const rawLines = body
     .split(/\r?\n/)
-    .map((s) => s.replace(/^\[.*?\]\s*/, '').replace(/^[-*•]\s+/, '').trim())
+    .map((s) =>
+      s
+        .replace(/^\[.*?\]\s*/, '')
+        .replace(/^[-*•]\s+/, '')
+        .trim()
+    )
     .filter(Boolean)
-    .filter((s) => s.length <= 40 && !/^https?:\/\//i.test(s) && !/^#+\s/.test(s));
+    .filter(
+      (s) =>
+        s.length <= 40 &&
+        !/^https?:\/\//i.test(s) &&
+        !/^#+\s/.test(s)
+    );
 
   const seen = new Set();
   const nicks = [];
+
   for (const n of rawLines) {
     const key = n.toLowerCase();
+
     if (seen.has(key) || BLOCKED_NICKS.has(key)) continue;
+
     seen.add(key);
     nicks.push(n);
   }
 
   if (!nicks.length) {
     console.log('empty nick');
+
     if (issueNumber) {
       try {
         execSync(
-          'gh issue comment ' + issueNumber + ' --body "Put player names in the issue **body**, one per line (title is ignored)."',
+          'gh issue comment ' + issueNumber +
+          ' --body "Put player names in the issue **body**, one per line (title is ignored)."',
           { stdio: 'inherit' }
         );
-        execSync('gh issue close ' + issueNumber, { stdio: 'inherit' });
+
+        execSync(
+          'gh issue close ' + issueNumber,
+          { stdio: 'inherit' }
+        );
       } catch {}
     }
+
     return;
   }
 
@@ -442,6 +628,7 @@ async function handleIssueRegister() {
 
   for (const nick of nicks) {
     let json;
+
     try {
       json = await fetchPlayer(nick);
     } catch (e) {
@@ -449,89 +636,175 @@ async function handleIssueRegister() {
       fail.push(nick + ' (API: ' + e.message + ')');
       continue;
     }
-    if (json.code !== 200 || !(json.result && json.result.list && json.result.list.length)) {
+
+    if (
+      json.code !== 200 ||
+      !(
+        json.result &&
+        json.result.list &&
+        json.result.list.length
+      )
+    ) {
       console.log('not found', nick, json.code);
       fail.push(nick + ' (code ' + json.code + ')');
       continue;
     }
+
     const apiNick =
-      (json.result.list.find((p) => p.nick === nick) || json.result.list[0]).nick || nick;
-    if (users.some((u) => u.toLowerCase() === apiNick.toLowerCase())) {
+      (
+        json.result.list.find((p) => p.nick === nick) ||
+        json.result.list[0]
+      ).nick || nick;
+
+    if (
+      users.some(
+        (u) => u.toLowerCase() === apiNick.toLowerCase()
+      )
+    ) {
       console.log('already registered', apiNick);
       already.push(apiNick);
       continue;
     }
+
+    // register job에서는 state.users를 수정하지 않는다.
     users.push(apiNick);
-    if (!state.users[apiNick]) {
-      state.users[apiNick] = { lastWave: null, hours: {}, jumps: newJumps(), past: [] };
-    }
     ok.push(apiNick);
+
     console.log('registered', apiNick);
   }
 
+  // 등록 성공 시 user.txt만 수정하고 커밋한다.
   if (ok.length) {
-    fs.writeFileSync(USERS_FILE, users.join('\n') + '\n');
-    commit(
+    fs.writeFileSync(
+      USERS_FILE,
+      users.join('\n') + '\n'
+    );
+
+    commitUsersFile(
       'chore: register ' +
-        (ok.length === 1 ? 'user ' + ok[0] : ok.length + ' users') +
-        ' [skip ci]'
+      (
+        ok.length === 1
+          ? 'user ' + ok[0]
+          : ok.length + ' users'
+      ) +
+      ' [skip ci]'
     );
   }
 
+  // GitHub Issue 결과 댓글 작성은 유지한다.
   if (issueNumber) {
     const lines = [];
-    if (ok.length)
-      lines.push('**Registered**\n' + ok.map((n) => '- `' + n + '` → ?name=' + n).join('\n'));
-    if (already.length)
-      lines.push('**Already registered**\n' + already.map((n) => '- `' + n + '`').join('\n'));
-    if (fail.length) lines.push('**Failed**\n' + fail.map((n) => '- ' + n).join('\n'));
+
+    if (ok.length) {
+      lines.push(
+        '**Registered**\n' +
+        ok.map((n) => '- `' + n + '` → ?name=' + n).join('\n')
+      );
+    }
+
+    if (already.length) {
+      lines.push(
+        '**Already registered**\n' +
+        already.map((n) => '- `' + n + '`').join('\n')
+      );
+    }
+
+    if (fail.length) {
+      lines.push(
+        '**Failed**\n' +
+        fail.map((n) => '- ' + n).join('\n')
+      );
+    }
+
     const bodyMsg = lines.join('\n\n') || 'Nothing to process.';
+
     try {
       fs.writeFileSync('/tmp/issue-comment.md', bodyMsg);
-      execSync('gh issue comment ' + issueNumber + ' --body-file /tmp/issue-comment.md', {
-        stdio: 'inherit',
-      });
-      execSync('gh issue close ' + issueNumber, { stdio: 'inherit' });
+
+      execSync(
+        'gh issue comment ' + issueNumber +
+        ' --body-file /tmp/issue-comment.md',
+        { stdio: 'inherit' }
+      );
+
+      execSync(
+        'gh issue close ' + issueNumber,
+        { stdio: 'inherit' }
+      );
     } catch {}
   }
 }
 
 (async () => {
+  // register job은 일반 추적 루프에 진입하지 않는다.
   if (process.env.MODE === 'register') {
     await handleIssueRegister();
     return;
   }
 
   const isCron = process.env.GITHUB_EVENT_NAME === 'schedule';
-  if (isCron && !HANDOFF_AT && Date.now() - (state.updated || 0) < 10 * 60 * 1000) {
+
+  if (
+    isCron &&
+    !HANDOFF_AT &&
+    Date.now() - (state.updated || 0) < 10 * 60 * 1000
+  ) {
     console.log('Another job is already running — exiting.');
     return;
   }
 
   let start = Date.now();
+
   if (HANDOFF_AT) {
     start = HANDOFF_AT;
+
     await sleep(Math.max(0, HANDOFF_AT - Date.now()));
+
     for (let i = 0; i < 40; i++) {
-      try { execSync('git pull --rebase --autostash', { stdio: 'ignore' }); load(); } catch {}
+      try {
+        execSync('git pull --rebase --autostash', {
+          stdio: 'ignore'
+        });
+
+        load();
+      } catch {}
+
       if ((state.updated || 0) >= HANDOFF_AT - 2000) break;
+
       await sleep(1000);
     }
   }
 
   const end = start + RUN_MS;
-  let lastCommit = Date.now(), next = Date.now(), dispatched = false;
+
+  let lastCommit = Date.now();
+  let next = Date.now();
+  let dispatched = false;
+
   await tick();
   save();
+
   while (Date.now() < end) {
     await tick();
-    if (!dispatched && process.env.GITHUB_ACTIONS && Date.now() >= end - 120000) {
+
+    if (
+      !dispatched &&
+      process.env.GITHUB_ACTIONS &&
+      Date.now() >= end - 120000
+    ) {
       dispatched = true;
       dispatchNext(end);
     }
-    if (Date.now() - lastCommit >= COMMIT_EVERY_MS) { commit(); lastCommit = Date.now(); }
+
+    if (Date.now() - lastCommit >= COMMIT_EVERY_MS) {
+      commit();
+      lastCommit = Date.now();
+    }
+
     next += 1000;
+
     await sleep(Math.max(0, next - Date.now()));
   }
+
   commit();
 })();
