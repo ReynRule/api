@@ -161,6 +161,7 @@ h2{font-size:15px;margin:22px 0 8px}
     </form>
     <div class="err" id="searchErr">User is not registered</div>
     <a class="issue-btn" id="issueBtn" href="/*ISSUES_URL*/" target="_blank" rel="noopener">Register user (open issue)</a>
+    <a class="issue-btn rank-btn" href="./rank/" rel="noopener">View RWPH Rankings (/rank)</a>
     <div class="foot" style="margin-top:32px">Made By ReynRule</div>
   </div>
   <div id="dashView" style="display:none">
