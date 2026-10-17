@@ -17,6 +17,7 @@ const RANK_PAGE_DIR = 'rank';
 const RANK_HTML = `${RANK_PAGE_DIR}/index.html`;
 
 
+
 const RANK_HTML_TEMPLATE = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,47 +44,34 @@ th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #30363d}
 <p><a href="../">← Back to RWPH Tracker</a></p>
 <h1>RWPH Rankings</h1>
 <p class="muted">Hourly wave gain rankings · Korea Standard Time (KST)</p>
-
 <div class="card">
   <div class="controls">
-    <label>
-      Date (KST)<br>
-      <input type="date" id="date">
-    </label>
-    <label>
-      Hour (KST)<br>
-      <select id="hour"></select>
-    </label>
+    <label>Date (KST)<br><input type="date" id="date"></label>
+    <label>Hour (KST)<br><select id="hour"></select></label>
   </div>
-
   <p id="status" class="muted">Loading rankings...</p>
-
   <div class="scroll">
     <table>
       <thead>
         <tr>
           <th>Rank</th>
           <th>Player</th>
-          <th class="num">Jumps</th>
           <th class="num">RWPH</th>
+          <th class="num">Jumps</th>
         </tr>
       </thead>
       <tbody id="rows"></tbody>
     </table>
   </div>
 </div>
-
 <p class="muted">Historical rankings are saved at 55 minutes past each hour.</p>
 </main>
-
 <script>
 const $ = id => document.getElementById(id);
 const fmt = n => Number(n || 0).toLocaleString('en-US');
 const pad = n => String(n).padStart(2, '0');
-const getKstDate = () =>
-  new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
-const getKstHour = () =>
-  new Date(Date.now() + 9 * 3600000).toISOString().slice(11, 13);
+const getKstDate = () => new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
+const getKstHour = () => new Date(Date.now() + 9 * 3600000).toISOString().slice(11, 13);
 
 let selectedDate = getKstDate();
 let selectedHour = getKstHour();
@@ -101,27 +89,23 @@ function renderRows(rankings) {
   $('rows').innerHTML = '';
 
   if (!rankings || !rankings.length) {
-    $('rows').innerHTML =
-      '<tr><td colspan="4">No ranking data available.</td></tr>';
+    $('rows').innerHTML = '<tr><td colspan="4">No ranking data available.</td></tr>';
     return;
   }
 
   rankings.forEach((r, i) => {
     const tr = document.createElement('tr');
-    const values = [
+    [
       r.rank || i + 1,
       r.nick || '',
-      fmt(r.jumps),
-      '+' + fmt(r.speed)
-    ];
-
-    values.forEach((value, j) => {
+      fmt(r.rwph),
+      fmt(r.jumps)
+    ].forEach((value, j) => {
       const td = document.createElement('td');
       td.textContent = value;
       if (j >= 2) td.className = 'num';
       tr.appendChild(td);
     });
-
     $('rows').appendChild(tr);
   });
 }
@@ -130,19 +114,14 @@ function updateHourOptions() {
   const hourSelect = $('hour');
   hourSelect.innerHTML = '';
 
-  const datePrefix = selectedDate + 'T';
   const hoursForDate = availableHours
-    .filter(h => h.startsWith(datePrefix))
+    .filter(h => h.startsWith(selectedDate + 'T'))
     .map(h => h.slice(11, 13));
 
-  // 현재 시간대도 선택 가능하게 표시
-  if (selectedDate === getKstDate()) {
-    hoursForDate.push(getKstHour());
-  }
+  if (selectedDate === getKstDate()) hoursForDate.push(getKstHour());
 
-  const uniqueHours = [...new Set(hoursForDate)].sort();
+  const uniqueHours = [...new Set(hoursForDate)];
 
-  // 스냅샷이 아직 없는 시간도 선택할 수 있도록 00~23시 제공
   for (let h = 0; h < 24; h++) {
     const value = pad(h);
     if (!uniqueHours.includes(value)) uniqueHours.push(value);
@@ -179,18 +158,19 @@ async function loadRanking() {
       const res = await fetch('../data/state.json?t=' + Date.now(), {
         cache: 'no-store'
       });
+
       if (!res.ok) throw new Error('State HTTP ' + res.status);
 
       const state = await res.json();
 
+      // RWPH는 메인 페이지와 동일하게 해당 시간대의 h.count 사용
       rankings = Object.entries(state.users || {}).map(([nick, u]) => {
         const h = (u.hours || {})[key] || {};
-        const jumps = (u.jumps && u.jumps.hours &&
-          u.jumps.hours[key]) || {};
+        const jumps = (u.jumps && u.jumps.hours && u.jumps.hours[key]) || {};
 
         return {
           nick,
-          speed: Number(h.gain) || 0,
+          rwph: Number(h.count) || 0,
           jumps: (Number(jumps.j10) || 0) +
                  (Number(jumps.j20) || 0) +
                  (Number(jumps.j30) || 0)
@@ -215,7 +195,7 @@ async function loadRanking() {
 
       rankings = (data.rankings || []).map(r => ({
         nick: r.nick,
-        speed: Number(r.speed) || 0,
+        rwph: Number(r.rwph ?? r.count) || 0,
         jumps: Number(r.jumps) || 0
       }));
 
@@ -223,21 +203,18 @@ async function loadRanking() {
     }
 
     rankings.sort((a, b) =>
-      b.speed - a.speed || a.nick.localeCompare(b.nick)
+      b.rwph - a.rwph || a.nick.localeCompare(b.nick)
     );
 
-    rankings.forEach((r, i) => {
-      r.rank = i + 1;
-    });
+    rankings.forEach((r, i) => { r.rank = i + 1; });
 
     renderRows(rankings);
+
     $('status').textContent =
-      label + ' · ' + selectedDate + ' ' +
-      hourLabel(selectedHour);
+      label + ' · ' + selectedDate + ' ' + hourLabel(selectedHour);
   } catch (e) {
     renderRows([]);
-    $('status').textContent =
-      'Could not load ranking data: ' + e.message;
+    $('status').textContent = 'Could not load ranking data: ' + e.message;
   }
 }
 
@@ -251,9 +228,7 @@ async function loadHours() {
       const data = await res.json();
       availableHours = Array.isArray(data.hours) ? data.hours : [];
     }
-  } catch (e) {
-    // 인덱스를 읽지 못해도 날짜와 시간을 선택할 수 있다.
-  }
+  } catch (e) {}
 
   updateHourOptions();
   await loadRanking();
