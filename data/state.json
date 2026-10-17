@@ -81,7 +81,19 @@
     "hours": {}
    },
    "past": []
+  },
+  "ALDE": {
+   "lastWave": null,
+   "hours": {},
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
   }
  },
- "updated": 1792202803780
+ "updated": 1792202845798
 }
