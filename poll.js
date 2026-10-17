@@ -36,10 +36,22 @@ const load = () => {
 };
 load();
 
+// Not real player nicks (form field names / UI labels that leaked into user.txt)
+const BLOCKED_NICKS = new Set([
+  'title', 'body', 'register users', 'register user', 'register', 'user', 'users',
+]);
+
 function readUsers() {
   try {
-    return fs.readFileSync(USERS_FILE, 'utf8').split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
-  } catch { return []; }
+    return fs
+      .readFileSync(USERS_FILE, 'utf8')
+      .split(/\r?\n/)
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .filter((s) => s.length >= 2 && s.length <= 40 && !BLOCKED_NICKS.has(s.toLowerCase()));
+  } catch {
+    return [];
+  }
 }
 
 const kst = (ms) => new Date(ms + 9 * 3600e3).toISOString();
@@ -305,7 +317,6 @@ async function tick() {
     try { return { nick, json: await fetchPlayer(nick) }; }
     catch (e) { console.error('fetch fail', nick, e.message); return { nick, json: null }; }
   }));
-
   let anyOk = false;
   let seasonDate = null;
 
@@ -388,6 +399,12 @@ async function handleIssueRegister() {
   const body = (process.env.ISSUE_BODY || '').trim();
   const issueNumber = process.env.ISSUE_NUMBER;
 
+  // Latest user.txt before editing (avoid overwriting concurrent track commits)
+  try {
+    execSync('git pull --rebase --autostash', { stdio: 'ignore' });
+  } catch {}
+  load();
+
   // Body only (ignore issue title): one nick per line
   const rawLines = body
     .split(/\r?\n/)
@@ -399,7 +416,7 @@ async function handleIssueRegister() {
   const nicks = [];
   for (const n of rawLines) {
     const key = n.toLowerCase();
-    if (seen.has(key)) continue;
+    if (seen.has(key) || BLOCKED_NICKS.has(key)) continue;
     seen.add(key);
     nicks.push(n);
   }
