@@ -5,22 +5,22 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2174942,
+   "lastWave": 2174982,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
      "gain": 940
     },
     "2026-10-18T00": {
-     "count": 93,
-     "gain": 565
+     "count": 96,
+     "gain": 605
     }
    },
    "jumps": {
-    "total": 11,
+    "total": 12,
     "j10": 0,
     "j20": 0,
-    "j30": 11,
+    "j30": 12,
     "hours": {
      "2026-10-17T23": {
       "j10": 0,
@@ -30,7 +30,7 @@
      "2026-10-18T00": {
       "j10": 0,
       "j20": 0,
-      "j30": 4
+      "j30": 5
      }
     }
    },
@@ -43,15 +43,15 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17988675,
+   "lastWave": 17988695,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
      "gain": 1072
     },
     "2026-10-18T00": {
-     "count": 102,
-     "gain": 682
+     "count": 105,
+     "gain": 702
     }
    },
    "jumps": {
@@ -97,15 +97,15 @@
    ]
   },
   "ALDE": {
-   "lastWave": 2987007,
+   "lastWave": 2987022,
    "hours": {
     "2026-10-17T23": {
      "count": 145,
      "gain": 925
     },
     "2026-10-18T00": {
-     "count": 98,
-     "gain": 540
+     "count": 101,
+     "gain": 555
     }
    },
    "jumps": {
@@ -135,15 +135,15 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1368031,
+   "lastWave": 1368046,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
      "gain": 709
     },
     "2026-10-18T00": {
-     "count": 95,
-     "gain": 439
+     "count": 98,
+     "gain": 454
     }
    },
    "jumps": {
@@ -216,11 +216,11 @@
    ]
   },
   "Scav rip pan": {
-   "lastWave": 1035925,
+   "lastWave": 1035933,
    "hours": {
     "2026-10-18T00": {
-     "count": 50,
-     "gain": 226
+     "count": 52,
+     "gain": 234
     }
    },
    "jumps": {
@@ -239,11 +239,11 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 177176,
+   "lastWave": 177182,
    "hours": {
     "2026-10-18T00": {
-     "count": 14,
-     "gain": 56
+     "count": 17,
+     "gain": 62
     }
    },
    "jumps": {
@@ -262,5 +262,5 @@
    "past": []
   }
  },
- "updated": 1792254549031
+ "updated": 1792254611041
 }
