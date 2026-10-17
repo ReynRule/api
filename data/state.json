@@ -125,7 +125,19 @@
     }
    },
    "past": []
+  },
+  "SKL_CAZcaz": {
+   "lastWave": null,
+   "hours": {},
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
   }
  },
- "updated": 1792208721652
+ "updated": 1792208762376
 }
