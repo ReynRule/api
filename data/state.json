@@ -5,15 +5,15 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2175232,
+   "lastWave": 2175247,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
      "gain": 940
     },
     "2026-10-18T00": {
-     "count": 141,
-     "gain": 855
+     "count": 144,
+     "gain": 870
     }
    },
    "jumps": {
@@ -43,15 +43,15 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17988994,
+   "lastWave": 17989013,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
      "gain": 1072
     },
     "2026-10-18T00": {
-     "count": 151,
-     "gain": 1001
+     "count": 154,
+     "gain": 1020
     }
    },
    "jumps": {
@@ -97,15 +97,15 @@
    ]
   },
   "ALDE": {
-   "lastWave": 2987242,
+   "lastWave": 2987252,
    "hours": {
     "2026-10-17T23": {
      "count": 145,
      "gain": 925
     },
     "2026-10-18T00": {
-     "count": 145,
-     "gain": 775
+     "count": 147,
+     "gain": 785
     }
    },
    "jumps": {
@@ -135,15 +135,15 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1368247,
+   "lastWave": 1368262,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
      "gain": 709
     },
     "2026-10-18T00": {
-     "count": 141,
-     "gain": 655
+     "count": 144,
+     "gain": 670
     }
    },
    "jumps": {
@@ -216,11 +216,11 @@
    ]
   },
   "Scav rip pan": {
-   "lastWave": 1036105,
+   "lastWave": 1036113,
    "hours": {
     "2026-10-18T00": {
-     "count": 82,
-     "gain": 406
+     "count": 84,
+     "gain": 414
     }
    },
    "jumps": {
@@ -239,28 +239,28 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 177264,
+   "lastWave": 177296,
    "hours": {
     "2026-10-18T00": {
-     "count": 44,
-     "gain": 144
+     "count": 46,
+     "gain": 176
     }
    },
    "jumps": {
-    "total": 2,
+    "total": 3,
     "j10": 0,
     "j20": 0,
-    "j30": 2,
+    "j30": 3,
     "hours": {
      "2026-10-18T00": {
       "j10": 0,
       "j20": 0,
-      "j30": 2
+      "j30": 3
      }
     }
    },
    "past": []
   }
  },
- "updated": 1792255541032
+ "updated": 1792255603031
 }
