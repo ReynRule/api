@@ -5,15 +5,15 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2174997,
+   "lastWave": 2175012,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
      "gain": 940
     },
     "2026-10-18T00": {
-     "count": 99,
-     "gain": 620
+     "count": 102,
+     "gain": 635
     }
    },
    "jumps": {
@@ -43,15 +43,15 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17988716,
+   "lastWave": 17988735,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
      "gain": 1072
     },
     "2026-10-18T00": {
-     "count": 108,
-     "gain": 723
+     "count": 111,
+     "gain": 742
     }
    },
    "jumps": {
@@ -97,15 +97,15 @@
    ]
   },
   "ALDE": {
-   "lastWave": 2987037,
+   "lastWave": 2987052,
    "hours": {
     "2026-10-17T23": {
      "count": 145,
      "gain": 925
     },
     "2026-10-18T00": {
-     "count": 104,
-     "gain": 570
+     "count": 107,
+     "gain": 585
     }
    },
    "jumps": {
@@ -135,15 +135,15 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1368060,
+   "lastWave": 1368074,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
      "gain": 709
     },
     "2026-10-18T00": {
-     "count": 101,
-     "gain": 468
+     "count": 104,
+     "gain": 482
     }
    },
    "jumps": {
@@ -216,34 +216,34 @@
    ]
   },
   "Scav rip pan": {
-   "lastWave": 1035941,
+   "lastWave": 1035975,
    "hours": {
     "2026-10-18T00": {
-     "count": 54,
-     "gain": 242
+     "count": 56,
+     "gain": 276
     }
    },
    "jumps": {
-    "total": 1,
+    "total": 2,
     "j10": 0,
     "j20": 0,
-    "j30": 1,
+    "j30": 2,
     "hours": {
      "2026-10-18T00": {
       "j10": 0,
       "j20": 0,
-      "j30": 1
+      "j30": 2
      }
     }
    },
    "past": []
   },
   "Kiroap": {
-   "lastWave": 177188,
+   "lastWave": 177192,
    "hours": {
     "2026-10-18T00": {
-     "count": 20,
-     "gain": 68
+     "count": 22,
+     "gain": 72
     }
    },
    "jumps": {
@@ -262,5 +262,5 @@
    "past": []
   }
  },
- "updated": 1792254673036
+ "updated": 1792254735045
 }
