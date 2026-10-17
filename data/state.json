@@ -5,15 +5,15 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2162611,
+   "lastWave": 2162626,
    "hours": {
     "2026-10-17T09": {
      "count": 1,
      "gain": 5
     },
     "2026-10-17T10": {
-     "count": 50,
-     "gain": 565
+     "count": 53,
+     "gain": 580
     }
    },
    "jumps": {
@@ -32,5 +32,5 @@
    "past": []
   }
  },
- "updated": 1792200668447
+ "updated": 1792200730446
 }
