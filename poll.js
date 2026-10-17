@@ -698,14 +698,19 @@ async function handleIssueRegister() {
     if (ok.length) {
       lines.push(
         '**Registered**\n' +
-        ok.map((n) => '- `' + n + '` → ?name=' + n).join('\n')
+        ok.map((n) =>
+          '- `' + n + '` → ?name=' + encodeURIComponent(n) +
+          '\n  [Direct](https://reynrule.github.io/api/?name=' + encodeURIComponent(n) + ')'
+        ).join('\n')
       );
     }
 
     if (already.length) {
       lines.push(
         '**Already registered**\n' +
-        already.map((n) => '- `' + n + '`').join('\n')
+        already.map((n) =>
+          '- `' + n + '`\n  [Direct](https://reynrule.github.io/api/?name=' + encodeURIComponent(n) + ')'
+        ).join('\n')
       );
     }
 
