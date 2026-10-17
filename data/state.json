@@ -5,7 +5,7 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2178932,
+   "lastWave": 2178947,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
@@ -32,8 +32,8 @@
      "gain": 860
     },
     "2026-10-18T05": {
-     "count": 2,
-     "gain": 10
+     "count": 5,
+     "gain": 25
     }
    },
    "jumps": {
@@ -83,7 +83,7 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17993920,
+   "lastWave": 17993940,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
@@ -110,8 +110,8 @@
      "gain": 1187
     },
     "2026-10-18T05": {
-     "count": 2,
-     "gain": 13
+     "count": 5,
+     "gain": 33
     }
    },
    "jumps": {
@@ -130,7 +130,7 @@
    ]
   },
   "S_Raikkonen": {
-   "lastWave": 1193200,
+   "lastWave": 1193209,
    "hours": {
     "2026-10-17T23": {
      "count": 0,
@@ -157,8 +157,8 @@
      "gain": 510
     },
     "2026-10-18T05": {
-     "count": 2,
-     "gain": 6
+     "count": 5,
+     "gain": 15
     }
    },
    "jumps": {
@@ -240,7 +240,7 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1371450,
+   "lastWave": 1371463,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
@@ -267,8 +267,8 @@
      "gain": 767
     },
     "2026-10-18T05": {
-     "count": 2,
-     "gain": 10
+     "count": 5,
+     "gain": 23
     }
    },
    "jumps": {
@@ -381,7 +381,7 @@
    ]
   },
   "Scav rip pan": {
-   "lastWave": 1038869,
+   "lastWave": 1038877,
    "hours": {
     "2026-10-18T00": {
      "count": 101,
@@ -404,8 +404,8 @@
      "gain": 638
     },
     "2026-10-18T05": {
-     "count": 1,
-     "gain": 4
+     "count": 3,
+     "gain": 12
     }
    },
    "jumps": {
@@ -444,7 +444,7 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 178360,
+   "lastWave": 178364,
    "hours": {
     "2026-10-18T00": {
      "count": 57,
@@ -467,8 +467,8 @@
      "gain": 200
     },
     "2026-10-18T05": {
-     "count": 1,
-     "gain": 2
+     "count": 3,
+     "gain": 6
     }
    },
    "jumps": {
@@ -533,5 +533,5 @@
    "past": []
   }
  },
- "updated": 1792270542173
+ "updated": 1792270604174
 }
