@@ -1,5 +1,6 @@
 // RWPH tracker (multi-user)
 // Poll users in user.txt · jumps 10–12 / 20–22 / 30–32 · /?name= dashboard
+// 시간대 기준: 매시 55분 ~ 다음 시각 55분 (키 "T14" = 14:55~15:55 KST)
 const fs = require('fs');
 const { execSync } = require('child_process');
 
@@ -16,8 +17,8 @@ const RANK_INDEX = `${RANK_DIR}/index.json`;
 const RANK_PAGE_DIR = 'rank';
 const RANK_HTML = `${RANK_PAGE_DIR}/index.html`;
 
-
-
+// 시간대는 매시 55분에 시작한다.
+const HOUR_OFFSET_MS = 55 * 60 * 1000;
 
 const RANK_HTML_TEMPLATE = `<!DOCTYPE html>
 <html lang="en">
@@ -96,7 +97,7 @@ th,td{text-align:left;padding:10px 8px;border-bottom:1px solid #30363d}
   </div>
 </div>
 
-<p class="muted">Historical rankings are saved at 55 minutes past each hour.</p>
+<p class="muted">Each ranking hour runs from :55 to the next :55. Historical rankings are saved when the hour ends.</p>
 </main>
 
 <script>
@@ -105,11 +106,14 @@ const fmt = n => Number(n || 0).toLocaleString('en-US');
 const pad = n => String(n).padStart(2, '0');
 const PAGE_SIZE = 50;
 
+// 시간대는 매시 55분에 시작하므로 55분을 뺀 시각을 기준으로 날짜/시간을 계산한다.
+const OFFSET = 55 * 60000;
+
 const getKstDate = () =>
-  new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
+  new Date(Date.now() + 9 * 3600000 - OFFSET).toISOString().slice(0, 10);
 
 const getKstHour = () =>
-  new Date(Date.now() + 9 * 3600000).toISOString().slice(11, 13);
+  new Date(Date.now() + 9 * 3600000 - OFFSET).toISOString().slice(11, 13);
 
 let selectedDate = getKstDate();
 let selectedHour = getKstHour();
@@ -122,7 +126,7 @@ function hourKey() {
 }
 
 function hourLabel(h) {
-  return h + ':00–' + pad((Number(h) + 1) % 24) + ':00 KST';
+  return h + ':55–' + pad((Number(h) + 1) % 24) + ':55 KST';
 }
 
 function renderRows(rankings) {
@@ -485,7 +489,8 @@ function readUsers() {
 }
 
 const kst = (ms) => new Date(ms + 9 * 3600e3).toISOString();
-const hourKey = (ms) => kst(ms).slice(0, 13);
+// 매시 55분에 시작하는 시간대 키. 예: 14:55~15:55 → "YYYY-MM-DDT14"
+const hourKey = (ms) => kst(ms - HOUR_OFFSET_MS).slice(0, 13);
 
 const HTML_TEMPLATE = `<!DOCTYPE html>
 <html lang="en">
@@ -596,7 +601,9 @@ var $ = function(id){return document.getElementById(id)};
 var nf = function(n){return Number(n||0).toLocaleString('en-US')};
 var kst = function(ms){return new Date(ms+9*3600e3).toISOString()};
 var fmt = function(ms){return kst(ms).replace('T',' ').slice(0,16)};
-var label = function(k){var hh=Number(k.slice(11,13));return k.slice(0,10)+' '+k.slice(11,13)+':00~'+String((hh+1)%24).padStart(2,'0')+':00'};
+// 시간대는 매시 55분에 시작한다. 키 "T14" = 14:55~15:55
+var HOUR_OFFSET = 55*60e3;
+var label = function(k){var hh=Number(k.slice(11,13));return k.slice(0,10)+' '+k.slice(11,13)+':55~'+String((hh+1)%24).padStart(2,'0')+':55'};
 var seasonOpen = false;
 var openJumps = {};
 var lastUpdated = (D && D.updated) || 0;
@@ -631,7 +638,7 @@ function renderDash(name){
   document.title=currentName+' · RWPH';
   var J=u.jumps||{total:0,j10:0,j20:0,j30:0,hours:{}};
   var H=u.hours||{};
-  var nowKey=kst(Date.now()).slice(0,13);
+  var nowKey=kst(Date.now()-HOUR_OFFSET).slice(0,13);
   var ss=D.season&&D.season.start?new Date(D.season.start+'Z').getTime():null;
   var se=D.season&&D.season.end?new Date(D.season.end+'Z').getTime():null;
   $('sub').textContent=currentName+(ss?'  ·  Season '+fmt(ss)+' ~ '+fmt(se)+' (KST)':'');
@@ -641,7 +648,7 @@ function renderDash(name){
   var cards=[
     ['Last wave',u.lastWave==null?'-':nf(u.lastWave)],
     ['24h Total','+'+nf(gain)+' wave'],
-    ['Best hour',best?best.slice(11,13)+':00 ['+nf(H[best].count)+']':'-'],
+    ['Best hour',best?best.slice(11,13)+':55 ['+nf(H[best].count)+']':'-'],
     ['Updated (KST)',D.updated?kst(D.updated).replace('T',' ').slice(5,19):'-']
   ];
   var cardsEl=$('cards');cardsEl.innerHTML='';
@@ -709,7 +716,7 @@ function render() {
 }
 
 
-// 평속 랭킹 스냅샷: KST 시간대별 wave 증가량(gain)을 기준으로 순위를 매긴다.
+// 평속 랭킹 스냅샷: 매시 55분 기준 시간대별 RWPH(wave 횟수)로 순위를 매긴다.
 const rankFileName = (hour) => `${hour.slice(0, 10)}-${hour.slice(11, 13)}.json`;
 
 function saveRankSnapshot(hour) {
@@ -719,28 +726,30 @@ function saveRankSnapshot(hour) {
   // 과거 기록은 절대 덮어쓰지 않는다.
   if (fs.existsSync(file)) return false;
 
-  
+
   const rows = Object.entries(state.users || {}).map(([nick, u]) => {
     const h = (u.hours || {})[hour] || { gain: 0, count: 0 };
     const jumps = (u.jumps && u.jumps.hours &&
       u.jumps.hours[hour]) || {};
-  
+
     return {
       nick,
+      rwph: Number(h.count) || 0, // /rank 페이지가 읽는 값
       speed: Number(h.gain) || 0,
       jumps:
         (Number(jumps.j10) || 0) +
         (Number(jumps.j20) || 0) +
         (Number(jumps.j30) || 0)
     };
-  }).sort((a, b) => b.speed - a.speed || a.nick.localeCompare(b.nick));
+  }).sort((a, b) => b.rwph - a.rwph || a.nick.localeCompare(b.nick));
 
 
   rows.forEach((r, i) => { r.rank = i + 1; });
   const payload = {
     hour,
     timezone: 'Asia/Seoul',
-    metric: 'wave gain during this hour',
+    window: 'HH:55 to next HH:55 (KST)',
+    metric: 'rwph (wave count during this hour)',
     savedAt: new Date().toISOString(),
     rankings: rows
   };
@@ -761,12 +770,18 @@ function saveRankSnapshot(hour) {
   return true;
 }
 
-function snapshotCurrentHourAt55() {
-  const now = new Date(Date.now() + 9 * 3600e3);
-  // KST 기준 매시 55분부터 현재 시간대 기록을 한 번 저장한다.
-  // 파일이 이미 존재하면 saveRankSnapshot이 덮어쓰지 않는다.
-  if (now.getUTCMinutes() < 55) return;
-  saveRankSnapshot(hourKey(Date.now()));
+// 시간대가 매시 55분에 끝나므로, 방금 끝난 시간대(= 현재 키의 직전 키)를 저장한다.
+// 파일이 이미 존재하면 saveRankSnapshot이 덮어쓰지 않으므로 매 tick 호출해도 안전하다.
+function snapshotPreviousHour() {
+  const prev = hourKey(Date.now() - 3600e3);
+
+  // 해당 시간대 데이터가 하나도 없으면(재시작 직후 등) 빈 스냅샷을 만들지 않는다.
+  const hasData = Object.values(state.users || {}).some(
+    (u) => u.hours && u.hours[prev]
+  );
+  if (!hasData) return;
+
+  saveRankSnapshot(prev);
 }
 
 function save() {
@@ -870,8 +885,8 @@ async function fetchPlayer(nick) {
 }
 
 async function tick() {
-  // KST 기준 매시 55분 이후 현재 시간대 기록을 저장한다. API 오류와 무관하게 실행한다.
-  snapshotCurrentHourAt55();
+  // 방금 끝난 시간대(:55 기준)를 저장한다. API 오류와 무관하게 실행한다.
+  snapshotPreviousHour();
   const names = readUsers();
 
   if (!names.length) return;
