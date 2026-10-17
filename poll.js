@@ -13,7 +13,8 @@ const STATE = 'data/state.json';
 const USERS_FILE = 'user.txt';
 const RANK_DIR = 'rankdata';
 const RANK_INDEX = `${RANK_DIR}/index.json`;
-const RANK_HTML = `${RANK_DIR}/index.html`;
+const RANK_PAGE_DIR = 'rank';
+const RANK_HTML = `${RANK_PAGE_DIR}/index.html`;
 
 const RANK_HTML_TEMPLATE = `<!DOCTYPE html>
 <html lang="en">
@@ -150,9 +151,10 @@ setInterval(loadRanking,15000);
 `;
 
 function ensureRankHtml() {
-  fs.mkdirSync(RANK_DIR, { recursive: true });
+  fs.mkdirSync(RANK_PAGE_DIR, { recursive: true });
+
   if (!fs.existsSync(RANK_HTML)) {
-    fs.writeFileSync(RANK_HTML, RANK_HTML_TEMPLATE);
+    fs.writeFileSync(RANK_HTML, RANK_HTML_TEMPLATE, 'utf8');
     console.log('created', RANK_HTML);
   }
 }
@@ -536,18 +538,21 @@ function save() {
 function commit(msg) {
   save();
   ensureRankHtml();
+
   try {
     execSync('git add index.html data/state.json user.txt');
-    ensureRankHtml();
+
+    // rankdata는 존재할 때만 추가
     if (fs.existsSync(RANK_DIR)) {
       execSync('git add -A -- rankdata');
     }
-    
-    if (fs.existsSync('rank')) {
-      execSync('git add -A -- rank');
-    }
 
-    if (!execSync('git status --porcelain').toString().trim()) return;
+    // ensureRankHtml()이 생성한 rank 페이지 추가
+    execSync('git add -A -- rank');
+
+    if (!execSync('git status --porcelain').toString().trim()) {
+      return;
+    }
 
     const m = (msg || 'chore: update rwph [skip ci]')
       .replace(/"/g, '\\"');
@@ -555,7 +560,9 @@ function commit(msg) {
     execSync('git commit -m "' + m + '"');
 
     try {
-      execSync('git pull --rebase --autostash', { stdio: 'ignore' });
+      execSync('git pull --rebase --autostash', {
+        stdio: 'ignore'
+      });
     } catch {}
 
     execSync('git push', { stdio: 'ignore' });
@@ -565,7 +572,6 @@ function commit(msg) {
     console.error('commit failed', e.message);
   }
 }
-
 // register job 전용: user.txt만 커밋
 // save()와 render()를 호출하지 않는다.
 function commitUsersFile(msg) {
