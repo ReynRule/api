@@ -539,7 +539,13 @@ function commit(msg) {
   try {
     execSync('git add index.html data/state.json user.txt');
     ensureRankHtml();
-    execSync('git add -A -- rankdata rank');
+    if (fs.existsSync(RANK_DIR)) {
+      execSync('git add -A -- rankdata');
+    }
+    
+    if (fs.existsSync('rank')) {
+      execSync('git add -A -- rank');
+    }
 
     if (!execSync('git status --porcelain').toString().trim()) return;
 
