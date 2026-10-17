@@ -1,0 +1,57 @@
+name: Grow Castle RWPH Tracker
+on:
+  schedule:
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+    inputs:
+      handoff_at:
+        description: 'Epoch ms to hand off from previous job. Empty = start now'
+        required: false
+        default: ''
+  issues:
+    types: [opened]
+permissions:
+  contents: write
+  actions: write
+  issues: write
+jobs:
+  register:
+    if: github.event_name == 'issues'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Git identity
+        run: |
+          git config user.name "rwph-bot"
+          git config user.email "rwph-bot@users.noreply.github.com"
+      - name: Validate & register user from issue
+        env:
+          MODE: register
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          GH_TOKEN: ${{ github.token }}
+        run: node poll.js
+
+  track:
+    if: github.event_name != 'issues'
+    runs-on: ubuntu-latest
+    timeout-minutes: 358
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Git identity
+        run: |
+          git config user.name "rwph-bot"
+          git config user.email "rwph-bot@users.noreply.github.com"
+      - name: Poll every 1s (relay)
+        env:
+          RUN_MINUTES: 345
+          HANDOFF_AT: ${{ inputs.handoff_at }}
+          GH_TOKEN: ${{ github.token }}
+        run: node poll.js
