@@ -5,15 +5,15 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2175347,
+   "lastWave": 2175367,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
      "gain": 940
     },
     "2026-10-18T00": {
-     "count": 159,
-     "gain": 970
+     "count": 163,
+     "gain": 990
     }
    },
    "jumps": {
@@ -43,15 +43,15 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17989113,
+   "lastWave": 17989133,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
      "gain": 1072
     },
     "2026-10-18T00": {
-     "count": 169,
-     "gain": 1120
+     "count": 172,
+     "gain": 1140
     }
    },
    "jumps": {
@@ -70,15 +70,15 @@
    ]
   },
   "S_Raikkonen": {
-   "lastWave": 1191121,
+   "lastWave": 1191127,
    "hours": {
     "2026-10-17T23": {
      "count": 0,
      "gain": 0
     },
     "2026-10-18T00": {
-     "count": 0,
-     "gain": 0
+     "count": 2,
+     "gain": 6
     }
    },
    "jumps": {
@@ -97,15 +97,15 @@
    ]
   },
   "ALDE": {
-   "lastWave": 2987327,
+   "lastWave": 2987342,
    "hours": {
     "2026-10-17T23": {
      "count": 145,
      "gain": 925
     },
     "2026-10-18T00": {
-     "count": 162,
-     "gain": 860
+     "count": 165,
+     "gain": 875
     }
    },
    "jumps": {
@@ -135,15 +135,15 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1368332,
+   "lastWave": 1368345,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
      "gain": 709
     },
     "2026-10-18T00": {
-     "count": 159,
-     "gain": 740
+     "count": 162,
+     "gain": 753
     }
    },
    "jumps": {
@@ -216,11 +216,11 @@
    ]
   },
   "Scav rip pan": {
-   "lastWave": 1036183,
+   "lastWave": 1036191,
    "hours": {
     "2026-10-18T00": {
-     "count": 95,
-     "gain": 484
+     "count": 97,
+     "gain": 492
     }
    },
    "jumps": {
@@ -239,11 +239,11 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 177308,
+   "lastWave": 177310,
    "hours": {
     "2026-10-18T00": {
-     "count": 52,
-     "gain": 188
+     "count": 53,
+     "gain": 190
     }
    },
    "jumps": {
@@ -262,5 +262,5 @@
    "past": []
   }
  },
- "updated": 1792255913040
+ "updated": 1792255975032
 }
