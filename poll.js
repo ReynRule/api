@@ -1,5 +1,5 @@
 // RWPH tracker (multi-user)
-// user.txt 유저 폴링 · 점프 10~12/20~22/30~32 · /?name= 대시보드
+// Poll users in user.txt · jumps 10–12 / 20–22 / 30–32 · /?name= dashboard
 const fs = require('fs');
 const { execSync } = require('child_process');
 
@@ -41,7 +41,7 @@ const kst = (ms) => new Date(ms + 9 * 3600e3).toISOString();
 const hourKey = (ms) => kst(ms).slice(0, 13);
 
 const HTML_TEMPLATE = `<!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -105,37 +105,37 @@ h2{font-size:15px;margin:22px 0 8px}
 <div class="wrap">
   <div id="homeView" class="home" style="display:none">
     <h1>RWPH Tracker</h1>
-    <p>유저 이름을 입력하세요</p>
+    <p>Enter a player name</p>
     <form id="searchForm">
       <input type="text" id="searchInput" placeholder="Player name" autocomplete="off" autofocus>
       <button type="submit">Go</button>
     </form>
-    <div class="err" id="searchErr">등록되지 않은 유저입니다</div>
-    <a class="issue-btn" id="issueBtn" href="/*ISSUES_URL*/" target="_blank" rel="noopener">유저 등록 (이슈 작성)</a>
+    <div class="err" id="searchErr">User is not registered</div>
+    <a class="issue-btn" id="issueBtn" href="/*ISSUES_URL*/" target="_blank" rel="noopener">Register user (open issue)</a>
     <div class="foot" style="margin-top:32px">Made By ReynRule</div>
   </div>
   <div id="dashView" style="display:none">
-    <a class="back" href="./">← 검색으로</a>
+    <a class="back" href="./">← Back to search</a>
     <h1>RWPH</h1>
     <div class="sub" id="sub"></div>
     <div class="grid" id="cards"></div>
     <div class="card panel" id="seasonPanel">
-      <div class="l">시즌 점프 상세 (클릭해서 닫기)</div>
+      <div class="l">Season jump details (click to close)</div>
       <div class="tiers" id="tiers"></div>
       <div class="scroll"><table>
-        <thead><tr><th>시간대 (KST)</th><th class="n">10점프</th><th class="n">20점프</th><th class="n">30점프</th><th class="n">합계</th></tr></thead>
+        <thead><tr><th>Hour (KST)</th><th class="n">10 Jump</th><th class="n">20 Jump</th><th class="n">30 Jump</th><th class="n">Total</th></tr></thead>
         <tbody id="seasonRows"></tbody>
       </table></div>
     </div>
-    <h2>최근 24시간</h2>
+    <h2>Last 24 hours</h2>
     <div class="card scroll"><table>
-      <thead><tr><th>시간대 (KST)</th><th class="n">RWPH</th><th class="n">wave+</th><th class="n">JUMP</th></tr></thead>
+      <thead><tr><th>Hour (KST)</th><th class="n">RWPH</th><th class="n">wave+</th><th class="n">JUMP</th></tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
     <div id="pastWrap" style="display:none">
-      <h2>이전 시즌</h2>
+      <h2>Past seasons</h2>
       <div class="card scroll"><table>
-        <thead><tr><th>시즌 (KST)</th><th class="n">총 점프</th></tr></thead>
+        <thead><tr><th>Season (KST)</th><th class="n">Total jumps</th></tr></thead>
         <tbody id="pastRows"></tbody>
       </table></div>
     </div>
@@ -186,30 +186,30 @@ function renderDash(name){
   var nowKey=kst(Date.now()).slice(0,13);
   var ss=D.season&&D.season.start?new Date(D.season.start+'Z').getTime():null;
   var se=D.season&&D.season.end?new Date(D.season.end+'Z').getTime():null;
-  $('sub').textContent=currentName+(ss?'  ·  시즌 '+fmt(ss)+' ~ '+fmt(se)+' (KST)':'');
+  $('sub').textContent=currentName+(ss?'  ·  Season '+fmt(ss)+' ~ '+fmt(se)+' (KST)':'');
   var keys=Object.keys(H).sort().slice(-24);
   var gain=keys.reduce(function(s,k){return s+(H[k].gain||0)},0);
   var best=keys.reduce(function(b,k){return (b==null||(H[k].count||0)>(H[b].count||0))?k:b},null);
   var cards=[
     ['Last wave',u.lastWave==null?'-':nf(u.lastWave)],
-    ['24h 합계','+'+nf(gain)+' wave'],
+    ['24h Total','+'+nf(gain)+' wave'],
     ['Best hour',best?best.slice(11,13)+':00 ['+nf(H[best].count)+']':'-'],
     ['Updated (KST)',D.updated?kst(D.updated).replace('T',' ').slice(5,19):'-']
   ];
   var cardsEl=$('cards');cardsEl.innerHTML='';
   cards.forEach(function(c){var d=document.createElement('div');d.className='card';d.innerHTML='<div class="l">'+c[0]+'</div><div class="v">'+c[1]+'</div>';cardsEl.appendChild(d)});
   var jc=document.createElement('div');jc.className='card click';
-  jc.innerHTML='<div class="l">시즌 총 JUMP</div><div class="v">'+nf(J.total)+'</div><div class="hint">클릭해서 10/20/30 상세 보기</div>';
+  jc.innerHTML='<div class="l">Season total JUMP</div><div class="v">'+nf(J.total)+'</div><div class="hint">Click for 10/20/30 breakdown</div>';
   jc.onclick=function(){seasonOpen=!seasonOpen;$('seasonPanel').classList.toggle('open',seasonOpen)};
   cardsEl.appendChild(jc);
   $('seasonPanel').classList.toggle('open',seasonOpen);
   $('seasonPanel').onclick=function(){seasonOpen=false;$('seasonPanel').classList.remove('open')};
   var tiersEl=$('tiers');tiersEl.innerHTML='';
-  [['10점프 (10~12)',J.j10],['20점프 (20~22)',J.j20],['30점프 (30~32)',J.j30]].forEach(function(t){
+  [['10 Jump (10–12)',J.j10],['20 Jump (20–22)',J.j20],['30 Jump (30–32)',J.j30]].forEach(function(t){
     var d=document.createElement('div');d.className='tier';d.innerHTML='<b>'+nf(t[1]||0)+'</b><span>'+t[0]+'</span>';tiersEl.appendChild(d);
   });
   var jk=Object.keys(J.hours||{}).sort().reverse();
-  $('seasonRows').innerHTML=jk.length?jk.map(function(k){var h=J.hours[k];return '<tr><td>'+label(k)+'</td><td class="n">'+(h.j10||0)+'</td><td class="n">'+(h.j20||0)+'</td><td class="n">'+(h.j30||0)+'</td><td class="n"><b>'+((h.j10||0)+(h.j20||0)+(h.j30||0))+'</b></td></tr>'}).join(''):'<tr><td colspan="5" class="jnone">이번 시즌 점프 기록 없음</td></tr>';
+  $('seasonRows').innerHTML=jk.length?jk.map(function(k){var h=J.hours[k];return '<tr><td>'+label(k)+'</td><td class="n">'+(h.j10||0)+'</td><td class="n">'+(h.j20||0)+'</td><td class="n">'+(h.j30||0)+'</td><td class="n"><b>'+((h.j10||0)+(h.j20||0)+(h.j30||0))+'</b></td></tr>'}).join(''):'<tr><td colspan="5" class="jnone">No jumps this season</td></tr>';
   var tb=$('rows');tb.innerHTML='';
   keys.slice().reverse().forEach(function(k){
     var h=H[k]||{count:0,gain:0};var jh=(J.hours&&J.hours[k])||{j10:0,j20:0,j30:0};var jt=(jh.j10||0)+(jh.j20||0)+(jh.j30||0);
@@ -217,7 +217,7 @@ function renderDash(name){
     tr.innerHTML='<td>'+label(k)+(k===nowKey?'<span class="badge">NOW</span>':'')+'</td><td class="n">'+nf(h.count||0)+'</td><td class="n">+'+nf(h.gain||0)+'</td><td class="n">'+(jt?'<span class="jbtn">'+jt+'</span>':'<span class="jnone">-</span>')+'</td>';
     tb.appendChild(tr);
     if(jt){var dt=document.createElement('tr');dt.className='detail';dt.style.display=openJumps[k]?'':'none';
-      dt.innerHTML='<td colspan="4">10점프 <b>'+(jh.j10||0)+'</b>회 &nbsp;·&nbsp; 20점프 <b>'+(jh.j20||0)+'</b>회 &nbsp;·&nbsp; 30점프 <b>'+(jh.j30||0)+'</b>회</td>';tb.appendChild(dt);
+      dt.innerHTML='<td colspan="4">10 Jump <b>'+(jh.j10||0)+'</b> &nbsp;·&nbsp; 20 Jump <b>'+(jh.j20||0)+'</b> &nbsp;·&nbsp; 30 Jump <b>'+(jh.j30||0)+'</b></td>';tb.appendChild(dt);
       tr.querySelector('.jbtn').onclick=function(){openJumps[k]=!openJumps[k];dt.style.display=openJumps[k]?'':'none'};
     }
   });
@@ -383,69 +383,96 @@ async function handleIssueRegister() {
   const title = (process.env.ISSUE_TITLE || '').trim();
   const body = (process.env.ISSUE_BODY || '').trim();
   const issueNumber = process.env.ISSUE_NUMBER;
-  let nick = title || (body.split(/\r?\n/).map((s) => s.trim()).find(Boolean) || '');
-  nick = nick.replace(/^\[.*?\]\s*/, '').trim();
-  if (!nick) {
+
+  // Title + body: one nick per line (multiple users OK)
+  const rawLines = (title + '\n' + body)
+    .split(/\r?\n/)
+    .map((s) => s.replace(/^\[.*?\]\s*/, '').replace(/^[-*•]\s+/, '').trim())
+    .filter(Boolean)
+    .filter((s) => s.length <= 40 && !/^https?:\/\//i.test(s) && !/^#+\s/.test(s));
+
+  const seen = new Set();
+  const nicks = [];
+  for (const n of rawLines) {
+    const key = n.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    nicks.push(n);
+  }
+
+  if (!nicks.length) {
     console.log('empty nick');
     if (issueNumber) {
       try {
-        execSync('gh issue comment ' + issueNumber + ' --body "유저 이름을 이슈 제목(또는 본문 첫 줄)에 적어 주세요."', { stdio: 'inherit' });
+        execSync(
+          'gh issue comment ' + issueNumber + ' --body "Enter one player name per line (multiple names allowed)."',
+          { stdio: 'inherit' }
+        );
         execSync('gh issue close ' + issueNumber, { stdio: 'inherit' });
       } catch {}
     }
     return;
   }
 
-  let json;
-  try { json = await fetchPlayer(nick); }
-  catch (e) {
-    console.error('api error', e.message);
-    if (issueNumber) {
-      try {
-        execSync('gh issue comment ' + issueNumber + ' --body "API 호출 실패: `' + nick + '` — ' + e.message + '"', { stdio: 'inherit' });
-        execSync('gh issue close ' + issueNumber, { stdio: 'inherit' });
-      } catch {}
-    }
-    return;
-  }
-
-  if (json.code !== 200 || !(json.result && json.result.list && json.result.list.length)) {
-    console.log('not found', nick, json.code);
-    if (issueNumber) {
-      try {
-        execSync('gh issue comment ' + issueNumber + ' --body "유저 `' + nick + '` 를 찾을 수 없습니다 (code: ' + json.code + ')."', { stdio: 'inherit' });
-        execSync('gh issue close ' + issueNumber, { stdio: 'inherit' });
-      } catch {}
-    }
-    return;
-  }
-
-  const apiNick = (json.result.list.find((p) => p.nick === nick) || json.result.list[0]).nick || nick;
   const users = readUsers();
-  if (users.some((u) => u.toLowerCase() === apiNick.toLowerCase())) {
-    console.log('already registered', apiNick);
-    if (issueNumber) {
-      try {
-        execSync('gh issue comment ' + issueNumber + ' --body "이미 등록된 유저입니다: `' + apiNick + '`"', { stdio: 'inherit' });
-        execSync('gh issue close ' + issueNumber, { stdio: 'inherit' });
-      } catch {}
+  const ok = [];
+  const already = [];
+  const fail = [];
+
+  for (const nick of nicks) {
+    let json;
+    try {
+      json = await fetchPlayer(nick);
+    } catch (e) {
+      console.error('api error', nick, e.message);
+      fail.push(nick + ' (API: ' + e.message + ')');
+      continue;
     }
-    return;
+    if (json.code !== 200 || !(json.result && json.result.list && json.result.list.length)) {
+      console.log('not found', nick, json.code);
+      fail.push(nick + ' (code ' + json.code + ')');
+      continue;
+    }
+    const apiNick =
+      (json.result.list.find((p) => p.nick === nick) || json.result.list[0]).nick || nick;
+    if (users.some((u) => u.toLowerCase() === apiNick.toLowerCase())) {
+      console.log('already registered', apiNick);
+      already.push(apiNick);
+      continue;
+    }
+    users.push(apiNick);
+    if (!state.users[apiNick]) {
+      state.users[apiNick] = { lastWave: null, hours: {}, jumps: newJumps(), past: [] };
+    }
+    ok.push(apiNick);
+    console.log('registered', apiNick);
   }
 
-  fs.writeFileSync(USERS_FILE, users.concat([apiNick]).join('\n') + '\n');
-  if (!state.users[apiNick]) {
-    state.users[apiNick] = { lastWave: null, hours: {}, jumps: newJumps(), past: [] };
+  if (ok.length) {
+    fs.writeFileSync(USERS_FILE, users.join('\n') + '\n');
+    commit(
+      'chore: register ' +
+        (ok.length === 1 ? 'user ' + ok[0] : ok.length + ' users') +
+        ' [skip ci]'
+    );
   }
-  commit('chore: register user ' + apiNick + ' [skip ci]');
 
   if (issueNumber) {
+    const lines = [];
+    if (ok.length)
+      lines.push('**Registered**\n' + ok.map((n) => '- `' + n + '` → ?name=' + n).join('\n'));
+    if (already.length)
+      lines.push('**Already registered**\n' + already.map((n) => '- `' + n + '`').join('\n'));
+    if (fail.length) lines.push('**Failed**\n' + fail.map((n) => '- ' + n).join('\n'));
+    const bodyMsg = lines.join('\n\n') || 'Nothing to process.';
     try {
-      execSync('gh issue comment ' + issueNumber + ' --body "등록 완료: `' + apiNick + '` — ?name=' + apiNick + ' 로 확인하세요."', { stdio: 'inherit' });
+      fs.writeFileSync('/tmp/issue-comment.md', bodyMsg);
+      execSync('gh issue comment ' + issueNumber + ' --body-file /tmp/issue-comment.md', {
+        stdio: 'inherit',
+      });
       execSync('gh issue close ' + issueNumber, { stdio: 'inherit' });
     } catch {}
   }
-  console.log('registered', apiNick);
 }
 
 (async () => {
