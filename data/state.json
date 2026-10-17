@@ -30,7 +30,43 @@
     }
    },
    "past": []
+  },
+  "title": {
+   "lastWave": null,
+   "hours": {},
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
+  },
+  "DP_ASURA": {
+   "lastWave": null,
+   "hours": {},
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
+  },
+  "S_Raikkonen": {
+   "lastWave": null,
+   "hours": {},
+   "jumps": {
+    "total": 0,
+    "j10": 0,
+    "j20": 0,
+    "j30": 0,
+    "hours": {}
+   },
+   "past": []
   }
  },
- "updated": 1792200186370
+ "updated": 1792200202491
 }
