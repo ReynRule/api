@@ -56,7 +56,7 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17990379,
+   "lastWave": 17990399,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
@@ -71,8 +71,8 @@
      "gain": 1188
     },
     "2026-10-18T02": {
-     "count": 3,
-     "gain": 18
+     "count": 6,
+     "gain": 38
     }
    },
    "jumps": {
@@ -91,7 +91,7 @@
    ]
   },
   "S_Raikkonen": {
-   "lastWave": 1191667,
+   "lastWave": 1191676,
    "hours": {
     "2026-10-17T23": {
      "count": 0,
@@ -106,8 +106,8 @@
      "gain": 513
     },
     "2026-10-18T02": {
-     "count": 3,
-     "gain": 9
+     "count": 6,
+     "gain": 18
     }
    },
    "jumps": {
@@ -126,7 +126,7 @@
    ]
   },
   "ALDE": {
-   "lastWave": 2988252,
+   "lastWave": 2988267,
    "hours": {
     "2026-10-17T23": {
      "count": 145,
@@ -141,8 +141,8 @@
      "gain": 865
     },
     "2026-10-18T02": {
-     "count": 3,
-     "gain": 15
+     "count": 6,
+     "gain": 30
     }
    },
    "jumps": {
@@ -172,7 +172,7 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1369154,
+   "lastWave": 1369168,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
@@ -187,8 +187,8 @@
      "gain": 772
     },
     "2026-10-18T02": {
-     "count": 3,
-     "gain": 13
+     "count": 6,
+     "gain": 27
     }
    },
    "jumps": {
@@ -277,7 +277,7 @@
    ]
   },
   "Scav rip pan": {
-   "lastWave": 1036895,
+   "lastWave": 1036903,
    "hours": {
     "2026-10-18T00": {
      "count": 101,
@@ -288,8 +288,8 @@
      "gain": 680
     },
     "2026-10-18T02": {
-     "count": 2,
-     "gain": 8
+     "count": 4,
+     "gain": 16
     }
    },
    "jumps": {
@@ -313,7 +313,7 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 177668,
+   "lastWave": 177670,
    "hours": {
     "2026-10-18T00": {
      "count": 57,
@@ -324,8 +324,8 @@
      "gain": 346
     },
     "2026-10-18T02": {
-     "count": 2,
-     "gain": 4
+     "count": 3,
+     "gain": 6
     }
    },
    "jumps": {
@@ -349,5 +349,5 @@
    "past": []
   }
  },
- "updated": 1792259763033
+ "updated": 1792259825031
 }
