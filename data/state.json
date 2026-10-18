@@ -5,7 +5,7 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2184007,
+   "lastWave": 2184022,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
@@ -56,8 +56,8 @@
      "gain": 470
     },
     "2026-10-18T11": {
-     "count": 67,
-     "gain": 335
+     "count": 70,
+     "gain": 350
     }
    },
    "jumps": {
@@ -199,7 +199,7 @@
    ]
   },
   "S_Raikkonen": {
-   "lastWave": 1196158,
+   "lastWave": 1196167,
    "hours": {
     "2026-10-17T23": {
      "count": 0,
@@ -250,8 +250,8 @@
      "gain": 312
     },
     "2026-10-18T11": {
-     "count": 28,
-     "gain": 84
+     "count": 31,
+     "gain": 93
     }
    },
    "jumps": {
@@ -367,7 +367,7 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1377392,
+   "lastWave": 1377401,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
@@ -418,8 +418,8 @@
      "gain": 919
     },
     "2026-10-18T11": {
-     "count": 75,
-     "gain": 444
+     "count": 77,
+     "gain": 453
     }
    },
    "jumps": {
@@ -703,7 +703,7 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 179706,
+   "lastWave": 179708,
    "hours": {
     "2026-10-18T00": {
      "count": 57,
@@ -750,8 +750,8 @@
      "gain": 210
     },
     "2026-10-18T11": {
-     "count": 46,
-     "gain": 92
+     "count": 47,
+     "gain": 94
     }
    },
    "jumps": {
@@ -785,7 +785,7 @@
    "past": []
   },
   "DC_InTTerre": {
-   "lastWave": 1388576,
+   "lastWave": 1388591,
    "hours": {
     "2026-10-18T03": {
      "count": 1,
@@ -820,8 +820,8 @@
      "gain": 865
     },
     "2026-10-18T11": {
-     "count": 76,
-     "gain": 380
+     "count": 79,
+     "gain": 395
     }
    },
    "jumps": {
@@ -845,5 +845,5 @@
    "past": []
   }
  },
- "updated": 1792293721593
+ "updated": 1792293783594
 }
