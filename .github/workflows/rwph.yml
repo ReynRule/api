@@ -55,3 +55,30 @@ jobs:
           HANDOFF_AT: ${{ inputs.handoff_at }}
           GH_TOKEN: ${{ github.token }}
         run: node poll.js
+
+  # Discord bot (/register, /rwph, /skip). Skipped for issue events and tracker handoff runs.
+  bot:
+    if: github.event_name != 'issues' && inputs.handoff_at == ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 358
+    # only one bot logged in at a time; the next queued run takes over when this one exits
+    concurrency:
+      group: rwph-discord-bot
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install discord.js
+        run: npm install --no-save --no-audit --no-fund discord.js@14
+      - name: Git identity
+        run: |
+          git config user.name "rwph-bot"
+          git config user.email "rwph-bot@users.noreply.github.com"
+      - name: Run Discord bot
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node rwph-bot.mjs
