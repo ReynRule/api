@@ -1,0 +1,111 @@
+{
+  "hour": "2026-10-18T21",
+  "timezone": "Asia/Seoul",
+  "window": "HH:55 to next HH:55 (KST)",
+  "metric": "rwph (number of wave increases during this hour)",
+  "savedAt": "2026-10-18T13:55:00.029Z",
+  "rankings": [
+    {
+      "nick": "DP_ASURA",
+      "rwph": 178,
+      "jumps": 0,
+      "rank": 1
+    },
+    {
+      "nick": "corpse for pan",
+      "rwph": 175,
+      "jumps": 12,
+      "rank": 2
+    },
+    {
+      "nick": "SD_Dadagamer11",
+      "rwph": 173,
+      "jumps": 12,
+      "rank": 3
+    },
+    {
+      "nick": "Rith",
+      "rwph": 172,
+      "jumps": 6,
+      "rank": 4
+    },
+    {
+      "nick": "S_Raikkonen",
+      "rwph": 171,
+      "jumps": 0,
+      "rank": 5
+    },
+    {
+      "nick": "SKL_dakryoja",
+      "rwph": 170,
+      "jumps": 7,
+      "rank": 6
+    },
+    {
+      "nick": "SD_yungicecube",
+      "rwph": 169,
+      "jumps": 10,
+      "rank": 7
+    },
+    {
+      "nick": "SKL_CAZcaz",
+      "rwph": 168,
+      "jumps": 0,
+      "rank": 8
+    },
+    {
+      "nick": "ReynRule",
+      "rwph": 167,
+      "jumps": 0,
+      "rank": 9
+    },
+    {
+      "nick": "WePanMarch",
+      "rwph": 164,
+      "jumps": 10,
+      "rank": 10
+    },
+    {
+      "nick": "S_seungheeee",
+      "rwph": 159,
+      "jumps": 0,
+      "rank": 11
+    },
+    {
+      "nick": "ALDE",
+      "rwph": 131,
+      "jumps": 1,
+      "rank": 12
+    },
+    {
+      "nick": "Scav rip pan",
+      "rwph": 113,
+      "jumps": 6,
+      "rank": 13
+    },
+    {
+      "nick": "Kiroap",
+      "rwph": 98,
+      "jumps": 0,
+      "rank": 14
+    },
+    {
+      "nick": "SD_Kirstein",
+      "rwph": 82,
+      "jumps": 3,
+      "rank": 15
+    },
+    {
+      "nick": "DC_InTTerre",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 16
+    },
+    {
+      "nick": "RynzeQ",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 17
+    }
+  ]
+}
