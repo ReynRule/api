@@ -1,0 +1,129 @@
+{
+  "hour": "2026-10-19T00",
+  "timezone": "Asia/Seoul",
+  "window": "HH:55 to next HH:55 (KST)",
+  "metric": "rwph (number of wave increases during this hour)",
+  "savedAt": "2026-10-18T16:55:00.363Z",
+  "rankings": [
+    {
+      "nick": "DP_ASURA",
+      "rwph": 179,
+      "jumps": 0,
+      "rank": 1
+    },
+    {
+      "nick": "corpse for pan",
+      "rwph": 174,
+      "jumps": 11,
+      "rank": 2
+    },
+    {
+      "nick": "SD_Dadagamer11",
+      "rwph": 174,
+      "jumps": 9,
+      "rank": 3
+    },
+    {
+      "nick": "SD_yungicecube",
+      "rwph": 174,
+      "jumps": 0,
+      "rank": 4
+    },
+    {
+      "nick": "Rith",
+      "rwph": 173,
+      "jumps": 2,
+      "rank": 5
+    },
+    {
+      "nick": "ALDE",
+      "rwph": 171,
+      "jumps": 5,
+      "rank": 6
+    },
+    {
+      "nick": "SKL_dakryoja",
+      "rwph": 171,
+      "jumps": 0,
+      "rank": 7
+    },
+    {
+      "nick": "WePanMarch",
+      "rwph": 171,
+      "jumps": 0,
+      "rank": 8
+    },
+    {
+      "nick": "SKL_CAZcaz",
+      "rwph": 168,
+      "jumps": 0,
+      "rank": 9
+    },
+    {
+      "nick": "S_Raikkonen",
+      "rwph": 161,
+      "jumps": 0,
+      "rank": 10
+    },
+    {
+      "nick": "ReynRule",
+      "rwph": 149,
+      "jumps": 9,
+      "rank": 11
+    },
+    {
+      "nick": "Scav rip pan",
+      "rwph": 127,
+      "jumps": 6,
+      "rank": 12
+    },
+    {
+      "nick": "Kiroap",
+      "rwph": 104,
+      "jumps": 0,
+      "rank": 13
+    },
+    {
+      "nick": "gongonemin",
+      "rwph": 101,
+      "jumps": 2,
+      "rank": 14
+    },
+    {
+      "nick": "Aurora",
+      "rwph": 71,
+      "jumps": 0,
+      "rank": 15
+    },
+    {
+      "nick": "SD_Kirstein",
+      "rwph": 57,
+      "jumps": 0,
+      "rank": 16
+    },
+    {
+      "nick": "S_BottleMouse",
+      "rwph": 10,
+      "jumps": 2,
+      "rank": 17
+    },
+    {
+      "nick": "DC_InTTerre",
+      "rwph": 2,
+      "jumps": 2,
+      "rank": 18
+    },
+    {
+      "nick": "RynzeQ",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 19
+    },
+    {
+      "nick": "S_seungheeee",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 20
+    }
+  ]
+}
