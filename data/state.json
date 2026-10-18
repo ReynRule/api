@@ -5,7 +5,7 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2184497,
+   "lastWave": 2184512,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
@@ -60,8 +60,8 @@
      "gain": 640
     },
     "2026-10-18T12": {
-     "count": 27,
-     "gain": 185
+     "count": 30,
+     "gain": 200
     }
    },
    "jumps": {
@@ -212,7 +212,7 @@
    ]
   },
   "S_Raikkonen": {
-   "lastWave": 1196521,
+   "lastWave": 1196530,
    "hours": {
     "2026-10-17T23": {
      "count": 0,
@@ -267,8 +267,8 @@
      "gain": 369
     },
     "2026-10-18T12": {
-     "count": 26,
-     "gain": 78
+     "count": 29,
+     "gain": 87
     }
    },
    "jumps": {
@@ -287,7 +287,7 @@
    ]
   },
   "ALDE": {
-   "lastWave": 2991779,
+   "lastWave": 2991794,
    "hours": {
     "2026-10-17T23": {
      "count": 145,
@@ -342,8 +342,8 @@
      "gain": 377
     },
     "2026-10-18T12": {
-     "count": 26,
-     "gain": 104
+     "count": 29,
+     "gain": 119
     }
    },
    "jumps": {
@@ -388,7 +388,7 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1378057,
+   "lastWave": 1378070,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
@@ -443,8 +443,8 @@
      "gain": 990
     },
     "2026-10-18T12": {
-     "count": 26,
-     "gain": 119
+     "count": 29,
+     "gain": 132
     }
    },
    "jumps": {
@@ -740,7 +740,7 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 179852,
+   "lastWave": 179856,
    "hours": {
     "2026-10-18T00": {
      "count": 57,
@@ -791,8 +791,8 @@
      "gain": 206
     },
     "2026-10-18T12": {
-     "count": 16,
-     "gain": 32
+     "count": 18,
+     "gain": 36
     }
    },
    "jumps": {
@@ -826,7 +826,7 @@
    "past": []
   },
   "DC_InTTerre": {
-   "lastWave": 1389186,
+   "lastWave": 1389201,
    "hours": {
     "2026-10-18T03": {
      "count": 1,
@@ -865,8 +865,8 @@
      "gain": 860
     },
     "2026-10-18T12": {
-     "count": 26,
-     "gain": 130
+     "count": 29,
+     "gain": 145
     }
    },
    "jumps": {
@@ -890,5 +890,5 @@
    "past": []
   }
  },
- "updated": 1792296263593
+ "updated": 1792296325592
 }
