@@ -270,7 +270,7 @@
    ]
   },
   "ALDE": {
-   "lastWave": 2991298,
+   "lastWave": 2991303,
    "hours": {
     "2026-10-17T23": {
      "count": 145,
@@ -321,8 +321,8 @@
      "gain": 105
     },
     "2026-10-18T11": {
-     "count": 0,
-     "gain": 0
+     "count": 1,
+     "gain": 5
     }
    },
    "jumps": {
@@ -367,7 +367,7 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1376948,
+   "lastWave": 1376961,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
@@ -418,8 +418,8 @@
      "gain": 919
     },
     "2026-10-18T11": {
-     "count": 0,
-     "gain": 0
+     "count": 3,
+     "gain": 13
     }
    },
    "jumps": {
@@ -698,7 +698,7 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 179614,
+   "lastWave": 179618,
    "hours": {
     "2026-10-18T00": {
      "count": 57,
@@ -745,8 +745,8 @@
      "gain": 210
     },
     "2026-10-18T11": {
-     "count": 0,
-     "gain": 0
+     "count": 2,
+     "gain": 4
     }
    },
    "jumps": {
@@ -780,7 +780,7 @@
    "past": []
   },
   "DC_InTTerre": {
-   "lastWave": 1388196,
+   "lastWave": 1388211,
    "hours": {
     "2026-10-18T03": {
      "count": 1,
@@ -815,8 +815,8 @@
      "gain": 865
     },
     "2026-10-18T11": {
-     "count": 0,
-     "gain": 0
+     "count": 3,
+     "gain": 15
     }
    },
    "jumps": {
@@ -840,5 +840,5 @@
    "past": []
   }
  },
- "updated": 1792292109593
+ "updated": 1792292171594
 }
