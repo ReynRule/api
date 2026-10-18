@@ -1,0 +1,315 @@
+// RWPH Discord bot — /register, /rwph, /skip
+// Runs on GitHub Actions inside the tracker repo (needs user.txt + data/state.json).
+import fs from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
+import {
+  Client, GatewayIntentBits, REST, Routes,
+  SlashCommandBuilder, EmbedBuilder,
+} from 'discord.js';
+
+const USERS_FILE = 'user.txt';
+const PLAYER_API = 'https://raongames.com/growcastle/restapi/season/now/players/';
+const WEB_URL = process.env.WEB_URL ?? 'https://reynrule.github.io/api/';
+const MAX_USERS = Number(process.env.MAX_USERS) || 500;   // safety cap on user.txt
+const REGISTER_COOLDOWN_MS = 30_000;                      // per Discord user
+const BLOCKED_NICKS = new Set([
+  'title', 'body', 'register users', 'register user', 'register', 'user', 'users',
+]);
+
+/* ------------------------------------------------------------------ *
+ * Time helpers — hour buckets run :55 → next :55 KST (key "T14" = 14:55~15:55)
+ * ------------------------------------------------------------------ */
+const HOUR_OFFSET = 55 * 60_000;
+const pad = n => String(n).padStart(2, '0');
+const nf = n => Number(n || 0).toLocaleString('en-US');
+const kst = ms => new Date(ms + 9 * 3_600_000).toISOString();
+export const hourKey = ms => kst(ms - HOUR_OFFSET).slice(0, 13);
+const fmtMs = ms => kst(ms).replace('T', ' ').slice(0, 16);
+const fmtIso = s => fmtMs(Date.parse(`${s}Z`));          // season dates are UTC
+const label = k => {
+  const hh = Number(k.slice(11, 13));
+  return `${k.slice(0, 10)} ${k.slice(11, 13)}:55~${pad((hh + 1) % 24)}:55`;
+};
+const seasonLine = s =>
+  s?.start && s?.end ? `Season ${fmtIso(s.start)} ~ ${fmtIso(s.end)} (KST)` : '';
+const code = (header, rows) => '```\n' + [header, ...rows].join('\n') + '\n```';
+const jumpSum = j => (j?.j10 || 0) + (j?.j20 || 0) + (j?.j30 || 0);
+
+/* ------------------------------------------------------------------ *
+ * Message builders (same data as the web dashboard)
+ * ------------------------------------------------------------------ */
+export function findUser(state, name) {
+  const users = state?.users ?? {};
+  if (users[name]) return [name, users[name]];
+  const k = Object.keys(users).find(n => n.toLowerCase() === name.toLowerCase());
+  return k ? [k, users[k]] : null;
+}
+
+export function buildRwph(state, name, u, now = Date.now()) {
+  const J = u.jumps ?? { total: 0, hours: {} };
+  const H = u.hours ?? {};
+  const nowKey = hourKey(now);
+  const keys = Object.keys(H).sort().slice(-24);
+  const gain = keys.reduce((s, k) => s + (H[k].gain || 0), 0);
+  const best = keys.reduce(
+    (b, k) => (b == null || (H[k].count || 0) > (H[b].count || 0) ? k : b), null);
+
+  const header = `${'Hour (KST)'.padEnd(26)}${'RWPH'.padStart(5)}${'wave+'.padStart(8)}${'JUMP'.padStart(6)}`;
+  const rows = keys.slice().reverse().map(k => {
+    const h = H[k] ?? { count: 0, gain: 0 };
+    const jt = jumpSum(J.hours?.[k]);
+    return `${(label(k) + (k === nowKey ? ' NOW' : '')).padEnd(26)}`
+      + `${nf(h.count).padStart(5)}${('+' + nf(h.gain)).padStart(8)}${(jt ? String(jt) : '-').padStart(6)}`;
+  });
+
+  const lines = [
+    `**${name}**${seasonLine(state.season) ? ' · ' + seasonLine(state.season) : ''}`,
+    `Last wave **${u.lastWave == null ? '-' : nf(u.lastWave)}** · 24h total **+${nf(gain)} wave** · `
+      + `Best hour **${best ? `${best.slice(11, 13)}:55 [${nf(H[best].count)}]` : '-'}** · `
+      + `Season JUMP **${nf(J.total)}**`,
+  ];
+  if (state.updated) lines.push(`Data updated <t:${Math.floor(state.updated / 1000)}:R>`);
+
+  return {
+    content: lines.join('\n'),
+    embeds: [new EmbedBuilder().setColor(0x58a6ff).setTitle('Last 24 hours')
+      .setDescription(keys.length ? code(header, rows) : 'No hourly data yet.')],
+  };
+}
+
+export function buildSkip(state, name, u) {
+  const J = u.jumps ?? { total: 0, j10: 0, j20: 0, j30: 0, hours: {} };
+  const lines = [
+    `**${name}**${seasonLine(state.season) ? ' · ' + seasonLine(state.season) : ''}`,
+    `**Season jump details** — Total **${nf(J.total)}**`,
+    `10 Jump (10–12): **${nf(J.j10)}** · 20 Jump (20–22): **${nf(J.j20)}** · 30 Jump (30–32): **${nf(J.j30)}**`,
+  ];
+  if (state.updated) lines.push(`Data updated <t:${Math.floor(state.updated / 1000)}:R>`);
+
+  const jk = Object.keys(J.hours ?? {}).sort().reverse();
+  const header = `${'Hour (KST)'.padEnd(22)}${'10'.padStart(4)}${'20'.padStart(4)}${'30'.padStart(4)}${'Total'.padStart(7)}`;
+  const rows = jk.map(k => {
+    const h = J.hours[k];
+    return `${label(k).padEnd(22)}${String(h.j10 || 0).padStart(4)}${String(h.j20 || 0).padStart(4)}${String(h.j30 || 0).padStart(4)}${String(jumpSum(h)).padStart(7)}`;
+  });
+  const embeds = [new EmbedBuilder().setColor(0xf0883e).setTitle('Jumps by hour')
+    .setDescription(jk.length ? code(header, rows) : 'No jumps this season.')];
+
+  const past = [...(u.past ?? [])].reverse();
+  if (past.length) {
+    const ph = `${'Season (KST)'.padEnd(36)}${'Total jumps'.padStart(12)}`;
+    const pr = past.map(p => `${`${fmtIso(p.start)} ~ ${fmtIso(p.end)}`.padEnd(36)}${nf(p.total).padStart(12)}`);
+    embeds.push(new EmbedBuilder().setColor(0x8b949e).setTitle('Past seasons').setDescription(code(ph, pr)));
+  }
+  return { content: lines.join('\n'), embeds };
+}
+
+/* ------------------------------------------------------------------ *
+ * state.json loading (fresh via GitHub API when running in Actions)
+ * ------------------------------------------------------------------ */
+let cache = { at: 0, data: null };
+async function getState() {
+  if (cache.data && Date.now() - cache.at < 20_000) return cache.data;
+  const repo = process.env.GITHUB_REPOSITORY;
+  const branch = process.env.GITHUB_REF_NAME || 'main';
+  let data = null;
+
+  if (!process.env.STATE_URL && repo && process.env.GITHUB_TOKEN) {
+    try {
+      const r = await fetch(`https://api.github.com/repos/${repo}/contents/data/state.json?ref=${branch}`, {
+        headers: {
+          Accept: 'application/vnd.github.raw+json',
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          'User-Agent': 'rwph-discord-bot',
+        },
+        signal: AbortSignal.timeout(15_000),
+      });
+      if (r.ok) data = await r.json();
+    } catch (e) { console.error('contents API failed:', e.message); }
+  }
+  if (!data) {
+    const url = process.env.STATE_URL
+      ?? `https://raw.githubusercontent.com/${repo}/${branch}/data/state.json`;
+    const r = await fetch(`${url}?t=${Date.now()}`, { signal: AbortSignal.timeout(15_000) });
+    if (!r.ok) throw new Error(`Failed to load state.json (HTTP ${r.status})`);
+    data = await r.json();
+  }
+  cache = { at: Date.now(), data };
+  return data;
+}
+
+/* ------------------------------------------------------------------ *
+ * /register — verify via game API, then append to user.txt and push
+ * ------------------------------------------------------------------ */
+const git = (...args) =>
+  execFileSync('git', args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+
+function readUsers() {
+  try {
+    return fs.readFileSync(USERS_FILE, 'utf8').split(/\r?\n/).map(s => s.trim())
+      .filter(s => s.length >= 2 && s.length <= 40 && !BLOCKED_NICKS.has(s.toLowerCase()));
+  } catch { return []; }
+}
+
+/** Returns 'added' | 'exists' | 'full'. Throws if the push ultimately fails. */
+function addToUserFile(nick) {
+  try { git('pull', '--rebase', '--autostash'); }
+  catch (e) { console.error('git pull failed:', e.message); }
+
+  const users = readUsers();
+  if (users.some(u => u.toLowerCase() === nick.toLowerCase())) return 'exists';
+  if (users.length >= MAX_USERS) return 'full';
+
+  let txt = fs.existsSync(USERS_FILE) ? fs.readFileSync(USERS_FILE, 'utf8') : '';
+  if (txt && !txt.endsWith('\n')) txt += '\n';
+  fs.writeFileSync(USERS_FILE, `${txt}${nick}\n`);
+
+  git('add', '--', USERS_FILE);
+  git('commit', '-m', `chore: register user ${nick.replace(/[\r\n]/g, ' ')} [skip ci]`, '--', USERS_FILE);
+
+  // the tracker pushes every minute, so retry on non-fast-forward
+  for (let i = 0; i < 5; i++) {
+    try { git('push'); return 'added'; }
+    catch (e) {
+      console.error(`push attempt ${i + 1} failed:`, e.message);
+      try { git('pull', '--rebase', '--autostash'); } catch {}
+    }
+  }
+  try { git('reset', '--hard', 'HEAD~1'); } catch {}
+  throw new Error('git push failed');
+}
+
+let queue = Promise.resolve();
+const serialize = fn => { const run = queue.then(fn); queue = run.catch(() => {}); return run; };
+
+const cooldowns = new Map();
+
+function cleanNick(raw) {
+  const n = (raw ?? '').trim();
+  if (n.length < 2 || n.length > 40) return null;
+  if (/[\u0000-\u001f\u007f]/.test(n)) return null;
+  if (BLOCKED_NICKS.has(n.toLowerCase())) return null;
+  return n;
+}
+
+async function handleRegister(i) {
+  const last = cooldowns.get(i.user.id) ?? 0;
+  const wait = REGISTER_COOLDOWN_MS - (Date.now() - last);
+  if (wait > 0) return i.editReply(`Please wait ${Math.ceil(wait / 1000)}s before registering again.`);
+
+  const nick = cleanNick(i.options.getString('name', true));
+  if (!nick) return i.editReply('Invalid name (2–40 characters, no line breaks).');
+  cooldowns.set(i.user.id, Date.now());
+
+  let json;
+  try {
+    const r = await fetch(PLAYER_API + encodeURIComponent(nick), { signal: AbortSignal.timeout(8_000) });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    json = await r.json();
+  } catch (e) {
+    cooldowns.delete(i.user.id);
+    return i.editReply(`Could not reach the game API (${e.message}). Try again later.`);
+  }
+
+  const list = json?.code === 200 ? (json.result?.list ?? []) : [];
+  const exact = list.find(p => p.nick?.toLowerCase() === nick.toLowerCase());
+  if (!exact) {
+    const hint = list.slice(0, 5).map(p => `\`${p.nick}\``).join(', ');
+    return i.editReply(`Player **${nick}** was not found in the current season.`
+      + (hint ? `\nDid you mean: ${hint}?` : ''));
+  }
+  const apiNick = exact.nick;
+
+  let result;
+  try { result = await serialize(async () => addToUserFile(apiNick)); }
+  catch (e) {
+    console.error(e);
+    cooldowns.delete(i.user.id);
+    return i.editReply('Failed to save the registration (git error). Please try again.');
+  }
+
+  const link = `${WEB_URL}?name=${encodeURIComponent(apiNick)}`;
+  if (result === 'exists') return i.editReply(`**${apiNick}** is already registered. Use \`/rwph name:${apiNick}\`.\n${link}`);
+  if (result === 'full') return i.editReply(`The tracker is full (${MAX_USERS} users).`);
+  return i.editReply(`Registered **${apiNick}** ✅\nTracking starts within ~1–2 minutes, then try \`/rwph name:${apiNick}\`.\n${link}`);
+}
+
+/* ------------------------------------------------------------------ *
+ * Commands
+ * ------------------------------------------------------------------ */
+const nameOpt = o => o.setName('name').setDescription('Player name').setRequired(true).setAutocomplete(true);
+const commands = [
+  new SlashCommandBuilder().setName('register')
+    .setDescription('Register a player for RWPH tracking')
+    .addStringOption(o => o.setName('name').setDescription('In-game player name').setRequired(true).setMaxLength(40)),
+  new SlashCommandBuilder().setName('rwph')
+    .setDescription('Last 24 hours of RWPH / wave+ / JUMP for a player')
+    .addStringOption(nameOpt),
+  new SlashCommandBuilder().setName('skip')
+    .setDescription('Season jump details and past seasons for a player')
+    .addStringOption(nameOpt),
+].map(c => c.toJSON());
+
+async function handle(i) {
+  await i.deferReply(); // public reply
+  if (i.commandName === 'register') return handleRegister(i);
+
+  const state = await getState();
+  const found = findUser(state, i.options.getString('name', true).trim());
+  if (!found) {
+    return i.editReply('That player is not registered. Use `/register name:<player>` first.');
+  }
+  const [name, u] = found;
+  return i.editReply(i.commandName === 'rwph' ? buildRwph(state, name, u) : buildSkip(state, name, u));
+}
+
+/* ------------------------------------------------------------------ *
+ * Main
+ * ------------------------------------------------------------------ */
+async function main() {
+  const { DISCORD_TOKEN, CLIENT_ID } = process.env;
+  if (!DISCORD_TOKEN || !CLIENT_ID) {
+    console.error('Missing DISCORD_TOKEN / CLIENT_ID environment variables.');
+    process.exit(1);
+  }
+
+  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
+  client.once('ready', async () => {
+    console.log(`Logged in as ${client.user.tag}`);
+    await new REST({ version: '10' }).setToken(DISCORD_TOKEN)
+      .put(Routes.applicationCommands(CLIENT_ID), { body: commands });
+    console.log('Global slash commands registered.');
+    // Actions jobs max out at 6h: exit after 350 min, the queued run takes over
+    const lifetime = Number(process.env.BOT_LIFETIME_MIN ?? 350) * 60_000;
+    setTimeout(async () => {
+      console.log('Lifetime reached, handing over to the next run.');
+      await queue.catch(() => {});
+      await client.destroy();
+      process.exit(0);
+    }, lifetime);
+  });
+
+  client.on('interactionCreate', async i => {
+    try {
+      if (i.isAutocomplete()) {
+        const q = i.options.getFocused().toLowerCase();
+        const state = await getState();
+        return i.respond(Object.keys(state.users ?? {})
+          .filter(n => n.toLowerCase().includes(q)).slice(0, 25)
+          .map(n => ({ name: n.slice(0, 100), value: n.slice(0, 100) })));
+      }
+      if (i.isChatInputCommand()) await handle(i);
+    } catch (e) {
+      console.error(e);
+      const msg = `Error: ${e.message}`;
+      if (i.isRepliable()) (i.deferred || i.replied ? i.editReply(msg) : i.reply(msg)).catch(() => {});
+    }
+  });
+
+  process.on('unhandledRejection', e => console.error('unhandledRejection', e));
+  await client.login(DISCORD_TOKEN);
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
