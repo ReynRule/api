@@ -5,7 +5,7 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2187092,
+   "lastWave": 2187097,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
@@ -72,8 +72,8 @@
      "gain": 870
     },
     "2026-10-18T15": {
-     "count": 5,
-     "gain": 25
+     "count": 6,
+     "gain": 30
     }
    },
    "jumps": {
@@ -143,7 +143,7 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17999394,
+   "lastWave": 17999414,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
@@ -210,8 +210,8 @@
      "gain": 1192
     },
     "2026-10-18T15": {
-     "count": 41,
-     "gain": 270
+     "count": 44,
+     "gain": 290
     }
    },
    "jumps": {
@@ -236,7 +236,7 @@
    ]
   },
   "S_Raikkonen": {
-   "lastWave": 1198108,
+   "lastWave": 1198117,
    "hours": {
     "2026-10-17T23": {
      "count": 0,
@@ -303,8 +303,8 @@
      "gain": 519
     },
     "2026-10-18T15": {
-     "count": 39,
-     "gain": 117
+     "count": 42,
+     "gain": 126
     }
    },
    "jumps": {
@@ -446,7 +446,7 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1380854,
+   "lastWave": 1380866,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
@@ -513,8 +513,8 @@
      "gain": 682
     },
     "2026-10-18T15": {
-     "count": 39,
-     "gain": 233
+     "count": 42,
+     "gain": 245
     }
    },
    "jumps": {
@@ -579,7 +579,7 @@
    ]
   },
   "S_seungheeee": {
-   "lastWave": 3158555,
+   "lastWave": 3158570,
    "hours": {
     "2026-10-17T23": {
      "count": 0,
@@ -646,8 +646,8 @@
      "gain": 225
     },
     "2026-10-18T15": {
-     "count": 5,
-     "gain": 25
+     "count": 8,
+     "gain": 40
     }
    },
    "jumps": {
@@ -753,7 +753,7 @@
    ]
   },
   "Scav rip pan": {
-   "lastWave": 1040640,
+   "lastWave": 1040648,
    "hours": {
     "2026-10-18T00": {
      "count": 101,
@@ -816,8 +816,8 @@
      "gain": 517
     },
     "2026-10-18T15": {
-     "count": 25,
-     "gain": 152
+     "count": 27,
+     "gain": 160
     }
    },
    "jumps": {
@@ -876,7 +876,7 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 180488,
+   "lastWave": 180490,
    "hours": {
     "2026-10-18T00": {
      "count": 57,
@@ -939,8 +939,8 @@
      "gain": 206
     },
     "2026-10-18T15": {
-     "count": 24,
-     "gain": 48
+     "count": 25,
+     "gain": 50
     }
    },
    "jumps": {
@@ -1065,5 +1065,5 @@
    "past": []
   }
  },
- "updated": 1792307336811
+ "updated": 1792307398812
 }
