@@ -1,0 +1,75 @@
+{
+  "hour": "2026-10-18T19",
+  "timezone": "Asia/Seoul",
+  "window": "HH:55 to next HH:55 (KST)",
+  "metric": "rwph (number of wave increases during this hour)",
+  "savedAt": "2026-10-18T11:55:00.774Z",
+  "rankings": [
+    {
+      "nick": "DP_ASURA",
+      "rwph": 179,
+      "jumps": 0,
+      "rank": 1
+    },
+    {
+      "nick": "S_Raikkonen",
+      "rwph": 173,
+      "jumps": 0,
+      "rank": 2
+    },
+    {
+      "nick": "ALDE",
+      "rwph": 172,
+      "jumps": 0,
+      "rank": 3
+    },
+    {
+      "nick": "WePanMarch",
+      "rwph": 168,
+      "jumps": 7,
+      "rank": 4
+    },
+    {
+      "nick": "SKL_CAZcaz",
+      "rwph": 166,
+      "jumps": 7,
+      "rank": 5
+    },
+    {
+      "nick": "Kiroap",
+      "rwph": 117,
+      "jumps": 0,
+      "rank": 6
+    },
+    {
+      "nick": "Scav rip pan",
+      "rwph": 114,
+      "jumps": 4,
+      "rank": 7
+    },
+    {
+      "nick": "ReynRule",
+      "rwph": 110,
+      "jumps": 0,
+      "rank": 8
+    },
+    {
+      "nick": "S_seungheeee",
+      "rwph": 85,
+      "jumps": 0,
+      "rank": 9
+    },
+    {
+      "nick": "DC_InTTerre",
+      "rwph": 1,
+      "jumps": 1,
+      "rank": 10
+    },
+    {
+      "nick": "RynzeQ",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 11
+    }
+  ]
+}
