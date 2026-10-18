@@ -5,7 +5,7 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2185597,
+   "lastWave": 2185612,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
@@ -64,8 +64,8 @@
      "gain": 1010
     },
     "2026-10-18T13": {
-     "count": 55,
-     "gain": 275
+     "count": 58,
+     "gain": 290
     }
    },
    "jumps": {
@@ -135,7 +135,7 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17997113,
+   "lastWave": 17997131,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
@@ -194,8 +194,8 @@
      "gain": 27
     },
     "2026-10-18T13": {
-     "count": 56,
-     "gain": 371
+     "count": 59,
+     "gain": 389
     }
    },
    "jumps": {
@@ -220,7 +220,7 @@
    ]
   },
   "S_Raikkonen": {
-   "lastWave": 1197118,
+   "lastWave": 1197127,
    "hours": {
     "2026-10-17T23": {
      "count": 0,
@@ -279,8 +279,8 @@
      "gain": 513
     },
     "2026-10-18T13": {
-     "count": 54,
-     "gain": 162
+     "count": 57,
+     "gain": 171
     }
    },
    "jumps": {
@@ -409,7 +409,7 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1379231,
+   "lastWave": 1379245,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
@@ -468,8 +468,8 @@
      "gain": 1024
     },
     "2026-10-18T13": {
-     "count": 47,
-     "gain": 269
+     "count": 50,
+     "gain": 283
     }
    },
    "jumps": {
@@ -787,7 +787,7 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 180094,
+   "lastWave": 180096,
    "hours": {
     "2026-10-18T00": {
      "count": 57,
@@ -842,8 +842,8 @@
      "gain": 208
     },
     "2026-10-18T13": {
-     "count": 33,
-     "gain": 66
+     "count": 34,
+     "gain": 68
     }
    },
    "jumps": {
@@ -877,7 +877,7 @@
    "past": []
   },
   "DC_InTTerre": {
-   "lastWave": 1390191,
+   "lastWave": 1390206,
    "hours": {
     "2026-10-18T03": {
      "count": 1,
@@ -920,8 +920,8 @@
      "gain": 860
     },
     "2026-10-18T13": {
-     "count": 55,
-     "gain": 275
+     "count": 58,
+     "gain": 290
     }
    },
    "jumps": {
@@ -945,5 +945,5 @@
    "past": []
   }
  },
- "updated": 1792300417592
+ "updated": 1792300479593
 }
