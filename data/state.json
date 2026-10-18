@@ -5,7 +5,7 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2185357,
+   "lastWave": 2185372,
    "hours": {
     "2026-10-17T23": {
      "count": 153,
@@ -64,8 +64,8 @@
      "gain": 1010
     },
     "2026-10-18T13": {
-     "count": 7,
-     "gain": 35
+     "count": 10,
+     "gain": 50
     }
    },
    "jumps": {
@@ -135,7 +135,7 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 17996788,
+   "lastWave": 17996808,
    "hours": {
     "2026-10-17T23": {
      "count": 164,
@@ -194,8 +194,8 @@
      "gain": 27
     },
     "2026-10-18T13": {
-     "count": 7,
-     "gain": 46
+     "count": 10,
+     "gain": 66
     }
    },
    "jumps": {
@@ -220,7 +220,7 @@
    ]
   },
   "S_Raikkonen": {
-   "lastWave": 1196974,
+   "lastWave": 1196983,
    "hours": {
     "2026-10-17T23": {
      "count": 0,
@@ -279,8 +279,8 @@
      "gain": 513
     },
     "2026-10-18T13": {
-     "count": 6,
-     "gain": 18
+     "count": 9,
+     "gain": 27
     }
    },
    "jumps": {
@@ -409,7 +409,7 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1378991,
+   "lastWave": 1379002,
    "hours": {
     "2026-10-17T23": {
      "count": 154,
@@ -468,8 +468,8 @@
      "gain": 1024
     },
     "2026-10-18T13": {
-     "count": 6,
-     "gain": 29
+     "count": 8,
+     "gain": 40
     }
    },
    "jumps": {
@@ -782,7 +782,7 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 180036,
+   "lastWave": 180040,
    "hours": {
     "2026-10-18T00": {
      "count": 57,
@@ -837,8 +837,8 @@
      "gain": 208
     },
     "2026-10-18T13": {
-     "count": 4,
-     "gain": 8
+     "count": 6,
+     "gain": 12
     }
    },
    "jumps": {
@@ -872,7 +872,7 @@
    "past": []
   },
   "DC_InTTerre": {
-   "lastWave": 1389946,
+   "lastWave": 1389961,
    "hours": {
     "2026-10-18T03": {
      "count": 1,
@@ -915,8 +915,8 @@
      "gain": 860
     },
     "2026-10-18T13": {
-     "count": 6,
-     "gain": 30
+     "count": 9,
+     "gain": 45
     }
    },
    "jumps": {
@@ -940,5 +940,5 @@
    "past": []
   }
  },
- "updated": 1792299425592
+ "updated": 1792299487593
 }
