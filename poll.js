@@ -330,15 +330,25 @@ async function loadRanking() {
 
 async function loadHours() {
   try {
-    const res = await fetch('../rankdata/index.json?t=' + Date.now(), {
-      cache: 'no-store'
-    });
+    const res = await fetch(
+      'https://raw.githubusercontent.com/ReynRule/api/main/rankdata/index.json?t=' + Date.now(),
+      {
+        cache: 'no-store'
+      }
+    );
 
-    if (res.ok) {
-      const data = await res.json();
-      availableHours = Array.isArray(data.hours) ? data.hours : [];
+    if (!res.ok) {
+      throw new Error('HTTP ' + res.status);
     }
-  } catch (e) {}
+
+    const data = await res.json();
+
+    if (Array.isArray(data.hours)) {
+      availableHours = data.hours;
+    }
+  } catch (e) {
+    console.error('Failed to load ranking hours:', e);
+  }
 
   updateHourOptions();
   await loadRanking();
@@ -680,11 +690,29 @@ function renderDash(name){
   else{$('pastWrap').style.display='none'}
 }
 function render(){var name=getNameParam();if(!name){renderHome();return}renderDash(name)}
+
 function refreshData(){
-  fetch('https://raw.githubusercontent.com/ReynRule/api/main/data/state.json?t='+Date.now(),{cache:'no-store'})
-    .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
-    .catch(function(){});
+  fetch('https://raw.githubusercontent.com/ReynRule/api/main/data/state.json?t='+Date.now(), {
+    cache: 'no-store'
+  })
+    .then(function(r){
+      if(!r.ok) throw new Error(r.status);
+      return r.json();
+    })
+    .then(function(json){
+      if(!json || !json.users) return;
+
+      // 최신 데이터를 실제 화면 데이터에 반영
+      D = json;
+
+      // 화면 다시 그리기
+      render();
+    })
+    .catch(function(e){
+      console.error('Failed to refresh tracker data:', e);
+    });
 }
+
 $('searchForm').onsubmit=function(e){
   e.preventDefault();
   var n=($('searchInput').value||'').trim();if(!n)return;
