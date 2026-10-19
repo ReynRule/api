@@ -1,0 +1,153 @@
+{
+  "hour": "2026-10-19T20",
+  "timezone": "Asia/Seoul",
+  "window": "HH:55 to next HH:55 (KST)",
+  "metric": "rwph (number of wave increases during this hour)",
+  "savedAt": "2026-10-19T12:55:00.184Z",
+  "rankings": [
+    {
+      "nick": "LoVenti",
+      "rwph": 175,
+      "jumps": 0,
+      "rank": 1
+    },
+    {
+      "nick": "ReynRule",
+      "rwph": 175,
+      "jumps": 0,
+      "rank": 2
+    },
+    {
+      "nick": "SD_Dadagamer11",
+      "rwph": 174,
+      "jumps": 9,
+      "rank": 3
+    },
+    {
+      "nick": "corpse for pan",
+      "rwph": 173,
+      "jumps": 13,
+      "rank": 4
+    },
+    {
+      "nick": "Rith",
+      "rwph": 173,
+      "jumps": 4,
+      "rank": 5
+    },
+    {
+      "nick": "SKL_dakryoja",
+      "rwph": 171,
+      "jumps": 0,
+      "rank": 6
+    },
+    {
+      "nick": "Micro soft",
+      "rwph": 170,
+      "jumps": 0,
+      "rank": 7
+    },
+    {
+      "nick": "WePanMarch",
+      "rwph": 170,
+      "jumps": 11,
+      "rank": 8
+    },
+    {
+      "nick": "SKL_CAZcaz",
+      "rwph": 167,
+      "jumps": 0,
+      "rank": 9
+    },
+    {
+      "nick": "SD_yungicecube",
+      "rwph": 166,
+      "jumps": 4,
+      "rank": 10
+    },
+    {
+      "nick": "DP_ASURA",
+      "rwph": 164,
+      "jumps": 0,
+      "rank": 11
+    },
+    {
+      "nick": "ALDE",
+      "rwph": 144,
+      "jumps": 8,
+      "rank": 12
+    },
+    {
+      "nick": "S_BottleMouse",
+      "rwph": 129,
+      "jumps": 2,
+      "rank": 13
+    },
+    {
+      "nick": "S_seungheeee",
+      "rwph": 115,
+      "jumps": 0,
+      "rank": 14
+    },
+    {
+      "nick": "UD_4203",
+      "rwph": 112,
+      "jumps": 0,
+      "rank": 15
+    },
+    {
+      "nick": "Scav rip pan",
+      "rwph": 109,
+      "jumps": 5,
+      "rank": 16
+    },
+    {
+      "nick": "gongonemin",
+      "rwph": 106,
+      "jumps": 5,
+      "rank": 17
+    },
+    {
+      "nick": "Kiroap",
+      "rwph": 104,
+      "jumps": 2,
+      "rank": 18
+    },
+    {
+      "nick": "SD_Kirstein",
+      "rwph": 74,
+      "jumps": 2,
+      "rank": 19
+    },
+    {
+      "nick": "DC_InTTerre",
+      "rwph": 1,
+      "jumps": 1,
+      "rank": 20
+    },
+    {
+      "nick": "Aurora",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 21
+    },
+    {
+      "nick": "MS365",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 22
+    },
+    {
+      "nick": "RynzeQ",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 23
+    },
+    {
+      "nick": "S_Raikkonen",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 24
+    }
+  ]
+}
