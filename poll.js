@@ -2,7 +2,7 @@
 // Poll users in user.txt · jumps 10–12 / 20–22 / 30–32 · /?name= dashboard
 // 시간대 기준: 매시 55분 ~ 다음 시각 55분 (키 "T14" = 14:55~15:55 KST)
 const fs = require('fs');
-const { execSync } = require('child_process');
+const { execSync, execFileSync } = require('child_process');
 
 const RUN_MS = (Number(process.env.RUN_MINUTES) || 345) * 60 * 1000;
 const HANDOFF_AT = Number(process.env.HANDOFF_AT) || 0;
@@ -809,65 +809,120 @@ function save() {
 }
 
 // 기존 추적 job용: 상태 저장 및 index.html 생성 유지
+
+function runGit(args, options = {}) {
+  console.log('> git ' + args.join(' '));
+
+  return execFileSync('git', args, {
+    encoding: 'utf8',
+    stdio: 'inherit',
+    timeout: 120000,
+    ...options
+  });
+}
+
+function gitOutput(args) {
+  return execFileSync('git', args, {
+    encoding: 'utf8',
+    timeout: 120000,
+    stdio: ['ignore', 'pipe', 'inherit']
+  }).trim();
+}
+
+// 원격 변경사항을 먼저 반영하고 커밋·푸시한다.
 function commit(msg) {
   save();
   ensureRankHtml();
 
   try {
-    execSync('git add index.html data/state.json user.txt');
+    // 다른 워크플로가 먼저 올린 커밋을 가져온다.
+    runGit(['pull', '--rebase', '--autostash']);
 
-    // rankdata는 존재할 때만 추가
+    runGit([
+      'add',
+      'index.html',
+      'data/state.json',
+      'user.txt'
+    ]);
+
     if (fs.existsSync(RANK_DIR)) {
-      execSync('git add -A -- rankdata');
+      runGit(['add', '-A', '--', 'rankdata']);
     }
 
-    // ensureRankHtml()이 생성한 rank 페이지 추가
-    execSync('git add -A -- rank');
+    runGit(['add', '-A', '--', 'rank']);
 
-    if (!execSync('git status --porcelain').toString().trim()) {
+    // 실제 변경이 있을 때만 커밋한다.
+    if (!gitOutput(['status', '--porcelain'])) {
+      console.log('No changes to commit');
       return;
     }
 
-    const m = (msg || 'chore: update rwph [skip ci]')
-      .replace(/"/g, '\\"');
+    const message = msg || 'chore: update rwph [skip ci]';
 
-    execSync('git commit -m "' + m + '"');
+    runGit(['commit', '-m', message]);
 
+    // 동시에 다른 실행이 푸시한 경우 한 번 동기화 후 재시도한다.
     try {
-      execSync('git pull --rebase --autostash', {
-        stdio: 'ignore'
-      });
-    } catch {}
+      runGit(['push']);
+    } catch (firstError) {
+      console.error('First push failed; syncing and retrying.');
 
-    execSync('git push', { stdio: 'ignore' });
+      runGit(['pull', '--rebase', '--autostash']);
+      runGit(['push']);
+    }
 
-    console.log('committed', new Date().toISOString());
+    console.log('Commit and push completed:', new Date().toISOString());
   } catch (e) {
-    console.error('commit failed', e.message);
+    console.error('commit failed:', e.message);
+    throw e;
   }
 }
+
 // register job 전용: user.txt만 커밋
 // save()와 render()를 호출하지 않는다.
+
 function commitUsersFile(msg) {
   try {
-    execSync('git add -- user.txt');
+    // 최신 main을 먼저 가져온다.
+    runGit(['pull', '--rebase', '--autostash']);
 
-    const m = (msg || 'chore: update user.txt')
-      .replace(/"/g, '\\"');
+    runGit(['add', '--', 'user.txt']);
 
-    execSync('git commit -m "' + m + '" -- user.txt');
+    // user.txt에 변경사항이 없으면 종료한다.
+    if (!gitOutput(['diff', '--cached', '--quiet']).length) {
+      // diff --cached --quiet은 변경사항이 없을 때 종료 코드 0을 반환한다.
+      // 실제 변경 여부는 staged 파일 목록으로 확인한다.
+    }
+
+    const staged = gitOutput(['diff', '--cached', '--name-only']);
+
+    if (!staged.split(/\r?\n/).includes('user.txt')) {
+      console.log('No user.txt changes to commit');
+      return;
+    }
+
+    runGit([
+      'commit',
+      '-m',
+      msg || 'chore: update user.txt'
+    ]);
 
     try {
-      execSync('git pull --rebase --autostash', { stdio: 'ignore' });
-    } catch {}
+      runGit(['push']);
+    } catch (firstError) {
+      console.error('First user.txt push failed; syncing and retrying.');
 
-    execSync('git push', { stdio: 'inherit' });
+      runGit(['pull', '--rebase', '--autostash']);
+      runGit(['push']);
+    }
 
-    console.log('user.txt committed', new Date().toISOString());
+    console.log('user.txt committed and pushed:', new Date().toISOString());
   } catch (e) {
-    console.error('user.txt commit failed', e.message);
+    console.error('user.txt commit failed:', e.message);
+    throw e;
   }
 }
+
 
 async function fetchPlayer(nick) {
   const url =
