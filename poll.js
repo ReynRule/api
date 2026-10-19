@@ -252,9 +252,10 @@ async function loadRanking() {
     let label = '';
 
     if (key === now) {
-      const res = await fetch('../data/state.json?t=' + Date.now(), {
-        cache: 'no-store'
-      });
+      const res = await fetch(
+        'https://raw.githubusercontent.com/ReynRule/api/main/data/state.json?t=' + Date.now(),
+        { cache: 'no-store' }
+      );
 
       if (!res.ok) throw new Error('State HTTP ' + res.status);
 
@@ -279,7 +280,7 @@ async function loadRanking() {
       label = 'Live ranking';
     } else {
       const file =
-        '../rankdata/' +
+        'https://raw.githubusercontent.com/ReynRule/api/main/rankdata/' +
         selectedDate + '-' + selectedHour + '.json?t=' + Date.now();
 
       const res = await fetch(file, { cache: 'no-store' });
@@ -682,7 +683,7 @@ function renderDash(name){
 }
 function render(){var name=getNameParam();if(!name){renderHome();return}renderDash(name)}
 function refreshData(){
-  fetch('data/state.json?t='+Date.now(),{cache:'no-store'})
+  fetch('https://raw.githubusercontent.com/ReynRule/api/main/data/state.json?t='+Date.now(),{cache:'no-store'})
     .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
     .then(function(json){if(!json)return;if((json.updated||0)<=lastUpdated)return;lastUpdated=json.updated||0;D=json;render()})
     .catch(function(){});
