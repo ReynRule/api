@@ -607,7 +607,6 @@ var HOUR_OFFSET = 55*60e3;
 var label = function(k){var hh=Number(k.slice(11,13));return k.slice(0,10)+' '+k.slice(11,13)+':55~'+String((hh+1)%24).padStart(2,'0')+':55'};
 var seasonOpen = false;
 var openJumps = {};
-var lastUpdated = (D && D.updated) || 0;
 var currentName = null;
 function getNameParam(){return (new URLSearchParams(location.search).get('name')||'').trim()}
 function goName(name){var n=(name||'').trim();if(!n)return;location.search='?name='+encodeURIComponent(n)}
@@ -649,8 +648,7 @@ function renderDash(name){
   var cards=[
     ['Last wave',u.lastWave==null?'-':nf(u.lastWave)],
     ['24h Total','+'+nf(gain)+' wave'],
-    ['Best hour',best?best.slice(11,13)+':55 ['+nf(H[best].count)+']':'-'],
-    ['Updated (KST)',D.updated?kst(D.updated).replace('T',' ').slice(5,19):'-']
+    ['Best hour',best?best.slice(11,13)+':55 ['+nf(H[best].count)+']':'-']
   ];
   var cardsEl=$('cards');cardsEl.innerHTML='';
   cards.forEach(function(c){var d=document.createElement('div');d.className='card';d.innerHTML='<div class="l">'+c[0]+'</div><div class="v">'+c[1]+'</div>';cardsEl.appendChild(d)});
@@ -685,7 +683,6 @@ function render(){var name=getNameParam();if(!name){renderHome();return}renderDa
 function refreshData(){
   fetch('https://raw.githubusercontent.com/ReynRule/api/main/data/state.json?t='+Date.now(),{cache:'no-store'})
     .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
-    .then(function(json){if(!json)return;if((json.updated||0)<=lastUpdated)return;lastUpdated=json.updated||0;D=json;render()})
     .catch(function(){});
 }
 $('searchForm').onsubmit=function(e){
@@ -704,7 +701,6 @@ setInterval(refreshData,30000);
 function render() {
   const data = JSON.stringify({
     season: state.season,
-    updated: Date.now(),
     users: state.users,
   }).replace(/</g, '\\u003c');
 
