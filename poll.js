@@ -252,10 +252,9 @@ async function loadRanking() {
     let label = '';
 
     if (key === now) {
-      const res = await fetch(
-        'https://raw.githubusercontent.com/ReynRule/api/main/data/state.json?t=' + Date.now(),
-        { cache: 'no-store' }
-      );
+      const res = await fetch('../data/state.json?t=' + Date.now(), {
+        cache: 'no-store'
+      });
 
       if (!res.ok) throw new Error('State HTTP ' + res.status);
 
@@ -280,7 +279,7 @@ async function loadRanking() {
       label = 'Live ranking';
     } else {
       const file =
-        'https://raw.githubusercontent.com/ReynRule/api/main/rankdata/' +
+        '../rankdata/' +
         selectedDate + '-' + selectedHour + '.json?t=' + Date.now();
 
       const res = await fetch(file, { cache: 'no-store' });
@@ -330,25 +329,15 @@ async function loadRanking() {
 
 async function loadHours() {
   try {
-    const res = await fetch(
-      'https://raw.githubusercontent.com/ReynRule/api/main/rankdata/index.json?t=' + Date.now(),
-      {
-        cache: 'no-store'
-      }
-    );
+    const res = await fetch('../rankdata/index.json?t=' + Date.now(), {
+      cache: 'no-store'
+    });
 
-    if (!res.ok) {
-      throw new Error('HTTP ' + res.status);
+    if (res.ok) {
+      const data = await res.json();
+      availableHours = Array.isArray(data.hours) ? data.hours : [];
     }
-
-    const data = await res.json();
-
-    if (Array.isArray(data.hours)) {
-      availableHours = data.hours;
-    }
-  } catch (e) {
-    console.error('Failed to load ranking hours:', e);
-  }
+  } catch (e) {}
 
   updateHourOptions();
   await loadRanking();
@@ -617,6 +606,7 @@ var HOUR_OFFSET = 55*60e3;
 var label = function(k){var hh=Number(k.slice(11,13));return k.slice(0,10)+' '+k.slice(11,13)+':55~'+String((hh+1)%24).padStart(2,'0')+':55'};
 var seasonOpen = false;
 var openJumps = {};
+var lastUpdated = (D && D.updated) || 0;
 var currentName = null;
 function getNameParam(){return (new URLSearchParams(location.search).get('name')||'').trim()}
 function goName(name){var n=(name||'').trim();if(!n)return;location.search='?name='+encodeURIComponent(n)}
@@ -658,7 +648,8 @@ function renderDash(name){
   var cards=[
     ['Last wave',u.lastWave==null?'-':nf(u.lastWave)],
     ['24h Total','+'+nf(gain)+' wave'],
-    ['Best hour',best?best.slice(11,13)+':55 ['+nf(H[best].count)+']':'-']
+    ['Best hour',best?best.slice(11,13)+':55 ['+nf(H[best].count)+']':'-'],
+    ['Updated (KST)',D.updated?kst(D.updated).replace('T',' ').slice(5,19):'-']
   ];
   var cardsEl=$('cards');cardsEl.innerHTML='';
   cards.forEach(function(c){var d=document.createElement('div');d.className='card';d.innerHTML='<div class="l">'+c[0]+'</div><div class="v">'+c[1]+'</div>';cardsEl.appendChild(d)});
@@ -690,29 +681,12 @@ function renderDash(name){
   else{$('pastWrap').style.display='none'}
 }
 function render(){var name=getNameParam();if(!name){renderHome();return}renderDash(name)}
-
 function refreshData(){
-  fetch('https://raw.githubusercontent.com/ReynRule/api/main/data/state.json?t='+Date.now(), {
-    cache: 'no-store'
-  })
-    .then(function(r){
-      if(!r.ok) throw new Error(r.status);
-      return r.json();
-    })
-    .then(function(json){
-      if(!json || !json.users) return;
-
-      // 최신 데이터를 실제 화면 데이터에 반영
-      D = json;
-
-      // 화면 다시 그리기
-      render();
-    })
-    .catch(function(e){
-      console.error('Failed to refresh tracker data:', e);
-    });
+  fetch('data/state.json?t='+Date.now(),{cache:'no-store'})
+    .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
+    .then(function(json){if(!json)return;if((json.updated||0)<=lastUpdated)return;lastUpdated=json.updated||0;D=json;render()})
+    .catch(function(){});
 }
-
 $('searchForm').onsubmit=function(e){
   e.preventDefault();
   var n=($('searchInput').value||'').trim();if(!n)return;
@@ -729,6 +703,7 @@ setInterval(refreshData,30000);
 function render() {
   const data = JSON.stringify({
     season: state.season,
+    updated: Date.now(),
     users: state.users,
   }).replace(/</g, '\\u003c');
 
