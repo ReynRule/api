@@ -1,4 +1,4 @@
-name: Grow Castle RWPH Tracker1-1
+name: Grow Castle RWPH Tracker1-12
 on:
   schedule:
     - cron: '*/20 * * * *'
