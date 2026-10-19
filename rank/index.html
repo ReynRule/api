@@ -230,9 +230,10 @@ async function loadRanking() {
     let label = '';
 
     if (key === now) {
-      const res = await fetch('../data/state.json?t=' + Date.now(), {
-        cache: 'no-store'
-      });
+      const res = await fetch(
+        'https://raw.githubusercontent.com/ReynRule/api/main/data/state.json?t=' + Date.now(),
+        { cache: 'no-store' }
+      );
 
       if (!res.ok) throw new Error('State HTTP ' + res.status);
 
@@ -257,7 +258,7 @@ async function loadRanking() {
       label = 'Live ranking';
     } else {
       const file =
-        '../rankdata/' +
+        'https://raw.githubusercontent.com/ReynRule/api/main/rankdata/' +
         selectedDate + '-' + selectedHour + '.json?t=' + Date.now();
 
       const res = await fetch(file, { cache: 'no-store' });
