@@ -25,3 +25,4 @@ MS365
 S_Minerva
 UD_JSCC
 UD_JSCCC
+Asura_Rule
