@@ -10,6 +10,8 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const COMMIT_EVERY_MS = 1 * 60 * 1000;
 const MAX_HOURS = 24;
 const MAX_PAST = 30;
+const PART_FILE = 'data/part.json';
+const PART_KEEP_MS = 70 * 60 * 1000; // /part용 이벤트 보관 시간
 const STATE = 'data/state.json';
 const USERS_FILE = 'user.txt';
 const RANK_DIR = 'rankdata';
@@ -445,7 +447,7 @@ let state = {
   users: {},
   updated: 0
 };
-
+let part = { updated: 0, users: {} };
 const load = () => {
   try {
     state = {
@@ -456,6 +458,10 @@ const load = () => {
 
   state.season ??= { start: null, end: null };
   state.users ??= {};
+    try {
+    part = { ...part, ...JSON.parse(fs.readFileSync(PART_FILE, 'utf8')) };
+  } catch {}
+  part.users ??= {};
 };
 
 load();
@@ -804,6 +810,12 @@ function save() {
   }
 
   fs.mkdirSync('data', { recursive: true });
+  const cutoff = Date.now() - PART_KEEP_MS;
+  for (const pu of Object.values(part.users)) {
+    pu.ev = (pu.ev || []).filter((e) => e[0] > cutoff);
+  }
+  part.updated = Date.now();
+  fs.writeFileSync(PART_FILE, JSON.stringify(part));
   fs.writeFileSync(STATE, JSON.stringify(state, null, 1));
   render();
 }
@@ -842,7 +854,8 @@ function commit(msg) {
       'add',
       'index.html',
       'data/state.json',
-      'user.txt'
+      'user.txt',
+      'data/part.json'
     ]);
 
     if (fs.existsSync(RANK_DIR)) {
@@ -991,6 +1004,8 @@ async function tick() {
     u.jumps.hours ??= {};
     u.hours ??= {};
     u.past ??= [];
+    const pu = (part.users[nick] ??= { since: Date.now(), ev: [] });
+    pu.ev ??= [];
 
     const wave = Number(me.wave) || 0;
     const k = hourKey(Date.now());
@@ -1005,6 +1020,7 @@ async function tick() {
 
       h.count += 1;
       h.gain += diff;
+      pu.ev.push([Date.now(), diff]); // /part 전용 분단위 기록
 
       const t = tierOf(diff);
 
@@ -1077,6 +1093,9 @@ async function tick() {
     if (!set.has(name)) {
       console.log('remove user from state', name);
       delete state.users[name];
+        for (const name of Object.keys(part.users)) {
+          if (!set.has(name)) delete part.users[name];
+        }
     }
   }
 }
