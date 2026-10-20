@@ -7,12 +7,16 @@
   "ReynRule": {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
    "lastWave": 2219766,
 =======
    "lastWave": 2219777,
 >>>>>>> Stashed changes
 =======
    "lastWave": 2219782,
+>>>>>>> Stashed changes
+=======
+   "lastWave": 2219792,
 >>>>>>> Stashed changes
    "hours": {
     "2026-10-19T14": {
@@ -110,6 +114,7 @@
     "2026-10-20T13": {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 27,
      "gain": 140
 =======
@@ -119,6 +124,10 @@
 =======
      "count": 30,
      "gain": 156
+>>>>>>> Stashed changes
+=======
+     "count": 32,
+     "gain": 166
 >>>>>>> Stashed changes
     }
    },
@@ -262,6 +271,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
    "lastWave": 18037110,
 =======
    "lastWave": 18037116,
@@ -271,6 +281,9 @@
 >>>>>>> Stashed changes
 =======
    "lastWave": 18037134,
+>>>>>>> Stashed changes
+=======
+   "lastWave": 18037140,
 >>>>>>> Stashed changes
    "hours": {
     "2026-10-19T14": {
@@ -369,6 +382,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 66,
      "gain": 396
 =======
@@ -382,6 +396,10 @@
 =======
      "count": 68,
      "gain": 420
+>>>>>>> Stashed changes
+=======
+     "count": 71,
+     "gain": 426
 >>>>>>> Stashed changes
     }
    },
@@ -422,7 +440,7 @@
    ]
   },
   "S_Raikkonen": {
-   "lastWave": 1213374,
+   "lastWave": 1213383,
    "hours": {
     "2026-10-19T14": {
      "count": 0,
@@ -520,6 +538,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 70,
 =======
      "count": 68,
@@ -532,6 +551,10 @@
 =======
      "count": 70,
      "gain": 224
+>>>>>>> Stashed changes
+=======
+     "count": 75,
+     "gain": 233
 >>>>>>> Stashed changes
     }
    },
@@ -557,7 +580,7 @@
    ]
   },
   "ALDE": {
-   "lastWave": 3032620,
+   "lastWave": 3032635,
    "hours": {
     "2026-10-19T14": {
      "count": 171,
@@ -655,6 +678,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 77,
 =======
      "count": 75,
@@ -667,6 +691,10 @@
 =======
      "count": 78,
      "gain": 400
+>>>>>>> Stashed changes
+=======
+     "count": 83,
+     "gain": 415
 >>>>>>> Stashed changes
     }
    },
@@ -797,7 +825,7 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1417477,
+   "lastWave": 1417493,
    "hours": {
     "2026-10-19T14": {
      "count": 166,
@@ -895,6 +923,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 74,
 =======
      "count": 72,
@@ -907,6 +936,10 @@
 =======
      "count": 75,
      "gain": 345
+>>>>>>> Stashed changes
+=======
+     "count": 80,
+     "gain": 361
 >>>>>>> Stashed changes
     }
    },
@@ -997,7 +1030,7 @@
    ]
   },
   "S_seungheeee": {
-   "lastWave": 3170860,
+   "lastWave": 3170870,
    "hours": {
     "2026-10-19T14": {
      "count": 0,
@@ -1095,6 +1128,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 68,
 =======
      "count": 65,
@@ -1108,12 +1142,16 @@
      "count": 66,
      "gain": 345
 >>>>>>> Stashed changes
+=======
+     "count": 71,
+     "gain": 355
+>>>>>>> Stashed changes
     }
    },
    "jumps": {
-    "total": 3,
+    "total": 2,
     "j10": 2,
-    "j20": 1,
+    "j20": 0,
     "j30": 0,
     "hours": {
      "2026-10-19T19": {
@@ -1124,11 +1162,6 @@
      "2026-10-20T01": {
       "j10": 1,
       "j20": 0,
-      "j30": 0
-     },
-     "2026-10-20T13": {
-      "j10": 0,
-      "j20": 1,
       "j30": 0
      }
     }
@@ -1257,7 +1290,7 @@
    ]
   },
   "Scav rip pan": {
-   "lastWave": 1065112,
+   "lastWave": 1065120,
    "hours": {
     "2026-10-19T14": {
      "count": 112,
@@ -1352,8 +1385,8 @@
      "gain": 194
     },
     "2026-10-20T13": {
-     "count": 56,
-     "gain": 260
+     "count": 58,
+     "gain": 268
     }
    },
    "jumps": {
@@ -1487,7 +1520,7 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 190478,
+   "lastWave": 190480,
    "hours": {
     "2026-10-19T14": {
      "count": 103,
@@ -1585,6 +1618,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 47,
 =======
      "count": 46,
@@ -1597,6 +1631,10 @@
 =======
      "count": 48,
      "gain": 98
+>>>>>>> Stashed changes
+=======
+     "count": 50,
+     "gain": 100
 >>>>>>> Stashed changes
     }
    },
@@ -1901,7 +1939,7 @@
    "past": []
   },
   "WePanMarch": {
-   "lastWave": 1247001,
+   "lastWave": 1247013,
    "hours": {
     "2026-10-19T14": {
      "count": 172,
@@ -1996,8 +2034,8 @@
      "gain": 832
     },
     "2026-10-20T13": {
-     "count": 74,
-     "gain": 368
+     "count": 77,
+     "gain": 380
     }
    },
    "jumps": {
@@ -2134,6 +2172,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
    "lastWave": 61164,
 =======
    "lastWave": 61166,
@@ -2143,6 +2182,9 @@
 >>>>>>> Stashed changes
 =======
    "lastWave": 61168,
+>>>>>>> Stashed changes
+=======
+   "lastWave": 61170,
 >>>>>>> Stashed changes
    "hours": {
     "2026-10-19T14": {
@@ -2241,6 +2283,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 36,
      "gain": 72
 =======
@@ -2254,6 +2297,10 @@
 =======
      "count": 38,
      "gain": 76
+>>>>>>> Stashed changes
+=======
+     "count": 39,
+     "gain": 78
 >>>>>>> Stashed changes
     }
    },
@@ -2363,7 +2410,7 @@
    "past": []
   },
   "SKL_dakryoja": {
-   "lastWave": 2530112,
+   "lastWave": 2530124,
    "hours": {
     "2026-10-19T14": {
      "count": 150,
@@ -2461,6 +2508,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 76,
 =======
      "count": 73,
@@ -2473,6 +2521,10 @@
 =======
      "count": 76,
      "gain": 316
+>>>>>>> Stashed changes
+=======
+     "count": 82,
+     "gain": 328
 >>>>>>> Stashed changes
     }
    },
@@ -2600,6 +2652,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
    "lastWave": 16792607,
 =======
    "lastWave": 16792615,
@@ -2609,6 +2662,9 @@
 >>>>>>> Stashed changes
 =======
    "lastWave": 16792633,
+>>>>>>> Stashed changes
+=======
+   "lastWave": 16792647,
 >>>>>>> Stashed changes
    "hours": {
     "2026-10-19T14": {
@@ -2707,6 +2763,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 75,
      "gain": 535
 =======
@@ -2720,6 +2777,10 @@
 =======
      "count": 76,
      "gain": 561
+>>>>>>> Stashed changes
+=======
+     "count": 81,
+     "gain": 575
 >>>>>>> Stashed changes
     }
    },
@@ -2854,7 +2915,7 @@
    "past": []
   },
   "Rith": {
-   "lastWave": 4716815,
+   "lastWave": 4716834,
    "hours": {
     "2026-10-19T14": {
      "count": 175,
@@ -2952,6 +3013,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 77,
 =======
      "count": 75,
@@ -2965,12 +3027,16 @@
      "count": 78,
      "gain": 526
 >>>>>>> Stashed changes
+=======
+     "count": 83,
+     "gain": 545
+>>>>>>> Stashed changes
     }
    },
    "jumps": {
-    "total": 112,
+    "total": 111,
     "j10": 0,
-    "j20": 3,
+    "j20": 2,
     "j30": 109,
     "hours": {
      "2026-10-18T20": {
@@ -3077,18 +3143,13 @@
       "j10": 0,
       "j20": 0,
       "j30": 3
-     },
-     "2026-10-20T13": {
-      "j10": 0,
-      "j20": 1,
-      "j30": 0
      }
     }
    },
    "past": []
   },
   "corpse for pan": {
-   "lastWave": 3332181,
+   "lastWave": 3332196,
    "hours": {
     "2026-10-19T14": {
      "count": 163,
@@ -3186,6 +3247,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 78,
 =======
      "count": 75,
@@ -3199,14 +3261,23 @@
      "count": 78,
      "gain": 405
 >>>>>>> Stashed changes
+=======
+     "count": 84,
+     "gain": 420
+>>>>>>> Stashed changes
     }
    },
    "jumps": {
-    "total": 289,
+    "total": 288,
     "j10": 7,
-    "j20": 3,
+    "j20": 2,
     "j30": 279,
     "hours": {
+     "2026-10-19T08": {
+      "j10": 1,
+      "j20": 0,
+      "j30": 7
+     },
      "2026-10-19T09": {
       "j10": 0,
       "j20": 0,
@@ -3321,18 +3392,13 @@
       "j10": 0,
       "j20": 1,
       "j30": 0
-     },
-     "2026-10-20T13": {
-      "j10": 0,
-      "j20": 1,
-      "j30": 0
      }
     }
    },
    "past": []
   },
   "SD_Dadagamer11": {
-   "lastWave": 5151466,
+   "lastWave": 5151478,
    "hours": {
     "2026-10-19T14": {
      "count": 173,
@@ -3430,6 +3496,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 77,
 =======
      "count": 75,
@@ -3443,11 +3510,15 @@
      "count": 78,
      "gain": 492
 >>>>>>> Stashed changes
+=======
+     "count": 83,
+     "gain": 504
+>>>>>>> Stashed changes
     }
    },
    "jumps": {
-    "total": 267,
-    "j10": 1,
+    "total": 266,
+    "j10": 0,
     "j20": 2,
     "j30": 264,
     "hours": {
@@ -3567,7 +3638,7 @@
       "j30": 7
      },
      "2026-10-20T13": {
-      "j10": 1,
+      "j10": 0,
       "j20": 0,
       "j30": 6
      }
@@ -3576,7 +3647,7 @@
    "past": []
   },
   "gongonemin": {
-   "lastWave": 839200,
+   "lastWave": 839206,
    "hours": {
     "2026-10-19T14": {
      "count": 0,
@@ -3674,6 +3745,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 45,
 =======
      "count": 43,
@@ -3686,6 +3758,10 @@
 =======
      "count": 45,
      "gain": 141
+>>>>>>> Stashed changes
+=======
+     "count": 49,
+     "gain": 147
 >>>>>>> Stashed changes
     }
    },
@@ -3821,9 +3897,13 @@
   },
   "S_BottleMouse": {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
    "lastWave": 2656381,
 =======
    "lastWave": 2656386,
+>>>>>>> Stashed changes
+=======
+   "lastWave": 2656397,
 >>>>>>> Stashed changes
    "hours": {
     "2026-10-19T14": {
@@ -3922,6 +4002,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 72,
 =======
      "count": 70,
@@ -3934,6 +4015,10 @@
 =======
      "count": 73,
      "gain": 390
+>>>>>>> Stashed changes
+=======
+     "count": 77,
+     "gain": 401
 >>>>>>> Stashed changes
     }
    },
@@ -4162,7 +4247,7 @@
    "past": []
   },
   "UD_4203": {
-   "lastWave": 1854626,
+   "lastWave": 1854634,
    "hours": {
     "2026-10-19T14": {
      "count": 103,
@@ -4260,6 +4345,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 49,
 =======
      "count": 48,
@@ -4272,6 +4358,10 @@
 =======
      "count": 50,
      "gain": 204
+>>>>>>> Stashed changes
+=======
+     "count": 53,
+     "gain": 212
 >>>>>>> Stashed changes
     }
    },
@@ -4296,7 +4386,7 @@
    "past": []
   },
   "LoVenti": {
-   "lastWave": 9586082,
+   "lastWave": 9586101,
    "hours": {
     "2026-10-19T14": {
      "count": 176,
@@ -4394,6 +4484,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 79,
 =======
      "count": 77,
@@ -4407,12 +4498,16 @@
      "count": 80,
      "gain": 546
 >>>>>>> Stashed changes
+=======
+     "count": 85,
+     "gain": 565
+>>>>>>> Stashed changes
     }
    },
    "jumps": {
-    "total": 4,
+    "total": 3,
     "j10": 0,
-    "j20": 2,
+    "j20": 1,
     "j30": 2,
     "hours": {
      "2026-10-20T00": {
@@ -4424,18 +4519,13 @@
       "j10": 0,
       "j20": 0,
       "j30": 2
-     },
-     "2026-10-20T13": {
-      "j10": 0,
-      "j20": 1,
-      "j30": 0
      }
     }
    },
    "past": []
   },
   "Micro soft": {
-   "lastWave": 4942523,
+   "lastWave": 4942542,
    "hours": {
     "2026-10-19T14": {
      "count": 165,
@@ -4533,6 +4623,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 77,
 =======
      "count": 74,
@@ -4545,6 +4636,10 @@
 =======
      "count": 77,
      "gain": 526
+>>>>>>> Stashed changes
+=======
+     "count": 83,
+     "gain": 545
 >>>>>>> Stashed changes
     }
    },
@@ -4592,9 +4687,13 @@
   },
   "S_Minerva": {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
    "lastWave": 1213926,
 =======
    "lastWave": 1213931,
+>>>>>>> Stashed changes
+=======
+   "lastWave": 1213939,
 >>>>>>> Stashed changes
    "hours": {
     "2026-10-20T00": {
@@ -4653,6 +4752,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 70,
 =======
      "count": 68,
@@ -4666,11 +4766,15 @@
      "count": 71,
      "gain": 307
 >>>>>>> Stashed changes
+=======
+     "count": 75,
+     "gain": 315
+>>>>>>> Stashed changes
     }
    },
    "jumps": {
-    "total": 2,
-    "j10": 1,
+    "total": 1,
+    "j10": 0,
     "j20": 0,
     "j30": 1,
     "hours": {
@@ -4678,18 +4782,13 @@
       "j10": 0,
       "j20": 0,
       "j30": 1
-     },
-     "2026-10-20T13": {
-      "j10": 1,
-      "j20": 0,
-      "j30": 0
      }
     }
    },
    "past": []
   },
   "UD_JSCC": {
-   "lastWave": 1107065,
+   "lastWave": 1107080,
    "hours": {
     "2026-10-20T02": {
      "count": 83,
@@ -4739,6 +4838,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
      "count": 78,
 =======
      "count": 76,
@@ -4751,6 +4851,10 @@
 =======
      "count": 79,
      "gain": 421
+>>>>>>> Stashed changes
+=======
+     "count": 84,
+     "gain": 436
 >>>>>>> Stashed changes
     }
    },
@@ -4767,6 +4871,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
    "lastWave": 8409,
 =======
    "lastWave": 8413,
@@ -4777,12 +4882,16 @@
 =======
    "lastWave": 8422,
 >>>>>>> Stashed changes
+=======
+   "lastWave": 8436,
+>>>>>>> Stashed changes
    "hours": {
     "2026-10-20T12": {
      "count": 88,
      "gain": 407
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -4800,24 +4909,23 @@
      "count": 74,
      "gain": 352
 >>>>>>> Stashed changes
+=======
+     "count": 80,
+     "gain": 366
+>>>>>>> Stashed changes
     }
    },
    "jumps": {
-    "total": 1,
+    "total": 0,
     "j10": 0,
-    "j20": 1,
+    "j20": 0,
     "j30": 0,
-    "hours": {
-     "2026-10-20T13": {
-      "j10": 0,
-      "j20": 1,
-      "j30": 0
-     }
-    }
+    "hours": {}
    },
    "past": []
   }
  },
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -4830,5 +4938,8 @@
 >>>>>>> Stashed changes
 =======
  "updated": 1792473776299
+>>>>>>> Stashed changes
+=======
+ "updated": 1792473830015
 >>>>>>> Stashed changes
 }
