@@ -205,9 +205,18 @@ async function getJson(path, ttl, envUrl) {
   }
   if (!data) {
     const url = envUrl ?? `https://raw.githubusercontent.com/${repo}/${branch}/${path}`;
-    const r = await fetch(`${url}?t=${Date.now()}`, { signal: AbortSignal.timeout(15_000) });
-    if (!r.ok) throw new Error(`Failed to load ${path} (HTTP ${r.status})`);
-    data = await r.json();
+    try {
+      const r = await fetch(`${url}?t=${Date.now()}`, { signal: AbortSignal.timeout(15_000) });
+      if (!r.ok) throw new Error(`Failed to load ${path} (HTTP ${r.status})`);
+      data = await r.json();
+    } catch (e) {
+      // remote file broken/unreachable: keep serving the last good copy
+      if (hit) {
+        console.error(`using stale ${path}:`, e.message);
+        return hit.data;
+      }
+      throw new Error(`${path} is temporarily unavailable`);
+    }
   }
   caches.set(path, { at: Date.now(), data });
   return data;
