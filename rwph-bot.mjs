@@ -1,5 +1,5 @@
-// RWPH Discord bot — /register, /rwph, /skip
-// Runs on GitHub Actions inside the tracker repo (needs user.txt + data/state.json).
+// RWPH Discord bot — /register, /rwph, /skip, /part
+// Runs on GitHub Actions inside the tracker repo (needs user.txt + data/state.json + data/part.json).
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
@@ -13,6 +13,7 @@ const PLAYER_API = 'https://raongames.com/growcastle/restapi/season/now/players/
 const WEB_URL = process.env.WEB_URL ?? 'https://reynrule.github.io/api/';
 const MAX_USERS = Number(process.env.MAX_USERS) || 500;   // safety cap on user.txt
 const REGISTER_COOLDOWN_MS = 30_000;                      // per Discord user
+const PART_WINDOW_MS = 60 * 60_000;                       // /part rolling window (1 hour)
 const BLOCKED_NICKS = new Set([
   'title', 'body', 'register users', 'register user', 'register', 'user', 'users',
 ]);
@@ -26,15 +27,31 @@ const nf = n => Number(n || 0).toLocaleString('en-US');
 const kst = ms => new Date(ms + 9 * 3_600_000).toISOString();
 export const hourKey = ms => kst(ms - HOUR_OFFSET).slice(0, 13);
 const fmtMs = ms => kst(ms).replace('T', ' ').slice(0, 16);
+const fmtShort = ms => fmtMs(ms).slice(5);                // "MM-DD HH:mm"
 const fmtIso = s => fmtMs(Date.parse(`${s}Z`));          // season dates are UTC
+// short label for mobile: "10-20 14:55~15:55"
 const label = k => {
   const hh = Number(k.slice(11, 13));
-  return `${k.slice(0, 10)} ${k.slice(11, 13)}:55~${pad((hh + 1) % 24)}:55`;
+  return `${k.slice(5, 10)} ${k.slice(11, 13)}:55~${pad((hh + 1) % 24)}:55`;
 };
 const seasonLine = s =>
   s?.start && s?.end ? `Season ${fmtIso(s.start)} ~ ${fmtIso(s.end)} (KST)` : '';
-const code = (header, rows) => '```\n' + [header, ...rows].join('\n') + '\n```';
 const jumpSum = j => (j?.j10 || 0) + (j?.j20 || 0) + (j?.j30 || 0);
+const tierOf = d => {
+  if (d >= 10 && d <= 12) return 10;
+  if (d >= 20 && d <= 22) return 20;
+  if (d >= 30 && d <= 32) return 30;
+  return 0;
+};
+
+/* ------------------------------------------------------------------ *
+ * Mobile-friendly text helpers
+ * (no padded code blocks — they scroll sideways / break on phones)
+ * ------------------------------------------------------------------ */
+const esc = s => String(s).replace(/([\\*_~`|>])/g, '\\$1');
+const clip = (s, max = 3000) =>
+  s.length <= max ? s : s.slice(0, max - 20).replace(/\n[^\n]*$/, '') + '\n…';
+const NO_PING = { parse: [] };
 
 /* ------------------------------------------------------------------ *
  * Message builders (same data as the web dashboard)
@@ -55,69 +72,127 @@ export function buildRwph(state, name, u, now = Date.now()) {
   const best = keys.reduce(
     (b, k) => (b == null || (H[k].count || 0) > (H[b].count || 0) ? k : b), null);
 
-  const header = `${'Hour (KST)'.padEnd(26)}${'RWPH'.padStart(5)}${'wave+'.padStart(8)}${'JUMP'.padStart(6)}`;
   const rows = keys.slice().reverse().map(k => {
     const h = H[k] ?? { count: 0, gain: 0 };
     const jt = jumpSum(J.hours?.[k]);
-    return `${(label(k) + (k === nowKey ? ' NOW' : '')).padEnd(26)}`
-      + `${nf(h.count).padStart(5)}${('+' + nf(h.gain)).padStart(8)}${(jt ? String(jt) : '-').padStart(6)}`;
+    return `**${label(k)}**${k === nowKey ? ' 🟢 NOW' : ''}\n`
+      + `└ RWPH \`${nf(h.count)}\` · wave \`+${nf(h.gain)}\` · JUMP \`${jt || '-'}\``;
   });
 
-  const lines = [
-    `**${name}**${seasonLine(state.season) ? ' · ' + seasonLine(state.season) : ''}`,
-    `Last wave **${u.lastWave == null ? '-' : nf(u.lastWave)}** · 24h total **+${nf(gain)} wave** · `
-      + `Best hour **${best ? `${best.slice(11, 13)}:55 [${nf(H[best].count)}]` : '-'}** · `
-      + `Season JUMP **${nf(J.total)}**`,
-  ];
+  const lines = [`**${esc(name)}**`];
+  if (seasonLine(state.season)) lines.push(seasonLine(state.season));
+  lines.push(
+    `Last wave **${u.lastWave == null ? '-' : nf(u.lastWave)}**`,
+    `24h total **+${nf(gain)} wave**`,
+    `Best hour **${best ? `${best.slice(11, 13)}:55 [${nf(H[best].count)}]` : '-'}**`,
+    `Season JUMP **${nf(J.total)}**`,
+  );
   if (state.updated) lines.push(`Data updated <t:${Math.floor(state.updated / 1000)}:R>`);
 
   return {
     content: lines.join('\n'),
     embeds: [new EmbedBuilder().setColor(0x58a6ff).setTitle('Last 24 hours')
-      .setDescription(keys.length ? code(header, rows) : 'No hourly data yet.')],
+      .setDescription(rows.length ? clip(rows.join('\n')) : 'No hourly data yet.')],
   };
 }
 
 export function buildSkip(state, name, u) {
   const J = u.jumps ?? { total: 0, j10: 0, j20: 0, j30: 0, hours: {} };
-  const lines = [
-    `**${name}**${seasonLine(state.season) ? ' · ' + seasonLine(state.season) : ''}`,
+  const lines = [`**${esc(name)}**`];
+  if (seasonLine(state.season)) lines.push(seasonLine(state.season));
+  lines.push(
     `**Season jump details** — Total **${nf(J.total)}**`,
-    `10 Jump (10–12): **${nf(J.j10)}** · 20 Jump (20–22): **${nf(J.j20)}** · 30 Jump (30–32): **${nf(J.j30)}**`,
-  ];
+    `10 Jump (10–12): **${nf(J.j10)}**`,
+    `20 Jump (20–22): **${nf(J.j20)}**`,
+    `30 Jump (30–32): **${nf(J.j30)}**`,
+  );
   if (state.updated) lines.push(`Data updated <t:${Math.floor(state.updated / 1000)}:R>`);
 
   const jk = Object.keys(J.hours ?? {}).sort().reverse();
-  const header = `${'Hour (KST)'.padEnd(22)}${'10'.padStart(4)}${'20'.padStart(4)}${'30'.padStart(4)}${'Total'.padStart(7)}`;
   const rows = jk.map(k => {
     const h = J.hours[k];
-    return `${label(k).padEnd(22)}${String(h.j10 || 0).padStart(4)}${String(h.j20 || 0).padStart(4)}${String(h.j30 || 0).padStart(4)}${String(jumpSum(h)).padStart(7)}`;
+    return `**${label(k)}**\n`
+      + `└ 10 \`${h.j10 || 0}\` · 20 \`${h.j20 || 0}\` · 30 \`${h.j30 || 0}\` · Total \`${jumpSum(h)}\``;
   });
   const embeds = [new EmbedBuilder().setColor(0xf0883e).setTitle('Jumps by hour')
-    .setDescription(jk.length ? code(header, rows) : 'No jumps this season.')];
+    .setDescription(jk.length ? clip(rows.join('\n'), 2800) : 'No jumps this season.')];
 
   const past = [...(u.past ?? [])].reverse();
   if (past.length) {
-    const ph = `${'Season (KST)'.padEnd(36)}${'Total jumps'.padStart(12)}`;
-    const pr = past.map(p => `${`${fmtIso(p.start)} ~ ${fmtIso(p.end)}`.padEnd(36)}${nf(p.total).padStart(12)}`);
-    embeds.push(new EmbedBuilder().setColor(0x8b949e).setTitle('Past seasons').setDescription(code(ph, pr)));
+    const pr = past.map(p =>
+      `**${fmtIso(p.start)} ~ ${fmtIso(p.end)}**\n└ Total jumps \`${nf(p.total)}\``);
+    embeds.push(new EmbedBuilder().setColor(0x8b949e).setTitle('Past seasons')
+      .setDescription(clip(pr.join('\n'), 2500)));
   }
   return { content: lines.join('\n'), embeds };
 }
 
+/**
+ * /part — rolling window: (now - 1h) → now, minute precision.
+ * Uses the dedicated event log (data/part.json): users[nick] = { since, ev: [[ms, waveDiff], ...] }
+ */
+export function buildPart(state, part, name, now = Date.now()) {
+  const from = now - PART_WINDOW_MS;
+  const pu = part?.users?.[name];
+
+  const head = [
+    `**${esc(name)}** · Rolling 1 hour`,
+    `🕒 \`${fmtShort(from)}\` ~ \`${fmtShort(now)}\` (KST)`,
+  ];
+
+  if (!pu) {
+    return {
+      content: head.join('\n'),
+      embeds: [new EmbedBuilder().setColor(0x8b949e).setTitle('No data yet')
+        .setDescription('Minute-level tracking has not started for this player yet.\nTry again in a minute or two.')],
+    };
+  }
+
+  let rwph = 0, gain = 0, j10 = 0, j20 = 0, j30 = 0;
+  for (const [t, d] of pu.ev ?? []) {
+    if (t <= from || t > now) continue;
+    rwph += 1;
+    gain += d;
+    const tier = tierOf(d);
+    if (tier === 10) j10++;
+    else if (tier === 20) j20++;
+    else if (tier === 30) j30++;
+  }
+  const jumps = j10 + j20 + j30;
+
+  const desc = [
+    `RWPH (wave count) **${nf(rwph)}**`,
+    `wave+ **+${nf(gain)}**`,
+    `JUMP total **${nf(jumps)}**`,
+    `└ 10 \`${j10}\` · 20 \`${j20}\` · 30 \`${j30}\``,
+  ];
+
+  const embed = new EmbedBuilder().setColor(0x3fb950).setTitle('Last 60 minutes')
+    .setDescription(desc.join('\n'));
+
+  if (pu.since && pu.since > from + 2_000) {
+    embed.setFooter({ text: `Tracking started ${fmtShort(pu.since)} KST — partial window` });
+  }
+  if (part?.updated) head.push(`Data updated <t:${Math.floor(part.updated / 1000)}:R>`);
+
+  return { content: head.join('\n'), embeds: [embed] };
+}
+
 /* ------------------------------------------------------------------ *
- * state.json loading (fresh via GitHub API when running in Actions)
+ * JSON loading (fresh via GitHub API when running in Actions)
  * ------------------------------------------------------------------ */
-let cache = { at: 0, data: null };
-async function getState() {
-  if (cache.data && Date.now() - cache.at < 20_000) return cache.data;
+const caches = new Map();
+async function getJson(path, ttl, envUrl) {
+  const hit = caches.get(path);
+  if (hit && Date.now() - hit.at < ttl) return hit.data;
+
   const repo = process.env.GITHUB_REPOSITORY;
   const branch = process.env.GITHUB_REF_NAME || 'main';
   let data = null;
 
-  if (!process.env.STATE_URL && repo && process.env.GITHUB_TOKEN) {
+  if (!envUrl && repo && process.env.GITHUB_TOKEN) {
     try {
-      const r = await fetch(`https://api.github.com/repos/${repo}/contents/data/state.json?ref=${branch}`, {
+      const r = await fetch(`https://api.github.com/repos/${repo}/contents/${path}?ref=${branch}`, {
         headers: {
           Accept: 'application/vnd.github.raw+json',
           Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
@@ -126,18 +201,19 @@ async function getState() {
         signal: AbortSignal.timeout(15_000),
       });
       if (r.ok) data = await r.json();
-    } catch (e) { console.error('contents API failed:', e.message); }
+    } catch (e) { console.error(`contents API failed (${path}):`, e.message); }
   }
   if (!data) {
-    const url = process.env.STATE_URL
-      ?? `https://raw.githubusercontent.com/${repo}/${branch}/data/state.json`;
+    const url = envUrl ?? `https://raw.githubusercontent.com/${repo}/${branch}/${path}`;
     const r = await fetch(`${url}?t=${Date.now()}`, { signal: AbortSignal.timeout(15_000) });
-    if (!r.ok) throw new Error(`Failed to load state.json (HTTP ${r.status})`);
+    if (!r.ok) throw new Error(`Failed to load ${path} (HTTP ${r.status})`);
     data = await r.json();
   }
-  cache = { at: Date.now(), data };
+  caches.set(path, { at: Date.now(), data });
   return data;
 }
+const getState = () => getJson('data/state.json', 20_000, process.env.STATE_URL);
+const getPart = () => getJson('data/part.json', 10_000, process.env.PART_URL);
 
 /* ------------------------------------------------------------------ *
  * /register — verify via game API, then append to user.txt and push
@@ -216,7 +292,7 @@ async function handleRegister(i) {
   const exact = list.find(p => p.nick?.toLowerCase() === nick.toLowerCase());
   if (!exact) {
     const hint = list.slice(0, 5).map(p => `\`${p.nick}\``).join(', ');
-    return i.editReply(`Player **${nick}** was not found in the current season.`
+    return i.editReply(`Player **${esc(nick)}** was not found in the current season.`
       + (hint ? `\nDid you mean: ${hint}?` : ''));
   }
   const apiNick = exact.nick;
@@ -229,10 +305,16 @@ async function handleRegister(i) {
     return i.editReply('Failed to save the registration (git error). Please try again.');
   }
 
-  const link = `${WEB_URL}?name=${encodeURIComponent(apiNick)}`;
-  if (result === 'exists') return i.editReply(`**${apiNick}** is already registered. Use \`/rwph name:${apiNick}\`.\n${link}`);
+  // <...> suppresses the link preview embed (keeps the reply short on mobile)
+  const link = `<${WEB_URL}?name=${encodeURIComponent(apiNick)}>`;
+  if (result === 'exists') {
+    return i.editReply(`**${esc(apiNick)}** is already registered.\nUse \`/rwph name:${apiNick}\`\n${link}`);
+  }
   if (result === 'full') return i.editReply(`The tracker is full (${MAX_USERS} users).`);
-  return i.editReply(`Registered **${apiNick}** ✅\nTracking starts within ~1–2 minutes, then try \`/rwph name:${apiNick}\`.\n${link}`);
+  return i.editReply(
+    `Registered **${esc(apiNick)}** ✅\n`
+    + `Tracking starts within ~1–2 minutes.\n`
+    + `Then try \`/rwph name:${apiNick}\` or \`/part name:${apiNick}\`\n${link}`);
 }
 
 /* ------------------------------------------------------------------ *
@@ -249,6 +331,9 @@ const commands = [
   new SlashCommandBuilder().setName('skip')
     .setDescription('Season jump details and past seasons for a player')
     .addStringOption(nameOpt),
+  new SlashCommandBuilder().setName('part')
+    .setDescription('RWPH and JUMP count for the last 60 minutes (rolling, minute precision)')
+    .addStringOption(nameOpt),
 ].map(c => c.toJSON());
 
 async function handle(i) {
@@ -258,10 +343,22 @@ async function handle(i) {
   const state = await getState();
   const found = findUser(state, i.options.getString('name', true).trim());
   if (!found) {
-    return i.editReply('That player is not registered. Use `/register name:<player>` first.');
+    return i.editReply('That player is not registered.\nUse `/register name:<player>` first.');
   }
   const [name, u] = found;
-  return i.editReply(i.commandName === 'rwph' ? buildRwph(state, name, u) : buildSkip(state, name, u));
+
+  let payload;
+  if (i.commandName === 'part') {
+    let part = null;
+    try { part = await getPart(); }
+    catch (e) { console.error('part load failed:', e.message); }
+    payload = buildPart(state, part, name);
+  } else if (i.commandName === 'rwph') {
+    payload = buildRwph(state, name, u);
+  } else {
+    payload = buildSkip(state, name, u);
+  }
+  return i.editReply({ ...payload, allowedMentions: NO_PING });
 }
 
 /* ------------------------------------------------------------------ *
