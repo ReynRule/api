@@ -5,7 +5,7 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2219761,
+   "lastWave": 2219766,
    "hours": {
     "2026-10-19T14": {
      "count": 145,
@@ -100,8 +100,8 @@
      "gain": 904
     },
     "2026-10-20T13": {
-     "count": 26,
-     "gain": 135
+     "count": 27,
+     "gain": 140
     }
    },
    "jumps": {
@@ -241,7 +241,11 @@
    ]
   },
   "DP_ASURA": {
+<<<<<<< Updated upstream
    "lastWave": 18037110,
+=======
+   "lastWave": 18037116,
+>>>>>>> Stashed changes
    "hours": {
     "2026-10-19T14": {
      "count": 164,
@@ -336,8 +340,13 @@
      "gain": 900
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 66,
      "gain": 396
+=======
+     "count": 65,
+     "gain": 402
+>>>>>>> Stashed changes
     }
    },
    "jumps": {
@@ -472,7 +481,11 @@
      "gain": 471
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 70,
+=======
+     "count": 68,
+>>>>>>> Stashed changes
      "gain": 218
     }
    },
@@ -593,7 +606,11 @@
      "gain": 860
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 77,
+=======
+     "count": 75,
+>>>>>>> Stashed changes
      "gain": 385
     }
    },
@@ -819,7 +836,11 @@
      "gain": 774
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 74,
+=======
+     "count": 72,
+>>>>>>> Stashed changes
      "gain": 332
     }
    },
@@ -1005,14 +1026,18 @@
      "gain": 0
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 68,
+=======
+     "count": 65,
+>>>>>>> Stashed changes
      "gain": 340
     }
    },
    "jumps": {
-    "total": 2,
+    "total": 3,
     "j10": 2,
-    "j20": 0,
+    "j20": 1,
     "j30": 0,
     "hours": {
      "2026-10-19T19": {
@@ -1023,6 +1048,11 @@
      "2026-10-20T01": {
       "j10": 1,
       "j20": 0,
+      "j30": 0
+     },
+     "2026-10-20T13": {
+      "j10": 0,
+      "j20": 1,
       "j30": 0
      }
     }
@@ -1476,7 +1506,11 @@
      "gain": 208
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 47,
+=======
+     "count": 46,
+>>>>>>> Stashed changes
      "gain": 94
     }
    },
@@ -2011,7 +2045,11 @@
    "past": []
   },
   "SD_Kirstein": {
+<<<<<<< Updated upstream
    "lastWave": 61164,
+=======
+   "lastWave": 61166,
+>>>>>>> Stashed changes
    "hours": {
     "2026-10-19T14": {
      "count": 64,
@@ -2106,8 +2144,13 @@
      "gain": 164
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 36,
      "gain": 72
+=======
+     "count": 37,
+     "gain": 74
+>>>>>>> Stashed changes
     }
    },
    "jumps": {
@@ -2311,7 +2354,11 @@
      "gain": 688
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 76,
+=======
+     "count": 73,
+>>>>>>> Stashed changes
      "gain": 304
     }
    },
@@ -2436,7 +2483,11 @@
    "past": []
   },
   "SD_yungicecube": {
+<<<<<<< Updated upstream
    "lastWave": 16792607,
+=======
+   "lastWave": 16792615,
+>>>>>>> Stashed changes
    "hours": {
     "2026-10-19T14": {
      "count": 169,
@@ -2531,8 +2582,13 @@
      "gain": 1391
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 75,
      "gain": 535
+=======
+     "count": 73,
+     "gain": 543
+>>>>>>> Stashed changes
     }
    },
    "jumps": {
@@ -2761,14 +2817,18 @@
      "gain": 1134
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 77,
+=======
+     "count": 75,
+>>>>>>> Stashed changes
      "gain": 508
     }
    },
    "jumps": {
-    "total": 111,
+    "total": 112,
     "j10": 0,
-    "j20": 2,
+    "j20": 3,
     "j30": 109,
     "hours": {
      "2026-10-18T20": {
@@ -2875,6 +2935,11 @@
       "j10": 0,
       "j20": 0,
       "j30": 3
+     },
+     "2026-10-20T13": {
+      "j10": 0,
+      "j20": 1,
+      "j30": 0
      }
     }
    },
@@ -2976,21 +3041,20 @@
      "gain": 916
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 78,
+=======
+     "count": 75,
+>>>>>>> Stashed changes
      "gain": 390
     }
    },
    "jumps": {
-    "total": 288,
+    "total": 289,
     "j10": 7,
-    "j20": 2,
+    "j20": 3,
     "j30": 279,
     "hours": {
-     "2026-10-19T08": {
-      "j10": 1,
-      "j20": 0,
-      "j30": 7
-     },
      "2026-10-19T09": {
       "j10": 0,
       "j20": 0,
@@ -3105,6 +3169,11 @@
       "j10": 0,
       "j20": 1,
       "j30": 0
+     },
+     "2026-10-20T13": {
+      "j10": 0,
+      "j20": 1,
+      "j30": 0
      }
     }
    },
@@ -3206,13 +3275,17 @@
      "gain": 913
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 77,
+=======
+     "count": 75,
+>>>>>>> Stashed changes
      "gain": 479
     }
    },
    "jumps": {
-    "total": 266,
-    "j10": 0,
+    "total": 267,
+    "j10": 1,
     "j20": 2,
     "j30": 264,
     "hours": {
@@ -3332,7 +3405,7 @@
       "j30": 7
      },
      "2026-10-20T13": {
-      "j10": 0,
+      "j10": 1,
       "j20": 0,
       "j30": 6
      }
@@ -3436,7 +3509,11 @@
      "gain": 312
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 45,
+=======
+     "count": 43,
+>>>>>>> Stashed changes
      "gain": 135
     }
    },
@@ -3666,7 +3743,11 @@
      "gain": 832
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 72,
+=======
+     "count": 70,
+>>>>>>> Stashed changes
      "gain": 375
     }
    },
@@ -3990,7 +4071,11 @@
      "gain": 448
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 49,
+=======
+     "count": 48,
+>>>>>>> Stashed changes
      "gain": 196
     }
    },
@@ -4110,14 +4195,18 @@
      "gain": 1153
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 79,
+=======
+     "count": 77,
+>>>>>>> Stashed changes
      "gain": 526
     }
    },
    "jumps": {
-    "total": 3,
+    "total": 4,
     "j10": 0,
-    "j20": 1,
+    "j20": 2,
     "j30": 2,
     "hours": {
      "2026-10-20T00": {
@@ -4129,6 +4218,11 @@
       "j10": 0,
       "j20": 0,
       "j30": 2
+     },
+     "2026-10-20T13": {
+      "j10": 0,
+      "j20": 1,
+      "j30": 0
      }
     }
    },
@@ -4230,7 +4324,11 @@
      "gain": 1026
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 77,
+=======
+     "count": 74,
+>>>>>>> Stashed changes
      "gain": 506
     }
    },
@@ -4332,13 +4430,17 @@
      "gain": 651
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 70,
+=======
+     "count": 68,
+>>>>>>> Stashed changes
      "gain": 294
     }
    },
    "jumps": {
-    "total": 1,
-    "j10": 0,
+    "total": 2,
+    "j10": 1,
     "j20": 0,
     "j30": 1,
     "hours": {
@@ -4346,6 +4448,11 @@
       "j10": 0,
       "j20": 0,
       "j30": 1
+     },
+     "2026-10-20T13": {
+      "j10": 1,
+      "j20": 0,
+      "j30": 0
      }
     }
    },
@@ -4399,7 +4506,11 @@
      "gain": 905
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 78,
+=======
+     "count": 76,
+>>>>>>> Stashed changes
      "gain": 405
     }
    },
@@ -4413,26 +4524,45 @@
    "past": []
   },
   "UD_JSCCC": {
+<<<<<<< Updated upstream
    "lastWave": 8409,
+=======
+   "lastWave": 8413,
+>>>>>>> Stashed changes
    "hours": {
     "2026-10-20T12": {
      "count": 88,
      "gain": 407
     },
     "2026-10-20T13": {
+<<<<<<< Updated upstream
      "count": 74,
      "gain": 339
+=======
+     "count": 72,
+     "gain": 343
+>>>>>>> Stashed changes
     }
    },
    "jumps": {
-    "total": 0,
+    "total": 1,
     "j10": 0,
-    "j20": 0,
+    "j20": 1,
     "j30": 0,
-    "hours": {}
+    "hours": {
+     "2026-10-20T13": {
+      "j10": 0,
+      "j20": 1,
+      "j30": 0
+     }
+    }
    },
    "past": []
   }
  },
+<<<<<<< Updated upstream
  "updated": 1792473706015
+=======
+ "updated": 1792473714297
+>>>>>>> Stashed changes
 }
