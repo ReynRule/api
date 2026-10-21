@@ -5,7 +5,7 @@
  },
  "users": {
   "ReynRule": {
-   "lastWave": 2238278,
+   "lastWave": 2238293,
    "hours": {
     "2026-10-21T00": {
      "count": 27,
@@ -100,8 +100,8 @@
      "gain": 855
     },
     "2026-10-21T23": {
-     "count": 42,
-     "gain": 210
+     "count": 45,
+     "gain": 225
     }
    },
    "jumps": {
@@ -241,7 +241,7 @@
    ]
   },
   "DP_ASURA": {
-   "lastWave": 18058338,
+   "lastWave": 18058356,
    "hours": {
     "2026-10-21T00": {
      "count": 128,
@@ -336,8 +336,8 @@
      "gain": 0
     },
     "2026-10-21T23": {
-     "count": 37,
-     "gain": 222
+     "count": 40,
+     "gain": 240
     }
    },
    "jumps": {
@@ -382,7 +382,7 @@
    ]
   },
   "S_Raikkonen": {
-   "lastWave": 1229385,
+   "lastWave": 1229394,
    "hours": {
     "2026-10-21T00": {
      "count": 161,
@@ -477,8 +477,8 @@
      "gain": 480
     },
     "2026-10-21T23": {
-     "count": 39,
-     "gain": 117
+     "count": 42,
+     "gain": 126
     }
    },
    "jumps": {
@@ -503,7 +503,7 @@
    ]
   },
   "ALDE": {
-   "lastWave": 3062005,
+   "lastWave": 3062020,
    "hours": {
     "2026-10-21T00": {
      "count": 172,
@@ -598,8 +598,8 @@
      "gain": 865
     },
     "2026-10-21T23": {
-     "count": 41,
-     "gain": 205
+     "count": 44,
+     "gain": 220
     }
    },
    "jumps": {
@@ -739,7 +739,7 @@
    ]
   },
   "SKL_CAZcaz": {
-   "lastWave": 1443694,
+   "lastWave": 1443707,
    "hours": {
     "2026-10-21T00": {
      "count": 166,
@@ -834,8 +834,8 @@
      "gain": 768
     },
     "2026-10-21T23": {
-     "count": 39,
-     "gain": 177
+     "count": 42,
+     "gain": 190
     }
    },
    "jumps": {
@@ -1426,7 +1426,7 @@
    "past": []
   },
   "Kiroap": {
-   "lastWave": 197504,
+   "lastWave": 197508,
    "hours": {
     "2026-10-21T00": {
      "count": 105,
@@ -1521,8 +1521,8 @@
      "gain": 208
     },
     "2026-10-21T23": {
-     "count": 25,
-     "gain": 50
+     "count": 27,
+     "gain": 54
     }
    },
    "jumps": {
@@ -1831,7 +1831,7 @@
    "past": []
   },
   "WePanMarch": {
-   "lastWave": 1275049,
+   "lastWave": 1275061,
    "hours": {
     "2026-10-21T00": {
      "count": 172,
@@ -1926,8 +1926,8 @@
      "gain": 914
     },
     "2026-10-21T23": {
-     "count": 42,
-     "gain": 220
+     "count": 45,
+     "gain": 232
     }
    },
    "jumps": {
@@ -2061,7 +2061,7 @@
    "past": []
   },
   "SD_Kirstein": {
-   "lastWave": 65116,
+   "lastWave": 65118,
    "hours": {
     "2026-10-21T00": {
      "count": 66,
@@ -2156,8 +2156,8 @@
      "gain": 38
     },
     "2026-10-21T23": {
-     "count": 20,
-     "gain": 40
+     "count": 21,
+     "gain": 42
     }
    },
    "jumps": {
@@ -2291,7 +2291,7 @@
    "past": []
   },
   "SKL_dakryoja": {
-   "lastWave": 2554465,
+   "lastWave": 2554477,
    "hours": {
     "2026-10-21T00": {
      "count": 173,
@@ -2386,8 +2386,8 @@
      "gain": 712
     },
     "2026-10-21T23": {
-     "count": 41,
-     "gain": 190
+     "count": 44,
+     "gain": 202
     }
    },
    "jumps": {
@@ -2521,7 +2521,7 @@
    "past": []
   },
   "SD_yungicecube": {
-   "lastWave": 16833824,
+   "lastWave": 16833844,
    "hours": {
     "2026-10-21T00": {
      "count": 172,
@@ -2616,8 +2616,8 @@
      "gain": 1274
     },
     "2026-10-21T23": {
-     "count": 39,
-     "gain": 326
+     "count": 42,
+     "gain": 346
     }
    },
    "jumps": {
@@ -2751,7 +2751,7 @@
    "past": []
   },
   "Rith": {
-   "lastWave": 4755817,
+   "lastWave": 4755837,
    "hours": {
     "2026-10-21T00": {
      "count": 173,
@@ -2846,8 +2846,8 @@
      "gain": 1173
     },
     "2026-10-21T23": {
-     "count": 41,
-     "gain": 276
+     "count": 44,
+     "gain": 296
     }
    },
    "jumps": {
@@ -2981,7 +2981,7 @@
    "past": []
   },
   "corpse for pan": {
-   "lastWave": 3367017,
+   "lastWave": 3367032,
    "hours": {
     "2026-10-21T00": {
      "count": 176,
@@ -3076,8 +3076,8 @@
      "gain": 1125
     },
     "2026-10-21T23": {
-     "count": 42,
-     "gain": 285
+     "count": 45,
+     "gain": 300
     }
    },
    "jumps": {
@@ -3211,7 +3211,7 @@
    "past": []
   },
   "SD_Dadagamer11": {
-   "lastWave": 5179524,
+   "lastWave": 5179536,
    "hours": {
     "2026-10-21T00": {
      "count": 173,
@@ -3306,8 +3306,8 @@
      "gain": 726
     },
     "2026-10-21T23": {
-     "count": 42,
-     "gain": 177
+     "count": 45,
+     "gain": 189
     }
    },
    "jumps": {
@@ -3671,7 +3671,7 @@
    "past": []
   },
   "S_BottleMouse": {
-   "lastWave": 2677370,
+   "lastWave": 2677385,
    "hours": {
     "2026-10-21T00": {
      "count": 26,
@@ -3766,8 +3766,8 @@
      "gain": 800
     },
     "2026-10-21T23": {
-     "count": 38,
-     "gain": 190
+     "count": 41,
+     "gain": 205
     }
    },
    "jumps": {
@@ -4135,7 +4135,7 @@
    "past": []
   },
   "LoVenti": {
-   "lastWave": 9632371,
+   "lastWave": 9632390,
    "hours": {
     "2026-10-21T00": {
      "count": 176,
@@ -4230,8 +4230,8 @@
      "gain": 1179
     },
     "2026-10-21T23": {
-     "count": 42,
-     "gain": 277
+     "count": 45,
+     "gain": 296
     }
    },
    "jumps": {
@@ -4345,7 +4345,7 @@
    "past": []
   },
   "Micro soft": {
-   "lastWave": 4980665,
+   "lastWave": 4980685,
    "hours": {
     "2026-10-21T00": {
      "count": 172,
@@ -4440,8 +4440,8 @@
      "gain": 1123
     },
     "2026-10-21T23": {
-     "count": 41,
-     "gain": 275
+     "count": 44,
+     "gain": 295
     }
    },
    "jumps": {
@@ -4487,7 +4487,7 @@
    "past": []
   },
   "S_Minerva": {
-   "lastWave": 1226772,
+   "lastWave": 1226780,
    "hours": {
     "2026-10-21T00": {
      "count": 0,
@@ -4582,8 +4582,8 @@
      "gain": 672
     },
     "2026-10-21T23": {
-     "count": 37,
-     "gain": 156
+     "count": 39,
+     "gain": 164
     }
    },
    "jumps": {
@@ -4602,7 +4602,7 @@
    "past": []
   },
   "UD_JSCC": {
-   "lastWave": 1135186,
+   "lastWave": 1135202,
    "hours": {
     "2026-10-21T00": {
      "count": 175,
@@ -4697,8 +4697,8 @@
      "gain": 905
     },
     "2026-10-21T23": {
-     "count": 41,
-     "gain": 213
+     "count": 44,
+     "gain": 229
     }
    },
    "jumps": {
@@ -4717,7 +4717,7 @@
    "past": []
   },
   "UD_JSCCC": {
-   "lastWave": 26848,
+   "lastWave": 26858,
    "hours": {
     "2026-10-21T00": {
      "count": 157,
@@ -4812,8 +4812,8 @@
      "gain": 526
     },
     "2026-10-21T23": {
-     "count": 28,
-     "gain": 93
+     "count": 31,
+     "gain": 103
     }
    },
    "jumps": {
@@ -4826,7 +4826,7 @@
    "past": []
   },
   "Asura_Rule": {
-   "lastWave": 115,
+   "lastWave": 117,
    "hours": {
     "2026-10-21T00": {
      "count": 0,
@@ -4921,8 +4921,8 @@
      "gain": 2
     },
     "2026-10-21T23": {
-     "count": 7,
-     "gain": 7
+     "count": 9,
+     "gain": 9
     }
    },
    "jumps": {
@@ -4941,5 +4941,5 @@
    "past": []
   }
  },
- "updated": 1792595355834
+ "updated": 1792595417835
 }
