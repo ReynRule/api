@@ -29,3 +29,4 @@ Asura_Rule
 S_pikoo2
 Aurora__Pan
 sayonara pan
+UD_JSC
