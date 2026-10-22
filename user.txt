@@ -26,3 +26,4 @@ S_Minerva
 UD_JSCC
 UD_JSCCC
 Asura_Rule
+S_pikoo2
