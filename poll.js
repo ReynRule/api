@@ -894,47 +894,56 @@ function commit(msg) {
 // register job 전용: user.txt만 커밋
 // save()와 render()를 호출하지 않는다.
 
+
 function commitUsersFile(msg) {
   try {
-    // 최신 main을 먼저 가져온다.
+    // 최신 main 브랜치 동기화
     runGit(['pull', '--rebase', '--autostash']);
 
+    // user.txt 스테이징
     runGit(['add', '--', 'user.txt']);
 
-    // user.txt에 변경사항이 없으면 종료한다.
-    if (!gitOutput(['diff', '--cached', '--quiet']).length) {
-      // diff --cached --quiet은 변경사항이 없을 때 종료 코드 0을 반환한다.
-      // 실제 변경 여부는 staged 파일 목록으로 확인한다.
-    }
-
-    const staged = gitOutput(['diff', '--cached', '--name-only']);
+    // 실제 변경된 파일 확인
+    const staged = gitOutput([
+      'diff',
+      '--cached',
+      '--name-only'
+    ]);
 
     if (!staged.split(/\r?\n/).includes('user.txt')) {
       console.log('No user.txt changes to commit');
       return;
     }
 
+    // 커밋
     runGit([
       'commit',
       '-m',
       msg || 'chore: update user.txt'
     ]);
 
+    // 푸시, 실패하면 동기화 후 한 번 재시도
     try {
       runGit(['push']);
     } catch (firstError) {
-      console.error('First user.txt push failed; syncing and retrying.');
+      console.error(
+        'First user.txt push failed; syncing and retrying.'
+      );
 
       runGit(['pull', '--rebase', '--autostash']);
       runGit(['push']);
     }
 
-    console.log('user.txt committed and pushed:', new Date().toISOString());
+    console.log(
+      'user.txt committed and pushed:',
+      new Date().toISOString()
+    );
   } catch (e) {
     console.error('user.txt commit failed:', e.message);
     throw e;
   }
 }
+
 
 
 async function fetchPlayer(nick) {
