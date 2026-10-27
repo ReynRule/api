@@ -1,0 +1,237 @@
+{
+  "hour": "2026-10-27T19",
+  "timezone": "Asia/Seoul",
+  "window": "HH:55 to next HH:55 (KST)",
+  "metric": "rwph (number of wave increases during this hour)",
+  "savedAt": "2026-10-27T11:55:00.030Z",
+  "rankings": [
+    {
+      "nick": "UD_JSC",
+      "rwph": 176,
+      "jumps": 0,
+      "rank": 1
+    },
+    {
+      "nick": "anteater",
+      "rwph": 175,
+      "jumps": 12,
+      "rank": 2
+    },
+    {
+      "nick": "UD_JSCC",
+      "rwph": 175,
+      "jumps": 0,
+      "rank": 3
+    },
+    {
+      "nick": "SKL_Mammoth",
+      "rwph": 174,
+      "jumps": 0,
+      "rank": 4
+    },
+    {
+      "nick": "Aurora__Pan",
+      "rwph": 173,
+      "jumps": 9,
+      "rank": 5
+    },
+    {
+      "nick": "panSPie",
+      "rwph": 173,
+      "jumps": 0,
+      "rank": 6
+    },
+    {
+      "nick": "S_Minerva",
+      "rwph": 173,
+      "jumps": 0,
+      "rank": 7
+    },
+    {
+      "nick": "SD_Dadagamer11",
+      "rwph": 173,
+      "jumps": 0,
+      "rank": 8
+    },
+    {
+      "nick": "ALDE",
+      "rwph": 172,
+      "jumps": 0,
+      "rank": 9
+    },
+    {
+      "nick": "sayonara pan",
+      "rwph": 172,
+      "jumps": 18,
+      "rank": 10
+    },
+    {
+      "nick": "SD_yungicecube",
+      "rwph": 171,
+      "jumps": 12,
+      "rank": 11
+    },
+    {
+      "nick": "SKL_CAZcaz",
+      "rwph": 170,
+      "jumps": 8,
+      "rank": 12
+    },
+    {
+      "nick": "Rith",
+      "rwph": 168,
+      "jumps": 0,
+      "rank": 13
+    },
+    {
+      "nick": "S_pikoo2",
+      "rwph": 165,
+      "jumps": 0,
+      "rank": 14
+    },
+    {
+      "nick": "S_BottleMouse",
+      "rwph": 161,
+      "jumps": 0,
+      "rank": 15
+    },
+    {
+      "nick": "S_Raikkonen",
+      "rwph": 161,
+      "jumps": 0,
+      "rank": 16
+    },
+    {
+      "nick": "UD_JSCCC",
+      "rwph": 125,
+      "jumps": 0,
+      "rank": 17
+    },
+    {
+      "nick": "DP_ASURA",
+      "rwph": 122,
+      "jumps": 0,
+      "rank": 18
+    },
+    {
+      "nick": "corpse for pan",
+      "rwph": 120,
+      "jumps": 4,
+      "rank": 19
+    },
+    {
+      "nick": "SKL_dakryoja",
+      "rwph": 120,
+      "jumps": 1,
+      "rank": 20
+    },
+    {
+      "nick": "Kiroap",
+      "rwph": 101,
+      "jumps": 0,
+      "rank": 21
+    },
+    {
+      "nick": "ReynRule",
+      "rwph": 101,
+      "jumps": 0,
+      "rank": 22
+    },
+    {
+      "nick": "UD_4203",
+      "rwph": 89,
+      "jumps": 0,
+      "rank": 23
+    },
+    {
+      "nick": "S_seungheeee",
+      "rwph": 88,
+      "jumps": 1,
+      "rank": 24
+    },
+    {
+      "nick": "Mitoch0ndria",
+      "rwph": 84,
+      "jumps": 0,
+      "rank": 25
+    },
+    {
+      "nick": "gongonemin",
+      "rwph": 71,
+      "jumps": 2,
+      "rank": 26
+    },
+    {
+      "nick": "Gamex342942",
+      "rwph": 64,
+      "jumps": 0,
+      "rank": 27
+    },
+    {
+      "nick": "Asura_Rule",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 28
+    },
+    {
+      "nick": "Aurora",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 29
+    },
+    {
+      "nick": "DC_InTTerre",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 30
+    },
+    {
+      "nick": "LoVenti",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 31
+    },
+    {
+      "nick": "Micro soft",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 32
+    },
+    {
+      "nick": "MS365",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 33
+    },
+    {
+      "nick": "RynzeQ",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 34
+    },
+    {
+      "nick": "S_tring",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 35
+    },
+    {
+      "nick": "Scav rip pan",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 36
+    },
+    {
+      "nick": "SD_Kirstein",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 37
+    },
+    {
+      "nick": "WePanMarch",
+      "rwph": 0,
+      "jumps": 0,
+      "rank": 38
+    }
+  ]
+}
