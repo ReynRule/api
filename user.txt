@@ -36,3 +36,4 @@ SKL_Mammoth
 Mitoch0ndria
 Gamex342942
 S_tring
+S_ting_min
